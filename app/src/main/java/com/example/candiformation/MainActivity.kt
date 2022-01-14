@@ -3,36 +3,39 @@ package com.example.candiformation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.activity.viewModels
+import androidx.compose.material.Scaffold
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.candiformation.navigation.SetupNavigation
+import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.CandiformationTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private lateinit var navController: NavHostController
+    private val sharedViewModel: SharedViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            navController = rememberNavController()
+
             CandiformationTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
+                Scaffold(
+                    content = {
+                        SetupNavigation(
+                            navController = navController,
+                            viewModel = sharedViewModel
+                        )
+                    },
+                    bottomBar = {
+
+                    }
+                )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    CandiformationTheme {
-        Greeting("Android")
     }
 }
