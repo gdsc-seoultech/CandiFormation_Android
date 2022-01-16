@@ -5,18 +5,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.ui.screens.candidate.CandidateScreen
+import com.example.candiformation.ui.screens.home.HomeScreen
+import com.example.candiformation.ui.screens.setting.SettingScreen
 
-fun NavGraphBuilder.candidateNavGraph(
+fun NavGraphBuilder.settingNavGraph(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
     navigation(
-        startDestination = "candidate",
-        route = "candidate_root"
+        startDestination = "setting",
+        route = "setting_root"
     ) {
-        composable(route = "candidate") {
-            CandidateScreen()
+        composable(route = "setting") {
+            SettingScreen()
         }
     }
 }

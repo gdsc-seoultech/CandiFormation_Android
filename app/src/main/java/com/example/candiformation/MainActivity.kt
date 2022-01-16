@@ -8,6 +8,7 @@ import androidx.compose.material.Scaffold
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.candiformation.navigation.SetupNavigation
+import com.example.candiformation.navigation.bottomBar.BottomNavBar
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.CandiformationTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +33,10 @@ class MainActivity : ComponentActivity() {
                         )
                     },
                     bottomBar = {
-
+                        BottomNavBar(
+                            navController = navController,
+                            viewModel = sharedViewModel
+                        )
                     }
                 )
             }
