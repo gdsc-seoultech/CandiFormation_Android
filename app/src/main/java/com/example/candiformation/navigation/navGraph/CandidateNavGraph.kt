@@ -16,7 +16,10 @@ fun NavGraphBuilder.candidateNavGraph(
         route = "candidate_root"
     ) {
         composable(route = "candidate") {
-            CandidateScreen()
+            CandidateScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
     }
 }

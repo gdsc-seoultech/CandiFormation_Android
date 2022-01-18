@@ -7,32 +7,31 @@ import androidx.compose.ui.graphics.vector.ImageVector
 sealed class BottomNavItem(
     val label: String,
     val icon: ImageVector,
-    val route: String
+    val route: List<String>
 ) {
     object InfoBottomIcon: BottomNavItem(
         label = "정보",
         icon = Icons.Filled.Info,
-        route = "info"
+        route = listOf("info")
     )
     object CandidateBottomIcon: BottomNavItem(
         label = "후보",
         icon = Icons.Filled.Attribution,
-        route = "candidate"
+        route = listOf("candidate")
     )
     object HomeBottomIcon: BottomNavItem(
         label = "홈",
         icon = Icons.Filled.Home,
-        route = "home"
+        route = listOf("home")
     )
     object NewsBottomIcon: BottomNavItem(
         label = "뉴스",
         icon = Icons.Filled.Article,
-        route = "news"
+        route = listOf("news")
     )
     object SettingBottomIcon: BottomNavItem(
         label = "설정",
         icon = Icons.Filled.Settings,
-        route = "setting"
+        route = listOf("setting", "setting/appInfo")
     )
-
 }

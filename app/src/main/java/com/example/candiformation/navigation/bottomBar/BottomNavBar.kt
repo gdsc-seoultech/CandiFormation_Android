@@ -40,9 +40,9 @@ fun BottomNavBar(
                     selectedContentColor = Color.Black,
                     unselectedContentColor = Color.LightGray,
                     alwaysShowLabel = true,
-                    selected = (currentRoute == item.route),
+                    selected = (checkingNavigation(item, currentRoute)),
                     onClick = {
-                        navController.navigate(item.route) {
+                        navController.navigate(item.route[0]) {
                             popUpTo("home") { inclusive = true }
                         }
                     }
@@ -50,4 +50,16 @@ fun BottomNavBar(
             }
         }
     }
+}
+
+fun checkingNavigation(
+    item: BottomNavItem,
+    currentRoute: String?
+): Boolean {
+    for (i in 1..item.route.size) {
+        if (currentRoute == item.route[i - 1]) {
+            return true
+        }
+    }
+    return false
 }

@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.ui.screens.home.HomeScreen
 import com.example.candiformation.ui.screens.setting.SettingScreen
+import com.example.candiformation.ui.screens.setting.appInfo.AppInfoScreen
 
 fun NavGraphBuilder.settingNavGraph(
     navController: NavHostController,
@@ -17,7 +17,16 @@ fun NavGraphBuilder.settingNavGraph(
         route = "setting_root"
     ) {
         composable(route = "setting") {
-            SettingScreen()
+            SettingScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
+        }
+        composable(route = "setting/appInfo") {
+            AppInfoScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
     }
 }
