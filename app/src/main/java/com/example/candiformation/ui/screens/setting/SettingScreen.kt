@@ -53,14 +53,14 @@ fun SettingScreen(
 fun SettingTopAppBar() {
     TopAppBar(
         backgroundColor = Color.White,
-        contentPadding = PaddingValues(horizontal = CONTENT_INNER_PADDING)
-    ) {
-        Text(
-            text = "설정",
-            fontSize = TOP_APP_BAR_FONT,
-            fontWeight = FontWeight.Bold
-        )
-    }
+        title = {
+            Text(
+                text = "설정",
+                fontSize = TOP_APP_BAR_FONT,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    )
 }
 
 @Composable
@@ -90,7 +90,12 @@ fun ProfileCard(
             )
             Text(
                 modifier = Modifier
-                    .clickable {},
+                    .clip(RoundedCornerShape(4.dp))
+                    .clickable {
+                        navController.navigate("setting/login") {
+                            popUpTo("setting/login") { inclusive = true }
+                        }
+                    },
                 text = "로그인",
                 fontSize = CONTENT_INNER_FONT
             )
@@ -108,13 +113,13 @@ fun SettingList(
             navController = navController,
             viewModel = viewModel,
             title = "내가 쓴 댓글",
-            onClicked = {/* 각자 맞는 화면으로 이동 */}
+            onClicked = {/* 각자 맞는 화면으로 이동 */ }
         )
         SettingListUnit(
             navController = navController,
             viewModel = viewModel,
             title = "좋아요 누른 기사",
-            onClicked = {/* 각자 맞는 화면으로 이동 */}
+            onClicked = {/* 각자 맞는 화면으로 이동 */ }
         )
         Divider()
         SettingListUnit(
@@ -129,13 +134,13 @@ fun SettingList(
             navController = navController,
             viewModel = viewModel,
             title = "앱 공유",
-            onClicked = {/* 각자 맞는 화면으로 이동 */}
+            onClicked = {/* 각자 맞는 화면으로 이동 */ }
         )
         SettingListUnit(
             navController = navController,
             viewModel = viewModel,
             title = "설정",
-            onClicked = {/* 각자 맞는 화면으로 이동 */}
+            onClicked = {/* 각자 맞는 화면으로 이동 */ }
         )
     }
 }

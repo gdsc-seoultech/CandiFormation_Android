@@ -7,6 +7,7 @@ import androidx.navigation.navigation
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.screens.home.HomeScreen
 import com.example.candiformation.ui.screens.news.NewsScreen
+import com.example.candiformation.ui.screens.news.articles.ArticleScreen
 
 fun NavGraphBuilder.newsNavGraph(
     navController: NavHostController,
@@ -17,7 +18,13 @@ fun NavGraphBuilder.newsNavGraph(
         route = "news_root"
     ) {
         composable(route = "news") {
-            NewsScreen()
+            NewsScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
+        }
+        composable(route = "news/articles/{articleId}") {
+            ArticleScreen(navController = navController, viewModel = viewModel)
         }
     }
 }

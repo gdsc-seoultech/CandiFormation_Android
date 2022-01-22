@@ -27,11 +27,18 @@ sealed class BottomNavItem(
     object NewsBottomIcon: BottomNavItem(
         label = "뉴스",
         icon = Icons.Filled.Article,
-        route = listOf("news")
+        route = listOf("news", "news/articles/{articleId}")
     )
     object SettingBottomIcon: BottomNavItem(
         label = "설정",
         icon = Icons.Filled.Settings,
-        route = listOf("setting", "setting/appInfo")
+        route = listOf(
+            "setting",
+            "setting/appInfo",
+            "setting/login",
+            "setting/login/signup",
+            "setting/login/signup/auth",
+            "setting/login/signup/setnickname"
+        )
     )
 }

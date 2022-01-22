@@ -23,6 +23,7 @@ fun SetupNavigation(
                 viewModel = viewModel
             )
         }
+
         infoNavGraph(navController = navController, viewModel = viewModel)
         candidateNavGraph(navController = navController, viewModel = viewModel)
         homeNavGraph(navController = navController, viewModel = viewModel)

@@ -97,4 +97,6 @@ dependencies {
 
     // System UI controller
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
+
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 }

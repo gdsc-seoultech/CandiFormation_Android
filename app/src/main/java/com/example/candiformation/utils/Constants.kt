@@ -5,8 +5,9 @@ import androidx.compose.ui.unit.sp
 
 object Constants {
 
-    // url
-    const val BASE_URL = ""
+    // rest api url
+    const val ARTICLE_BASE_URL = "http://13.209.99.184:3000/"
+
 
     // font
     val SEMI_TITLE_SIZE = 24.sp
