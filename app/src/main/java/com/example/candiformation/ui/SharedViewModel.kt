@@ -9,7 +9,6 @@ import com.example.candiformation.data.repositories.CandiRepository
 import com.example.candiformation.models.ArticleResponse
 import com.example.candiformation.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,6 +37,10 @@ class SharedViewModel @Inject constructor(
     // ===============================================================================
 
 
-    // Current Article Id
+    // Current Article data
     var articleId = mutableStateOf(-1)
+    var articleTitle = mutableStateOf("")
+    var articleContent = mutableStateOf("")
+
+
 }

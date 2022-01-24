@@ -40,7 +40,14 @@ fun NewsArticleUnit(
             .background(VeryLightGrey)
             .clickable {
                 viewModel.articleId.value = articleResponse.id
-                navController.navigate("news/articles/${articleResponse.id}")
+                viewModel.articleTitle.value = articleResponse.title
+                viewModel.articleContent.value = articleResponse.content
+
+                navController.navigate("news/articles/selectedArticle") {
+                    popUpTo("news/articles") {
+                        inclusive = true
+                    }
+                }
             }
     ) {
         Column(

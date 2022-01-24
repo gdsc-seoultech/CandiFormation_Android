@@ -23,7 +23,7 @@ fun NavGraphBuilder.newsNavGraph(
                 viewModel = viewModel
             )
         }
-        composable(route = "news/articles/{articleId}") {
+        composable(route = "news/articles/selectedArticle") {
             ArticleScreen(navController = navController, viewModel = viewModel)
         }
     }

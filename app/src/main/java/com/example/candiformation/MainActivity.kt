@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             navController = rememberNavController()
 
-            CandiformationTheme {
+//            CandiformationTheme {
                 Scaffold(
                     content = {
                         SetupNavigation(
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 )
-            }
+//            }
         }
     }
 }
