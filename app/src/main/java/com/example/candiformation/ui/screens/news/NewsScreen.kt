@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
+import com.example.candiformation.ui.theme.VeryLightGrey
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Resource
 import kotlinx.coroutines.launch
@@ -85,8 +86,9 @@ fun NewsScreenContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                CircularProgressIndicator()
-
+                CircularProgressIndicator(
+                    color = VeryLightGrey
+                )
             }
         }
     }
