@@ -15,6 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    //yongsu test
+    //yongsu test
+    //yongsu test
+    
 
     private lateinit var navController: NavHostController
     private val sharedViewModel: SharedViewModel by viewModels()
