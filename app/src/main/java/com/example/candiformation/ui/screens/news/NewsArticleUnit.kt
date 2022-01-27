@@ -42,6 +42,7 @@ fun NewsArticleUnit(
                 viewModel.articleId.value = articleResponse.id
                 viewModel.articleTitle.value = articleResponse.title
                 viewModel.articleContent.value = articleResponse.content
+                viewModel.articleAgency.value = articleResponse.news_agency
 
                 navController.navigate("news/articles/selectedArticle") {
                     popUpTo("news/articles") {

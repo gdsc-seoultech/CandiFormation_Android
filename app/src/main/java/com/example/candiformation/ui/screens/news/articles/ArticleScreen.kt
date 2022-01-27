@@ -1,5 +1,6 @@
 package com.example.candiformation.ui.screens.news.articles
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -21,10 +22,9 @@ fun ArticleScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-
     Scaffold(
         topBar = {
-            ArticleScreenTopAppBar(navController = navController)
+            ArticleScreenTopAppBar(navController = navController, viewModel = viewModel)
         },
         content = {
             ArticleScreenContent(
@@ -33,8 +33,6 @@ fun ArticleScreen(
             )
         }
     )
-
-
 }
 
 @Composable
@@ -45,11 +43,28 @@ fun ArticleScreenContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 24.dp, end = 24.dp, top = 12.dp),
+            .padding(start = 32.dp, end = 32.dp, top = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         articleTitle(viewModel = viewModel)
+        Spacer(modifier = Modifier.height(32.dp))
+        articleContent(navController = navController, viewModel = viewModel)
+    }
+}
 
+@Composable
+fun articleContent(
+    navController: NavHostController,
+    viewModel: SharedViewModel
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Text(
+            text = viewModel.articleContent.value,
+            fontSize = 18.sp
+        )
     }
 }
 
@@ -58,31 +73,35 @@ fun articleTitle(
     viewModel: SharedViewModel
 ) {
     Box(
-        modifier = Modifier.
-                fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
     ) {
         Text(
             text = viewModel.articleTitle.value,
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            maxLines = 2
+            fontWeight = FontWeight.Bold
         )
     }
 }
 
 @Composable
 fun ArticleScreenTopAppBar(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: SharedViewModel
 ) {
     TopAppBar(
         backgroundColor = Color.White,
         title = {
-            Text(
-                text = "Article",
-                fontSize = Constants.TOP_APP_BAR_FONT,
-                fontWeight = FontWeight.Bold
-            )
-
+            Row(
+                modifier = Modifier.fillMaxWidth().border(2.dp, Color.Magenta),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "News",
+                    fontSize = Constants.TOP_APP_BAR_FONT,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         },
         navigationIcon = {
             IconButton(onClick = {
@@ -90,13 +109,21 @@ fun ArticleScreenTopAppBar(
                     popUpTo("news") { inclusive = true }
                 }
             }) {
-                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Arrow Back")
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Arrow Back"
+                )
             }
         },
         actions = {
             IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Filled.IosShare, contentDescription = "Ios Share")
+                Icon(
+                    imageVector = Icons.Filled.IosShare,
+                    contentDescription = "Ios Share",
+                    tint = Color.Black
+                )
             }
-        }
+        },
+        elevation = 0.dp
     )
 }

@@ -43,11 +43,12 @@ class SharedViewModel @Inject constructor(
 
 
 
-    // Current Article data
+    // Current Article data ==========================================================
     var articleId = mutableStateOf(-1)
     var articleTitle = mutableStateOf("")
     var articleContent = mutableStateOf("")
-
+    var articleAgency = mutableStateOf("")
+    // ===============================================================================
 
 
 
