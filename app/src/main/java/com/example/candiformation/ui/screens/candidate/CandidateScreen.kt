@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -175,12 +176,17 @@ fun CandidateCard(
 fun CandidateScreenTopAppBar() {
     TopAppBar(
         backgroundColor = Color.White,
-        contentPadding = PaddingValues(horizontal = CONTENT_INNER_PADDING)
-    ) {
-        Text(
-            text = "후보자",
-            fontSize = Constants.TOP_APP_BAR_FONT,
-            fontWeight = FontWeight.Bold
-        )
-    }
+        title = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start
+            ) {
+                Text(
+                    text = "후보자",
+                    fontSize = Constants.TOP_APP_BAR_FONT,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        },
+    )
 }

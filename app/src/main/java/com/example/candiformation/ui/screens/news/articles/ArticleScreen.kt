@@ -1,6 +1,5 @@
 package com.example.candiformation.ui.screens.news.articles
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -49,6 +48,15 @@ fun ArticleScreenContent(
         articleTitle(viewModel = viewModel)
         Spacer(modifier = Modifier.height(32.dp))
         articleContent(navController = navController, viewModel = viewModel)
+
+        // 썸네일 보류
+//        ThumbnailBox(
+//            navController = navController,
+//            viewModel = viewModel,
+//            url = ""
+//        )
+
+
     }
 }
 
@@ -93,8 +101,8 @@ fun ArticleScreenTopAppBar(
         backgroundColor = Color.White,
         title = {
             Row(
-                modifier = Modifier.fillMaxWidth().border(2.dp, Color.Magenta),
-                horizontalArrangement = Arrangement.Center
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start
             ) {
                 Text(
                     text = "News",
@@ -104,11 +112,12 @@ fun ArticleScreenTopAppBar(
             }
         },
         navigationIcon = {
-            IconButton(onClick = {
-                navController.navigate("news") {
-                    popUpTo("news") { inclusive = true }
-                }
-            }) {
+            IconButton(
+                onClick = {
+                    navController.navigate("news") {
+                        popUpTo("news") { inclusive = true }
+                    }
+                }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Arrow Back"
@@ -116,14 +125,14 @@ fun ArticleScreenTopAppBar(
             }
         },
         actions = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(
+                onClick = { /*TODO*/ }) {
                 Icon(
                     imageVector = Icons.Filled.IosShare,
                     contentDescription = "Ios Share",
                     tint = Color.Black
                 )
             }
-        },
-        elevation = 0.dp
+        }
     )
 }
