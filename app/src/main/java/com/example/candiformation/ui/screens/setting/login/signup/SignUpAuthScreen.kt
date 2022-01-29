@@ -43,7 +43,9 @@ fun SignUpAuthScreenContent(
     ) {
         Text("인증 된다 치고", fontSize = 30.sp)
         Button(onClick = {
-            navController.navigate("setting/login/signup/setnickname")
+            navController.navigate("setting/login/signup/setnickname") {
+                popUpTo(route = "setting/login/signup/setnickname") { inclusive = true }
+            }
         }) {
             Text("다음")
         }

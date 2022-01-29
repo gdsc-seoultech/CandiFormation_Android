@@ -62,7 +62,9 @@ fun SignUpScreenContent(
             }
         )
         Button(onClick = {
-            navController.navigate("setting/login/signup/auth")
+            navController.navigate("setting/login/signup/auth") {
+                popUpTo(route = "setting/login/signup/auth") { inclusive = true }
+            }
         }) {
             Text("다음")
         }

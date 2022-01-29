@@ -38,4 +38,3 @@ fun ThumbnailBox(
         Text("링크 이동", fontSize = 30.sp)
     }
 }
-

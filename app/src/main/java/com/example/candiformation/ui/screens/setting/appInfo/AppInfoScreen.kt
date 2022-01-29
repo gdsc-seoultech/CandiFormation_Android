@@ -12,5 +12,5 @@ fun AppInfoScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-    Text("App Info 화면입니다", fontSize = 50.sp)
+    Text("준비중입니다.", fontSize = 50.sp)
 }
