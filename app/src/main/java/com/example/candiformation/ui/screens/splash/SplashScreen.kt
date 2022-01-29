@@ -1,13 +1,18 @@
 package com.example.candiformation.ui.screens.splash
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.HowToVote
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
@@ -30,12 +35,45 @@ fun SplashScreen(
         }
         viewModel.bottomBarShown.value = true
     }
-
     Surface(
         modifier = Modifier
             .fillMaxSize()
             .padding(CONTENT_INNER_PADDING)
     ) {
-        Text(text = "스플래쉬 화면입니다.\n용수형이 할 것임", fontSize = 28.sp)
+        Row(modifier = Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        )
+        {
+            Icon(imageVector = Icons.Default.HowToVote,
+                contentDescription = "Candiformation_Icon",
+                tint = Color.Red,
+                modifier = Modifier.size(90.dp))
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text = "Candidate +",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = "Information",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = "Candiformation",
+                    fontSize = 27.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
     }
+
+
+
 }
