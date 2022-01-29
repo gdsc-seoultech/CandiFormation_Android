@@ -48,6 +48,7 @@ class SharedViewModel @Inject constructor(
     var articleTitle = mutableStateOf("")
     var articleContent = mutableStateOf("")
     var articleAgency = mutableStateOf("")
+    var articleLink = mutableStateOf("")
     // ===============================================================================
 
 

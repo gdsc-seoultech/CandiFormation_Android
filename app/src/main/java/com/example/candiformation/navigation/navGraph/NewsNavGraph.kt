@@ -1,5 +1,6 @@
 package com.example.candiformation.navigation.navGraph
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -9,6 +10,7 @@ import com.example.candiformation.ui.screens.home.HomeScreen
 import com.example.candiformation.ui.screens.news.NewsScreen
 import com.example.candiformation.ui.screens.news.articles.ArticleScreen
 
+@ExperimentalMaterialApi
 fun NavGraphBuilder.newsNavGraph(
     navController: NavHostController,
     viewModel: SharedViewModel

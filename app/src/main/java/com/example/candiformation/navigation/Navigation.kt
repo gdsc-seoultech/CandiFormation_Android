@@ -2,6 +2,7 @@ package com.example.candiformation.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -10,6 +11,7 @@ import com.example.candiformation.navigation.navGraph.*
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.screens.splash.SplashScreen
 
+@ExperimentalMaterialApi
 @Composable
 fun SetupNavigation(
     navController: NavHostController,

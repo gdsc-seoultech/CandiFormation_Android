@@ -1,5 +1,7 @@
 package com.example.candiformation.ui.screens.news.articles
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -16,6 +18,7 @@ import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 
+@ExperimentalMaterialApi
 @Composable
 fun ArticleScreen(
     navController: NavHostController,
@@ -34,6 +37,7 @@ fun ArticleScreen(
     )
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun ArticleScreenContent(
     navController: NavHostController,
@@ -48,6 +52,7 @@ fun ArticleScreenContent(
         articleTitle(viewModel = viewModel)
         Spacer(modifier = Modifier.height(32.dp))
         articleContent(navController = navController, viewModel = viewModel)
+        ThumbnailBox(navController = navController, viewModel = viewModel)
 
         // 썸네일 보류
 //        ThumbnailBox(
