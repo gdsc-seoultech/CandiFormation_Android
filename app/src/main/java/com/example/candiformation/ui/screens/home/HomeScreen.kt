@@ -25,9 +25,13 @@ fun HomeScreen(
             navController = navController,
             viewModel = viewModel
         )
-        HomeWebView(
-            url = "https://velog.io/@suee97"
-        )
+
+        Text("서비스 준비중 : 주변 투표소 정보", fontSize = 20.sp)
+
+        // 웹뷰로 주변 투표소 보여줄 계획
+//        HomeWebView(
+//            url = "https://velog.io/@suee97"
+//        )
     }
 }
 

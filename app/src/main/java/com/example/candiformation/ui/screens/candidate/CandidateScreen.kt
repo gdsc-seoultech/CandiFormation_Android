@@ -80,7 +80,7 @@ fun CandidateScreen(
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
-                        name = "이재명",
+                        name = "심상정",
                         colorId = MinjudangColor,
                         imgSrc = R.drawable.lee,
                         logoSrc = R.drawable.minjudang_logo
@@ -88,7 +88,7 @@ fun CandidateScreen(
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
-                        name = "윤석열",
+                        name = "안철수",
                         colorId = GukkimColor,
                         imgSrc = R.drawable.yoon,
                         logoSrc = R.drawable.minjudang_logo
@@ -104,17 +104,9 @@ fun CandidateScreen(
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
-                        name = "이재명",
+                        name = "오준호",
                         colorId = MinjudangColor,
                         imgSrc = R.drawable.lee,
-                        logoSrc = R.drawable.minjudang_logo
-                    )
-                    CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
-                        name = "윤석열",
-                        colorId = GukkimColor,
-                        imgSrc = R.drawable.yoon,
                         logoSrc = R.drawable.minjudang_logo
                     )
                 }
@@ -123,54 +115,7 @@ fun CandidateScreen(
     )
 }
 
-@Composable
-fun CandidateCard(
-    navController: NavHostController,
-    viewModel: SharedViewModel,
-    name: String,
-    colorId: Color,
-    imgSrc: Int,
-    logoSrc: Int
-) {
-    Column(
-        modifier = Modifier
-            .width(160.dp)
-            .border(2.dp, Color.Magenta)
-            .background(colorId),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            modifier = Modifier
-                .padding(vertical = 4.dp),
-            painter = painterResource(id = logoSrc),
-            contentDescription = "${name} 소속당 로고"
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp)
-                .border(2.dp, Color.Black)
-                .background(Color.White)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Image(
-                    painter = painterResource(id = imgSrc),
-                    contentDescription = name
-                )
-                Text(
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    text = name,
-                    fontSize = 24.sp
-                )
-            }
-        }
-    }
-}
+
 
 @Composable
 fun CandidateScreenTopAppBar() {

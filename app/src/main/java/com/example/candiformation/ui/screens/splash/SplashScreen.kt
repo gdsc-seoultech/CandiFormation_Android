@@ -29,7 +29,7 @@ fun SplashScreen(
     systemUiController.setSystemBarsColor(color = Color.LightGray)
 
     LaunchedEffect(key1 = true) {
-        delay(300) // 테스트 거슬려서 줄여놨음
+        delay(1000) // 테스트 거슬려서 줄여놨음
         navController.navigate("home_root") {
             popUpTo("splash") { inclusive = true }
         }
@@ -73,7 +73,4 @@ fun SplashScreen(
             }
         }
     }
-
-
-
 }
