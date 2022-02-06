@@ -103,4 +103,8 @@ dependencies {
 
     // Coil Library
     implementation("io.coil-kt:coil-compose:1.4.0")
+
+    // Extra animation
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
 }
