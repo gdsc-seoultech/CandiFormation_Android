@@ -1,26 +1,21 @@
 package com.example.candiformation.ui.screens.setting.login
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.PermIdentity
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.candiformation.components.CustomTextField
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.ui.theme.VeryLightGrey
+import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.utils.Constants
 
 @Composable
@@ -38,8 +33,6 @@ fun LoginScreen(
                     .fillMaxWidth()
                     .padding(start = 40.dp, end = 40.dp)
             ) {
-                CustomTextField("ddd")
-
                 LoginScreenContent(
                     navController = navController,
                     viewModel = viewModel
@@ -62,6 +55,14 @@ fun LoginScreenContent(
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+
+        Spacer(modifier = Modifier.height(100.dp))
+        CustomTextField(
+            placeHolderMsg = "E-mail",
+            iconRes = Icons.Filled.Email
+        )
+
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -72,7 +73,7 @@ fun LoginScreenContent(
             },
             shape = CircleShape,
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = VeryLightGrey,
+                backgroundColor = VeryLightGrey_type1,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 cursorColor = Color.Black,

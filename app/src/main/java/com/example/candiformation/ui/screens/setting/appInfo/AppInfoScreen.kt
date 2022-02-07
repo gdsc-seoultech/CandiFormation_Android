@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.ui.theme.VeryLightGrey
+import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.utils.Constants
 
 @Composable
@@ -121,7 +121,7 @@ fun AppInfoScreenCard(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 9.dp)
             .clip(RoundedCornerShape(8.dp)),
-        backgroundColor = VeryLightGrey
+        backgroundColor = VeryLightGrey_type1
     ) {
         Column(
             modifier = Modifier

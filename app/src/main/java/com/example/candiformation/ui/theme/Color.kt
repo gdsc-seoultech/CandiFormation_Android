@@ -7,8 +7,12 @@ val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
-val VeryLightGrey = Color(0xFFE6E6E6)
+// 커스텀 색상
+val VeryLightGrey_type1 = Color(0xFFE6E6E6)
+val VeryLightGrey_type2 = Color(0xFFD6D6D6)
+val VeryLightGrey_type3 = Color(0xFFF7F7F7)
 
+// 정당 색상
 val MinjudangColor = Color(0xFF008CCD)
 val GukkimColor = Color(0xFFE61E2B)
 val JusticeColor = Color(0xFFFFCC00)
