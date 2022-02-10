@@ -17,7 +17,10 @@ fun NavGraphBuilder.infoNavGraph(
         route = "info_root"
     ) {
         composable(route = "info") {
-            InfoScreen()
+            InfoScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
     }
 }

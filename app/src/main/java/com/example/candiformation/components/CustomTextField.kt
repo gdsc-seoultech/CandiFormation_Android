@@ -12,7 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.ui.theme.VeryLightGrey_type2
@@ -21,13 +23,15 @@ import com.example.candiformation.ui.theme.VeryLightGrey_type3
 @Composable
 fun CustomTextField(
     placeHolderMsg: String,
-    iconRes: ImageVector
+    iconRes: ImageVector,
+    isVisible: Boolean
 ) {
     val textState = remember { mutableStateOf(TextFieldValue()) }
 
     Row(
         modifier = Modifier
-            .height(50.dp).width(270.dp)
+            .height(50.dp)
+            .width(270.dp)
             .border(1.dp, VeryLightGrey_type2, RoundedCornerShape(8.dp))
             .background(VeryLightGrey_type3),
         verticalAlignment = Alignment.CenterVertically
@@ -60,7 +64,8 @@ fun CustomTextField(
                 focusedLabelColor = Color.Black,
                 unfocusedLabelColor = Color.LightGray,
                 placeholderColor = VeryLightGrey_type2
-            )
+            ),
+            visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
     }
 }

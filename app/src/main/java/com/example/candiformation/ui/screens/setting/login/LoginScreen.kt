@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,10 +14,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.candiformation.components.CustomButton
 import com.example.candiformation.components.CustomTextField
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.utils.Constants
+import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
 
 @Composable
 fun LoginScreen(
@@ -31,8 +34,10 @@ fun LoginScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 40.dp, end = 40.dp)
+                    .padding(horizontal = CONTENT_INNER_PADDING),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Spacer(modifier = Modifier.height(180.dp))
                 LoginScreenContent(
                     navController = navController,
                     viewModel = viewModel
@@ -47,50 +52,38 @@ fun LoginScreenContent(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-    var idText by remember { mutableStateOf("") }
-    var pwdText by remember { mutableStateOf("") }
-
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-
-        Spacer(modifier = Modifier.height(100.dp))
         CustomTextField(
             placeHolderMsg = "E-mail",
-            iconRes = Icons.Filled.Email
+            iconRes = Icons.Filled.Email,
+            isVisible = true
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        CustomTextField(
+            placeHolderMsg = "Password",
+            iconRes = Icons.Filled.Lock,
+            isVisible = false
         )
 
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 4.dp),
-            value = idText,
-            onValueChange = {
-                idText = it
-            },
-            shape = CircleShape,
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = VeryLightGrey_type1,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                cursorColor = Color.Black,
-                focusedLabelColor = Color.Black,
-                unfocusedLabelColor = Color.LightGray
-            ),
-            singleLine = true,
-            maxLines = 1,
-            label = {
-                Text("이메일")
-            }
+        Spacer(modifier = Modifier.height(20.dp))
+
+        CustomButton(
+            viewModel = viewModel,
+            navController = navController,
+            title = "로그인",
+            onClick = {}
         )
-        Button(onClick = { /*TODO*/ }) {
-            Text("로그인")
-        }
+        Spacer(modifier = Modifier.height(20.dp))
+
         Button(onClick = {
-            navController.navigate("setting/login/signup")
+            navController.navigate("setting/login/signup") {
+                popUpTo("setting/login")
+            }
         }) {
             Text("회원가입")
         }
