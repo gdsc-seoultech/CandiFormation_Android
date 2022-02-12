@@ -1,6 +1,7 @@
 package com.example.candiformation.ui.screens.home
 
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -8,8 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberImagePainter
 import com.example.candiformation.ui.SharedViewModel
 
 
@@ -27,6 +30,8 @@ fun HomeScreen(
         )
 
         Text("서비스 준비중 : 주변 투표소 정보", fontSize = 20.sp)
+
+
 
         // 웹뷰로 주변 투표소 보여줄 계획
 //        HomeWebView(

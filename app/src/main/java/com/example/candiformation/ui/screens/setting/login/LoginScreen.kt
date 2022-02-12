@@ -35,7 +35,6 @@ fun LoginScreen(
                     .padding(horizontal = CONTENT_INNER_PADDING),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 LoginScreenContent(
                     navController = navController,
                     viewModel = viewModel
@@ -50,6 +49,9 @@ fun LoginScreenContent(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    var idText = remember { mutableStateOf("") }
+    var passwordText = remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -59,20 +61,24 @@ fun LoginScreenContent(
         CustomTextField(
             placeHolderMsg = "E-mail",
             iconRes = Icons.Filled.Email,
-            isVisible = true
+            isVisible = true,
+            text = idText
         )
         Spacer(modifier = Modifier.height(8.dp))
         CustomTextField(
             placeHolderMsg = "Password",
             iconRes = Icons.Filled.Lock,
-            isVisible = false
+            isVisible = false,
+            text = passwordText
         )
         Spacer(modifier = Modifier.height(20.dp))
         CustomButton(
             viewModel = viewModel,
             navController = navController,
             title = "로그인",
-            onClick = {}
+            onClick = {
+                viewModel.login(idText.value, passwordText.value)
+            }
         )
         Spacer(modifier = Modifier.height(8.dp))
         CustomButton(

@@ -79,11 +79,11 @@ fun ProfileCard(
                 .padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
             Text(
-                text = "Nicknameee",
+                text = viewModel.currentUser.value.nickname,
                 fontSize = CONTENT_INNER_FONT
             )
             Text(
-                text = "tempemail@gmail.com",
+                text = viewModel.currentUser.value.username,
                 fontSize = CONTENT_INNER_FONT
             )
             Text(

@@ -1,5 +1,6 @@
 package com.example.candiformation.ui.screens.news.articles
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberImagePainter
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 
@@ -26,7 +28,10 @@ fun ArticleScreen(
 ) {
     Scaffold(
         topBar = {
-            ArticleScreenTopAppBar(navController = navController, viewModel = viewModel)
+            ArticleScreenTopAppBar(
+                navController = navController,
+                viewModel = viewModel
+            )
         },
         content = {
             ArticleScreenContent(
@@ -53,6 +58,12 @@ fun ArticleScreenContent(
         Spacer(modifier = Modifier.height(32.dp))
         articleContent(navController = navController, viewModel = viewModel)
         ThumbnailBox(navController = navController, viewModel = viewModel)
+        Image(
+            painter = rememberImagePainter(viewModel.articleImage.value),
+            contentDescription = null,
+            modifier = Modifier.size(128.dp)
+        )
+
 
         // 썸네일 보류
 //        ThumbnailBox(

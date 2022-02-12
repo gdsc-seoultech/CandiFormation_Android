@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
+import com.example.candiformation.models.SignUpBody
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 
@@ -51,7 +52,12 @@ fun SignUpNicknameScreenContent(
                 Text("닉네임")
             }
         )
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = {
+            viewModel.signUpBody.value.nickname = nicknameText
+            viewModel.postLoginBody()
+            val initLoginBody = SignUpBody("", "", "", "0000")
+            viewModel.signUpBody.value = initLoginBody
+        }) {
             Text("회원가입")
         }
     }

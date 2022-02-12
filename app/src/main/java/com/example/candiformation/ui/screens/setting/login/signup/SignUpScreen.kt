@@ -62,6 +62,9 @@ fun SignUpScreenContent(
             }
         )
         Button(onClick = {
+            viewModel.signUpBody.value.username = emailText
+            viewModel.signUpBody.value.password = pwdText
+
             navController.navigate("setting/login/signup/auth") {
                 popUpTo(route = "setting/login/signup/auth") { inclusive = true }
             }
