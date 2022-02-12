@@ -14,6 +14,7 @@ import com.example.candiformation.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -129,12 +130,21 @@ class SharedViewModel @Inject constructor(
     // SignIn ===========================================================================
     fun login(
         idText: String,
-        passwordText: String
+        passwordText: String,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            currentUser.value.nickname = repository.signIn(LoginBody(idText, passwordText))
-            currentUser.value.username = idText
-            currentUser.value.password = passwordText
+            val result = repository.signIn(LoginBody(idText, passwordText))
+
+            if (result!!.second) {
+                currentUser.value.nickname = result!!.first
+                currentUser.value.username = idText
+                currentUser.value.password = passwordText
+                onSuccess()
+            } else {
+                onFailure()
+            }
         }
     }
     // ==================================================================================

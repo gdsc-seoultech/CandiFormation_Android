@@ -45,13 +45,13 @@ class CandiRepository @Inject constructor(
     // 로그인
     suspend fun signIn(
         loginBody: LoginBody
-    ): String {
+    ): Pair<String, Boolean> {
         val signInRes = try {
             articleApi.signIn(loginBody)
         } catch (e: Exception) {
             Log.d("suee97", "$e")
-            return e.toString()
+            return Pair(e.toString(), false)
         }
-        return signInRes.usernickname
+        return Pair(signInRes.usernickname, true)
     }
 }
