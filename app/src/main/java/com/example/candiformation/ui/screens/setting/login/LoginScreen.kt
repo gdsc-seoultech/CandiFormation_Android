@@ -1,7 +1,6 @@
 package com.example.candiformation.ui.screens.setting.login
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,7 +16,6 @@ import androidx.navigation.NavHostController
 import com.example.candiformation.components.CustomButton
 import com.example.candiformation.components.CustomTextField
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
 
@@ -37,7 +35,7 @@ fun LoginScreen(
                     .padding(horizontal = CONTENT_INNER_PADDING),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(180.dp))
+
                 LoginScreenContent(
                     navController = navController,
                     viewModel = viewModel
@@ -57,7 +55,7 @@ fun LoginScreenContent(
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
+        Spacer(modifier = Modifier.height(60.dp))
         CustomTextField(
             placeHolderMsg = "E-mail",
             iconRes = Icons.Filled.Email,
@@ -69,24 +67,24 @@ fun LoginScreenContent(
             iconRes = Icons.Filled.Lock,
             isVisible = false
         )
-
         Spacer(modifier = Modifier.height(20.dp))
-
         CustomButton(
             viewModel = viewModel,
             navController = navController,
             title = "로그인",
             onClick = {}
         )
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Button(onClick = {
-            navController.navigate("setting/login/signup") {
-                popUpTo("setting/login")
+        Spacer(modifier = Modifier.height(8.dp))
+        CustomButton(
+            viewModel = viewModel,
+            navController = navController,
+            title = "회원가입",
+            onClick = {
+                navController.navigate("setting/login/signup") {
+                    popUpTo("setting/login")
+                }
             }
-        }) {
-            Text("회원가입")
-        }
+        )
     }
 }
 

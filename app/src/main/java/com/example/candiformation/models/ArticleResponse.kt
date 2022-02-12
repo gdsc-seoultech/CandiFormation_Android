@@ -8,11 +8,11 @@ data class ArticleResponse(
 
     val id: Int,
     val title: String,
-    val content: String,
-    val post_time: String,
+    val thumnail: String,
     val news_agency: String,
+    val link: String,
     val like_num: Int,
     val comment_num: Int,
-    val link: String
+    val images: List<Int>
 
 )

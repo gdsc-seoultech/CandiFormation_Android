@@ -36,7 +36,7 @@ fun NewsArticleUnit(
             .clickable {
                 viewModel.articleId.value = articleResponse.id
                 viewModel.articleTitle.value = articleResponse.title
-                viewModel.articleContent.value = articleResponse.content
+                viewModel.articleContent.value = articleResponse.thumnail
                 viewModel.articleAgency.value = articleResponse.news_agency
                 viewModel.articleLink.value = articleResponse.link
 
@@ -62,7 +62,7 @@ fun NewsArticleUnit(
                     .padding(vertical = 12.dp, horizontal = 12.dp),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
-                text = articleResponse.content
+                text = articleResponse.thumnail
             )
             Row(
                 modifier = Modifier

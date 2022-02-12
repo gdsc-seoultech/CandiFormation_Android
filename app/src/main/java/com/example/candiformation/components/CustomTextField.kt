@@ -16,7 +16,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.ui.theme.VeryLightGrey_type2
 import com.example.candiformation.ui.theme.VeryLightGrey_type3
 

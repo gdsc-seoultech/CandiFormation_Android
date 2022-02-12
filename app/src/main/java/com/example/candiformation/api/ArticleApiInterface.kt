@@ -5,7 +5,7 @@ import retrofit2.http.GET
 
 interface ArticleApiInterface {
 
-    @GET("articles")
+    @GET("api/articles")
     suspend fun getArticle(): List<ArticleResponse> // Article list를 return
 
 }
