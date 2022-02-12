@@ -25,6 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             navController = rememberNavController()
+            sharedViewModel.loginRefresh()
 
 //            CandiformationTheme {
                 Scaffold(

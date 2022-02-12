@@ -12,8 +12,31 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class CandiRepository @Inject constructor(
-    private val articleApi: ArticleApiInterface
+    private val articleApi: ArticleApiInterface,
+    private val context: Context
 ) {
+
+    private val userSharedPref: SharedPreferences = context.getSharedPreferences(
+        "user",
+        Context.MODE_PRIVATE
+    )
+
+    private val tokenSharedPref: SharedPreferences = context.getSharedPreferences(
+        "token",
+        Context.MODE_PRIVATE
+    )
+
+    suspend fun loginRefresh(): SignUpBody {
+        val user = getSavedUser()
+
+        if (user.username != "") {
+            saveUser(user)
+            Log.d("suee97", "저장된 유저 정보 >> ${user.toString()}")
+            return user
+        }
+        Log.d("suee97", "저장된 유저 정보가 없거나 문제가 있음")
+        return user
+    }
 
     // 기사 불러오기
     suspend fun getArticleResponse(): Resource<List<ArticleResponse>> {
@@ -35,12 +58,11 @@ class CandiRepository @Inject constructor(
             Log.d("suee97", "$e")
             return false
         }
-        if(signUpRes.status == "200") {
+        if (signUpRes.status == "200") {
             Log.d("suee97", "sign up response status is 200")
             return true
         }
         return false
-
     }
 
     // 로그인
@@ -52,6 +74,19 @@ class CandiRepository @Inject constructor(
         } catch (e: Exception) {
             Log.d("suee97", "$e")
             return Pair(e.toString(), false)
+        }
+        tokenSharedPref.edit {
+            putString("TOKEN", signInRes.token)
+            putString("USERNAME", signInRes.username)
+            putString("NICKNAME", signInRes.usernickname)
+            commit()
+        }
+        userSharedPref.edit {
+            putString("UN", signInRes.username)
+            putString("PW", loginBody.password)
+            putString("NN", signInRes.usernickname)
+            putString("TL", "")
+            commit()
         }
         return Pair(signInRes.usernickname, true)
     }
@@ -67,15 +102,6 @@ class CandiRepository @Inject constructor(
         }
     }
 
-    private val userSharedPref: SharedPreferences = context.getSharedPreferences(
-        "user",
-        Context.MODE_PRIVATE
-    )
-
-    private val tokenSharedPref: SharedPreferences = context.getSharedPreferences(
-        "token",
-        Context.MODE_PRIVATE
-    )
 
     fun saveUser(signUpBody: SignUpBody) {
         userSharedPref.edit {
@@ -115,7 +141,7 @@ class CandiRepository @Inject constructor(
     }
 
     private fun deleteToken() {
-        tokenSharedPref.edit{
+        tokenSharedPref.edit {
             putString("TOKEN", "")
             putString("USERNAME", "")
             putString("NICKNAME", "")
@@ -129,6 +155,10 @@ class CandiRepository @Inject constructor(
             "Bearer " + tokenSharedPref.getString("TOKEN", null) ?: ""
         )
     )
+
+    fun getSavedToken(): Pair<String, String> {
+        return Pair("Authorization", "Bearer " + tokenSharedPref.getString("TOKEN", null) ?: "")
+    }
 
     fun logOut() {
         deleteUser()

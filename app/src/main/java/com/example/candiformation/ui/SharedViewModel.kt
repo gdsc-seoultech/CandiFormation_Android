@@ -8,10 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.candiformation.data.repositories.CandiRepository
-import com.example.candiformation.models.ArticleResponse
-import com.example.candiformation.models.LikeBody
-import com.example.candiformation.models.LoginBody
-import com.example.candiformation.models.SignUpBody
+import com.example.candiformation.models.*
 import com.example.candiformation.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -160,4 +157,13 @@ class SharedViewModel @Inject constructor(
         }
     }
 
+
+    // Login Refresh
+    fun loginRefresh() {
+        viewModelScope.launch {
+            currentUser.value.username = repository.loginRefresh().username
+            currentUser.value.nickname = repository.loginRefresh().nickname
+            currentUser.value.password = repository.loginRefresh().password
+        }
+    }
 }
