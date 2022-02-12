@@ -1,11 +1,11 @@
 package com.example.candiformation.data.repositories
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.content.edit
 import com.example.candiformation.api.ArticleApiInterface
-import com.example.candiformation.models.ArticleResponse
-import com.example.candiformation.models.LikeBody
-import com.example.candiformation.models.LoginBody
-import com.example.candiformation.models.SignUpBody
+import com.example.candiformation.models.*
 import com.example.candiformation.utils.Resource
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
@@ -61,9 +61,78 @@ class CandiRepository @Inject constructor(
         likeBody: LikeBody
     ) {
         val likeRes = try {
-            articleApi.like(likeBody)
+            articleApi.like(likeBody, getHeaderMap())
         } catch (e: Exception) {
             Log.d("suee97", "$e")
         }
     }
+
+    private val userSharedPref: SharedPreferences = context.getSharedPreferences(
+        "user",
+        Context.MODE_PRIVATE
+    )
+
+    private val tokenSharedPref: SharedPreferences = context.getSharedPreferences(
+        "token",
+        Context.MODE_PRIVATE
+    )
+
+    fun saveUser(signUpBody: SignUpBody) {
+        userSharedPref.edit {
+            putString("UN", signUpBody.username)
+            putString("PW", signUpBody.password)
+            putString("NN", signUpBody.nickname)
+            putString("TL", signUpBody.tel)
+            commit()
+        }
+        Log.d("login shared", signUpBody.toString())
+    }
+
+    private fun deleteUser() {
+        userSharedPref.edit {
+            putString("UN", "")
+            putString("PW", "")
+            putString("NN", "")
+            putString("TL", "")
+            commit()
+        }
+    }
+
+    fun getSavedUser() = SignUpBody(
+        userSharedPref.getString("UN", "") ?: "",
+        userSharedPref.getString("PW", "") ?: "",
+        userSharedPref.getString("NN", "") ?: "",
+        userSharedPref.getString("TL", "") ?: ""
+    )
+
+    fun saveToken(loginResponse: LoginResponse) {
+        tokenSharedPref.edit {
+            putString("TOKEN", loginResponse.token)
+            putString("USERNAME", loginResponse.username)
+            putString("NICKNAME", loginResponse.usernickname)
+            commit()
+        }
+    }
+
+    private fun deleteToken() {
+        tokenSharedPref.edit{
+            putString("TOKEN", "")
+            putString("USERNAME", "")
+            putString("NICKNAME", "")
+            commit()
+        }
+    }
+
+    fun getHeaderMap() = mapOf(
+        pair = Pair(
+            "Authorization",
+            "Bearer " + tokenSharedPref.getString("TOKEN", null) ?: ""
+        )
+    )
+
+    fun logOut() {
+        deleteUser()
+        deleteToken()
+    }
+
 }

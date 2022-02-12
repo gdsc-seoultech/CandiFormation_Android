@@ -1,10 +1,7 @@
 package com.example.candiformation.api
 
 import com.example.candiformation.models.*
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface ArticleApiInterface {
 
@@ -27,7 +24,8 @@ interface ArticleApiInterface {
     // 좋아요 버튼 클릭
     @PUT("api/articles")
     suspend fun like(
-        @Body body: LikeBody
+        @Body body: LikeBody,
+        @HeaderMap header: Map<String, String>
     ): LikeResponse
 
 }

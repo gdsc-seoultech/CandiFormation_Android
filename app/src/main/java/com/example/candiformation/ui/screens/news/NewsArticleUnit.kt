@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.candiformation.models.ArticleResponse
+import com.example.candiformation.models.LikeBody
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
 
@@ -71,6 +72,14 @@ fun NewsArticleUnit(
                     .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
             ) {
                 Icon(
+                    modifier = Modifier.clickable {
+                        viewModel.like(
+                            likeBody = LikeBody(
+                                article_id = viewModel.articleId.value,
+                                username = viewModel.currentUser.value.username
+                            )
+                        )
+                    },
                     imageVector = Icons.Filled.FavoriteBorder,
                     contentDescription = "FavoriteBorder Icon"
                 )

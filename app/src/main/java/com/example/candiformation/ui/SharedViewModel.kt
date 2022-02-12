@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.candiformation.data.repositories.CandiRepository
 import com.example.candiformation.models.ArticleResponse
+import com.example.candiformation.models.LikeBody
 import com.example.candiformation.models.LoginBody
 import com.example.candiformation.models.SignUpBody
 import com.example.candiformation.utils.Resource
@@ -151,6 +152,12 @@ class SharedViewModel @Inject constructor(
     // ==================================================================================
 
     // Like button click ================================================================
-
+    fun like(
+        likeBody: LikeBody
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.like(likeBody = likeBody)
+        }
+    }
 
 }
