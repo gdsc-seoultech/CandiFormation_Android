@@ -1,6 +1,7 @@
 package com.example.candiformation.ui
 
 import android.util.Log
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -148,4 +149,8 @@ class SharedViewModel @Inject constructor(
         }
     }
     // ==================================================================================
+
+    // Like button click ================================================================
+
+
 }

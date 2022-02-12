@@ -3,6 +3,7 @@ package com.example.candiformation.data.repositories
 import android.util.Log
 import com.example.candiformation.api.ArticleApiInterface
 import com.example.candiformation.models.ArticleResponse
+import com.example.candiformation.models.LikeBody
 import com.example.candiformation.models.LoginBody
 import com.example.candiformation.models.SignUpBody
 import com.example.candiformation.utils.Resource
@@ -53,5 +54,16 @@ class CandiRepository @Inject constructor(
             return Pair(e.toString(), false)
         }
         return Pair(signInRes.usernickname, true)
+    }
+
+    // 좋아요 클릭
+    suspend fun like(
+        likeBody: LikeBody
+    ) {
+        val likeRes = try {
+            articleApi.like(likeBody)
+        } catch (e: Exception) {
+            Log.d("suee97", "$e")
+        }
     }
 }

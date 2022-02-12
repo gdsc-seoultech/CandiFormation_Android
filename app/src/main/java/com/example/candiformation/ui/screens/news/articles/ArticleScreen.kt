@@ -58,11 +58,7 @@ fun ArticleScreenContent(
         Spacer(modifier = Modifier.height(32.dp))
         articleContent(navController = navController, viewModel = viewModel)
         ThumbnailBox(navController = navController, viewModel = viewModel)
-        Image(
-            painter = rememberImagePainter(viewModel.articleImage.value),
-            contentDescription = null,
-            modifier = Modifier.size(128.dp)
-        )
+
 
 
         // 썸네일 보류

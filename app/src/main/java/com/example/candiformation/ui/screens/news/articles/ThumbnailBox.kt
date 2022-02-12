@@ -36,5 +36,10 @@ fun ThumbnailBox(
         }
     ) {
         Text("링크 이동", fontSize = 30.sp)
+        Image(
+            painter = rememberImagePainter(viewModel.articleImage.value),
+            contentDescription = null,
+            modifier = Modifier.size(256.dp)
+        )
     }
 }

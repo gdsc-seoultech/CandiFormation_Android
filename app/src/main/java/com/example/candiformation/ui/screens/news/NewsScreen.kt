@@ -47,7 +47,6 @@ fun NewsScreenContent(
     navController: NavHostController
 ) {
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
     val getAllArticleData = viewModel.getArticleData.observeAsState()
 
     Column(

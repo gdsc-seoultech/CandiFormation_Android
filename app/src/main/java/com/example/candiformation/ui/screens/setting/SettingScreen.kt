@@ -4,7 +4,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.SupervisedUserCircle
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -69,34 +72,50 @@ fun ProfileCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .clip(RoundedCornerShape(8.dp)),
+            .padding(horizontal = 16.dp),
         backgroundColor = VeryLightGrey_type1
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .padding(all = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = viewModel.currentUser.value.nickname,
-                fontSize = CONTENT_INNER_FONT
+            Icon(
+                imageVector = Icons.Default.SupervisedUserCircle,
+                contentDescription = "Profile image",
+                tint = Color.Black,
+                modifier = Modifier.size(90.dp)
             )
-            Text(
-                text = viewModel.currentUser.value.username,
-                fontSize = CONTENT_INNER_FONT
-            )
-            Text(
+            Column(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(4.dp))
-                    .clickable {
-                        navController.navigate("setting/login") {
-                            popUpTo("setting/login") { inclusive = true }
-                        }
-                    },
-                text = "로그인",
-                fontSize = CONTENT_INNER_FONT
-            )
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
+            ) {
+                Text(
+                    text = viewModel.currentUser.value.nickname,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 16.sp
+                )
+                Text(
+                    text = viewModel.currentUser.value.username,
+                    fontWeight = FontWeight.ExtraLight,
+                    fontSize = 12.sp
+                )
+                Text(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(4.dp))
+                        .clickable {
+                            navController.navigate("setting/login") {
+                                popUpTo("setting/login") { inclusive = true }
+                            }
+                        },
+                    text = "로그인",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp
+                )
+            }
         }
     }
 }
