@@ -149,6 +149,7 @@ class CandiRepository @Inject constructor(
         }
     }
 
+    // 토큰
     fun getHeaderMap() = mapOf(
         pair = Pair(
             "Authorization",

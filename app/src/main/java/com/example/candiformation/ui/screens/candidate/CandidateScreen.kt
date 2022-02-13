@@ -58,21 +58,24 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "이재명",
                         party = "민주",
-                        imgSrc = R.drawable.lee
+                        imgSrc = R.drawable.lee,
+                        onClick = {}
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "윤석열",
                         party = "국민의힘",
-                        imgSrc = R.drawable.yoon
+                        imgSrc = R.drawable.yoon,
+                        onClick = {}
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "심상정",
                         party = "정의당",
-                        imgSrc = R.drawable.lee
+                        imgSrc = R.drawable.lee,
+                        onClick = {}
                     )
                 }
                 Row(
@@ -87,21 +90,24 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "안철수",
                         party = "국민의당",
-                        imgSrc = R.drawable.yoon
+                        imgSrc = R.drawable.yoon,
+                        onClick = {}
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "심상정",
                         party = "정의당",
-                        imgSrc = R.drawable.lee
+                        imgSrc = R.drawable.lee,
+                        onClick = {}
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "심상정",
                         party = "정의당",
-                        imgSrc = R.drawable.lee
+                        imgSrc = R.drawable.lee,
+                        onClick = {}
                     )
                 }
                 Row(
@@ -115,7 +121,8 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "오준호",
                         party = "숭구리당당숭당당",
-                        imgSrc = R.drawable.lee
+                        imgSrc = R.drawable.lee,
+                        onClick = {}
                     )
                 }
             }

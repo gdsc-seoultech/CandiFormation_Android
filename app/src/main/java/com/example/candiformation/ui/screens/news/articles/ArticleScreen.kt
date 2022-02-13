@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
+import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
 
 @ExperimentalMaterialApi
 @Composable
@@ -51,23 +52,13 @@ fun ArticleScreenContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 32.dp, end = 32.dp, top = 20.dp),
+            .padding(start = CONTENT_INNER_PADDING, end = CONTENT_INNER_PADDING, top = 36.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         articleTitle(viewModel = viewModel)
         Spacer(modifier = Modifier.height(32.dp))
         articleContent(navController = navController, viewModel = viewModel)
         ThumbnailBox(navController = navController, viewModel = viewModel)
-
-
-
-        // 썸네일 보류
-//        ThumbnailBox(
-//            navController = navController,
-//            viewModel = viewModel,
-//            url = ""
-//        )
-
 
     }
 }
@@ -125,11 +116,7 @@ fun ArticleScreenTopAppBar(
         },
         navigationIcon = {
             IconButton(
-                onClick = {
-                    navController.navigate("news") {
-                        popUpTo("news") { inclusive = true }
-                    }
-                }) {
+                onClick = { navController.popBackStack() }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Arrow Back"

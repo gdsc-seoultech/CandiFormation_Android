@@ -21,7 +21,7 @@ import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
 
 @Composable
-fun ProfileCard(
+fun LoggedInProfileCard(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {

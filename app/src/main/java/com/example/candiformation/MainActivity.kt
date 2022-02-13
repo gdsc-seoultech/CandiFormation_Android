@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             navController = rememberNavController()
-            sharedViewModel.loginRefresh()
+            sharedViewModel.loginRefresh() // 저장된 로그인 정보 불러오기
 
 //            CandiformationTheme {
                 Scaffold(

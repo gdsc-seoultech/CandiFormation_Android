@@ -73,6 +73,7 @@ fun NewsArticleUnit(
             ) {
                 Icon(
                     modifier = Modifier.clickable {
+                        viewModel.articleId.value = articleResponse.id
                         viewModel.like(
                             likeBody = LikeBody(
                                 article_id = viewModel.articleId.value,

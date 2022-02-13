@@ -3,6 +3,7 @@ package com.example.candiformation.ui.screens.candidate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -23,9 +24,12 @@ fun CandidateCard(
     viewModel: SharedViewModel,
     name: String,
     party: String,
-    imgSrc: Int
+    imgSrc: Int,
+    onClick: () -> Unit
 ) {
-    Card(modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)) {
+    Card(modifier = Modifier
+        .padding(top = 4.dp, bottom = 4.dp)
+        .clickable { onClick() }) {
         Column(
             modifier = Modifier
                 .width(120.dp)
@@ -61,5 +65,4 @@ fun CandidateCard(
             }
         }
     }
-
 }

@@ -25,8 +25,6 @@ fun NewsScreen(
     viewModel: SharedViewModel,
     navController: NavHostController
 ) {
-    val scaffoldState = rememberScaffoldState()
-
     Scaffold(
         topBar = {
             NewsScreenTopAppBar()
@@ -36,8 +34,7 @@ fun NewsScreen(
                 navController = navController,
                 viewModel = viewModel
             )
-        },
-        scaffoldState = scaffoldState
+        }
     )
 }
 
@@ -58,12 +55,14 @@ fun NewsScreenContent(
             Log.d("suee97", "getArticleData is null or empty")
         } else {
             LazyColumn() {
-                items(getAllArticleData.value!!.size) {index ->
-                    NewsArticleUnit(
-                        navController = navController,
-                        viewModel = viewModel,
-                        articleResponse = getAllArticleData.value!![index]
-                    )
+                getAllArticleData.value?.let {
+                    items(it.size) { index ->
+                        NewsArticleUnit(
+                            navController = navController,
+                            viewModel = viewModel,
+                            articleResponse = getAllArticleData.value!![index]
+                        )
+                    }
                 }
             }
         }

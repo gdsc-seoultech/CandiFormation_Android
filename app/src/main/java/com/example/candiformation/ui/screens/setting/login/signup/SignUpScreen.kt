@@ -89,9 +89,7 @@ fun SignUpScreenTopAppBar(
         },
         navigationIcon = {
             IconButton(onClick = {
-                navController.navigate("setting/login") {
-                    popUpTo("setting/login") { inclusive = true }
-                }
+                navController.popBackStack()
             }) {
                 Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Arrow Back")
             }

@@ -2,6 +2,7 @@ package com.example.candiformation.ui
 
 import android.util.Log
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,6 +23,17 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor(
     private val repository: CandiRepository
 ) : ViewModel() {
+
+    // 로그인 정보 ======================================================================
+    var currentUser = mutableStateOf(
+        SignUpBody(
+            username = "",
+            password = "",
+            nickname = "",
+            tel = "0000"
+        )
+    )
+    // ==================================================================================
 
     // Bottom bar shown
     var bottomBarShown = mutableStateOf(false)
@@ -104,26 +116,6 @@ class SharedViewModel @Inject constructor(
         }
     }
     // ==================================================================================
-
-
-    // Current User Info ================================================================
-    var tempUser = mutableStateOf(
-        LoginBody(
-            username = "",
-            password = ""
-        )
-    )
-
-    var currentUser = mutableStateOf(
-        SignUpBody(
-            username = "",
-            password = "",
-            nickname = "",
-            tel = "0000"
-        )
-    )
-    // ==================================================================================
-
 
 
     // SignIn ===========================================================================

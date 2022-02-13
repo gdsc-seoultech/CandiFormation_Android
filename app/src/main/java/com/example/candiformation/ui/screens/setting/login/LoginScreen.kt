@@ -79,10 +79,14 @@ fun LoginScreenContent(
             viewModel = viewModel,
             navController = navController,
             title = "로그인",
+            widthDp = 100.dp,
             onClick = {
                 if (idText.value.isBlank() || passwordText.value.isBlank()) {
 
                 } else {
+                    navController.navigate("setting") {
+                        popUpTo("setting") { inclusive = true }
+                    }
                     viewModel.login(
                         idText = idText.value,
                         passwordText = passwordText.value,
@@ -97,6 +101,7 @@ fun LoginScreenContent(
             viewModel = viewModel,
             navController = navController,
             title = "회원가입",
+            widthDp = 100.dp,
             onClick = {
                 navController.navigate("setting/login/signup") {
                     popUpTo("setting/login")
@@ -121,9 +126,7 @@ fun LoginScreenTopAppBar(
         },
         navigationIcon = {
             IconButton(onClick = {
-                navController.navigate("setting") {
-                    popUpTo("setting") { inclusive = true }
-                }
+                navController.popBackStack()
             }) {
                 Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Arrow Back")
             }

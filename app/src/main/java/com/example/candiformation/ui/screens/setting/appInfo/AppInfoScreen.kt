@@ -56,9 +56,7 @@ fun AppInfoScreenTopAppBar(
         },
         navigationIcon = {
             IconButton(onClick = {
-                navController.navigate("setting") {
-                    popUpTo("setting") { inclusive = true }
-                }
+                navController.popBackStack()
             }) {
                 Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Arrow Back")
             }
