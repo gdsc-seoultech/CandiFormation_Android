@@ -163,6 +163,10 @@ class CandiRepository @Inject constructor(
     fun logOut() {
         deleteUser()
         deleteToken()
+        Log.d("suee97", "로그아웃 버튼 클릭")
+        Log.d("suee97", "로그아웃 이후 정보")
+        Log.d("suee97", getSavedUser().toString())
+        Log.d("suee97", getSavedToken().toString())
     }
 
 }

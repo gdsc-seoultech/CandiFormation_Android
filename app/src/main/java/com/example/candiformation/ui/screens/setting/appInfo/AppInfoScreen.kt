@@ -32,6 +32,7 @@ fun AppInfoScreen(
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
+                Spacer(modifier = Modifier.height(16.dp))
                 AppInfoTopLogo()
                 Spacer(modifier = Modifier.height(16.dp))
                 AppInfoScreenContent()
@@ -106,7 +107,7 @@ fun AppInfoTopLogo() {
 @Composable
 fun AppInfoScreenContent() {
     AppInfoScreenCard(title = "App version", description = "1.0")
-    AppInfoScreenCard(title = "Developers", description = "위성률\n신유빈\n오승언\n양용수")
+    AppInfoScreenCard(title = "Developers", description = "Wee S.Y.\nShin Y.B.\nOh S.U.\nYang Y.S.")
     AppInfoScreenCard(title = "Contacts / Bug Report", description = "atn1su@gmail.com")
     AppInfoScreenCard(title = "From.", description = "Google Solution Challenge")
 }
@@ -131,12 +132,12 @@ fun AppInfoScreenCard(
             Text(
                 text = title,
                 fontWeight = FontWeight.ExtraBold,
-                fontSize = 16.sp
+                fontSize = 17.sp
             )
             Text(
                 text = description,
                 fontWeight = FontWeight.Bold,
-                fontSize = 12.sp
+                fontSize = 13.sp
             )
         }
     }

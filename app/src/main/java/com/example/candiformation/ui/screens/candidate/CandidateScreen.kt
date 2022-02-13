@@ -38,7 +38,7 @@ fun CandidateScreen(
         },
         content = {
             val scrollState = rememberScrollState()
-            LaunchedEffect(Unit) { scrollState.animateScrollTo(0) }
+
 
             Column(
                 modifier = Modifier
@@ -49,7 +49,7 @@ fun CandidateScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 4.dp),
+                        .padding(vertical = 8.dp),
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -58,33 +58,27 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "이재명",
                         party = "민주",
-                        colorId = MinjudangColor,
-                        imgSrc = R.drawable.lee,
-                        logoSrc = R.drawable.minjudang_logo
+                        imgSrc = R.drawable.lee
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "윤석열",
                         party = "국민의힘",
-                        colorId = GukkimColor,
-                        imgSrc = R.drawable.yoon,
-                        logoSrc = R.drawable.minjudang_logo
+                        imgSrc = R.drawable.yoon
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "심상정",
                         party = "정의당",
-                        colorId = MinjudangColor,
-                        imgSrc = R.drawable.lee,
-                        logoSrc = R.drawable.minjudang_logo
+                        imgSrc = R.drawable.lee
                     )
                 }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp),
+                        .padding(bottom = 8.dp),
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -93,34 +87,27 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "안철수",
                         party = "국민의당",
-                        colorId = GukkimColor,
-                        imgSrc = R.drawable.yoon,
-                        logoSrc = R.drawable.minjudang_logo
+                        imgSrc = R.drawable.yoon
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "심상정",
                         party = "정의당",
-                        colorId = MinjudangColor,
-                        imgSrc = R.drawable.lee,
-                        logoSrc = R.drawable.minjudang_logo
+                        imgSrc = R.drawable.lee
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "심상정",
                         party = "정의당",
-                        colorId = MinjudangColor,
-                        imgSrc = R.drawable.lee,
-                        logoSrc = R.drawable.minjudang_logo
+                        imgSrc = R.drawable.lee
                     )
                 }
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 80.dp),
-                    horizontalArrangement = Arrangement.SpaceAround,
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CandidateCard(
@@ -128,9 +115,7 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "오준호",
                         party = "숭구리당당숭당당",
-                        colorId = MinjudangColor,
-                        imgSrc = R.drawable.lee,
-                        logoSrc = R.drawable.minjudang_logo
+                        imgSrc = R.drawable.lee
                     )
                 }
             }

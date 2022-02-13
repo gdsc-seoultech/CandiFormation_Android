@@ -64,61 +64,7 @@ fun SettingTopAppBar() {
     )
 }
 
-@Composable
-fun ProfileCard(
-    navController: NavHostController,
-    viewModel: SharedViewModel
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        backgroundColor = VeryLightGrey_type1
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.SupervisedUserCircle,
-                contentDescription = "Profile image",
-                tint = Color.Black,
-                modifier = Modifier.size(90.dp)
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
-            ) {
-                Text(
-                    text = viewModel.currentUser.value.nickname,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 16.sp
-                )
-                Text(
-                    text = viewModel.currentUser.value.username,
-                    fontWeight = FontWeight.ExtraLight,
-                    fontSize = 12.sp
-                )
-                Text(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(4.dp))
-                        .clickable {
-                            navController.navigate("setting/login") {
-                                popUpTo("setting/login") { inclusive = true }
-                            }
-                        },
-                    text = "로그인",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 12.sp
-                )
-            }
-        }
-    }
-}
+
 
 @Composable
 fun SettingList(

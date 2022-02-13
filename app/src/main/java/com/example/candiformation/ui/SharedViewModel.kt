@@ -148,6 +148,7 @@ class SharedViewModel @Inject constructor(
     }
     // ==================================================================================
 
+
     // Like button click ================================================================
     fun like(
         likeBody: LikeBody
@@ -156,14 +157,31 @@ class SharedViewModel @Inject constructor(
             repository.like(likeBody = likeBody)
         }
     }
+    // ==================================================================================
 
 
-    // Login Refresh
+    // Login Refresh ====================================================================
     fun loginRefresh() {
         viewModelScope.launch {
-            currentUser.value.username = repository.loginRefresh().username
-            currentUser.value.nickname = repository.loginRefresh().nickname
-            currentUser.value.password = repository.loginRefresh().password
+            val tempUser = repository.loginRefresh()
+
+            currentUser.value.username = tempUser.username
+            currentUser.value.nickname = tempUser.nickname
+            currentUser.value.password = tempUser.password
         }
     }
+    // ==================================================================================
+
+
+    // Logout ===========================================================================
+    fun logOut() {
+        repository.logOut()
+        currentUser.value = SignUpBody(
+            username = "",
+            password = "",
+            nickname = "",
+            tel = "0000"
+        )
+    }
+    // ==================================================================================
 }

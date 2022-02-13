@@ -23,9 +23,7 @@ fun CandidateCard(
     viewModel: SharedViewModel,
     name: String,
     party: String,
-    colorId: Color,
-    imgSrc: Int,
-    logoSrc: Int
+    imgSrc: Int
 ) {
     Card(modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)) {
         Column(
