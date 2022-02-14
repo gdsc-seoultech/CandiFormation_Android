@@ -40,13 +40,8 @@ class CandiRepository @Inject constructor(
 
 
     // 전체 뉴스기사 정보 불러오기 ================================================================
-    suspend fun getArticleResponse(): Resource<List<ArticleResponse>> {
-        val articleRes = try {
-            articleApi.getArticle()
-        } catch (e: Exception) {
-            return Resource.Error("Error : ${e.localizedMessage}")
-        }
-        return Resource.Success(articleRes)
+    suspend fun getArticleResponse(): List<ArticleResponse> {
+        return articleApi.getArticle()
     }
     // ==========================================================================================
 

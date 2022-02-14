@@ -1,20 +1,14 @@
 package com.example.candiformation.ui
 
 import android.util.Log
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.candiformation.data.repositories.CandiRepository
 import com.example.candiformation.models.*
-import com.example.candiformation.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -39,21 +33,30 @@ class SharedViewModel @Inject constructor(
     var bottomBarShown = mutableStateOf(false)
 
 
-    // Article ======================================================================
-    var isArticleLoading = mutableStateOf(false)
-    private var _getArticleData: MutableLiveData<List<ArticleResponse>> =
-        MutableLiveData<List<ArticleResponse>>()
-    var getArticleData: LiveData<List<ArticleResponse>> = _getArticleData
+    // Article Response ===================================================================
+//    var isArticleLoading = mutableStateOf(false)
+//    private var _getArticleData: MutableLiveData<List<ArticleResponse>> =
+//        MutableLiveData<List<ArticleResponse>>()
+//    var getArticleData: LiveData<List<ArticleResponse>> = _getArticleData
+//
+//    suspend fun getArticleData(): Resource<List<ArticleResponse>> {
+//        val result = repository.getArticleResponse()
+//        if (result is Resource.Success) {
+//            isArticleLoading.value = true
+//            _getArticleData.value = result.data!!
+//        }
+//
+//        return result
+//    }
 
-    suspend fun getArticleData(): Resource<List<ArticleResponse>> {
-        val result = repository.getArticleResponse()
-        if (result is Resource.Success) {
-            isArticleLoading.value = true
-            _getArticleData.value = result.data!!
+    var articleDataList = mutableStateOf(listOf<ArticleResponse>())
+
+    fun getArticle() {
+        viewModelScope.launch {
+            articleDataList.value = repository.getArticleResponse()
         }
-
-        return result
     }
+
     // ===============================================================================
 
 

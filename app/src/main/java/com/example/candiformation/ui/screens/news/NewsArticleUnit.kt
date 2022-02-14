@@ -29,8 +29,7 @@ fun NewsArticleUnit(
     navController: NavHostController,
     viewModel: SharedViewModel,
     articleResponse: ArticleResponse,
-    likeIconClicked: () -> Unit,
-    likeCount: Int
+    likeIconClicked: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -87,7 +86,7 @@ fun NewsArticleUnit(
                 Spacer(modifier = Modifier.width(2.dp))
                 Text(
                     modifier = Modifier.padding(4.dp),
-                    text = likeCount.toString()
+                    text = articleResponse.like_num.toString()
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Box() {
