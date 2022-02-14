@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.ExperimentalMaterialApi
@@ -35,11 +36,13 @@ fun ThumbnailBox(
             uriHandler.openUri(viewModel.articleLink.value)
         }
     ) {
-        Text("링크 이동", fontSize = 30.sp)
-        Image(
-            painter = rememberImagePainter(viewModel.articleImage.value),
-            contentDescription = null,
-            modifier = Modifier.size(256.dp)
-        )
+        Column {
+            Text("링크 이동", fontSize = 30.sp)
+            Image(
+                painter = rememberImagePainter(viewModel.articleImage.value),
+                contentDescription = null,
+                modifier = Modifier.size(256.dp)
+            )
+        }
     }
 }

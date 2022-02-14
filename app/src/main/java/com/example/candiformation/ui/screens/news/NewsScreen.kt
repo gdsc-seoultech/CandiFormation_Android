@@ -10,10 +10,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.candiformation.models.LikeBody
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.utils.Constants
@@ -44,7 +44,7 @@ fun NewsScreenContent(
     navController: NavHostController
 ) {
     val scope = rememberCoroutineScope()
-    val getAllArticleData = viewModel.getArticleData.observeAsState()
+    val allArticleData = viewModel.getArticleData.observeAsState()
 
     Column(
         modifier = Modifier
@@ -55,12 +55,22 @@ fun NewsScreenContent(
             Log.d("suee97", "getArticleData is null or empty")
         } else {
             LazyColumn() {
-                getAllArticleData.value?.let {
+                allArticleData.value?.let {
                     items(it.size) { index ->
                         NewsArticleUnit(
                             navController = navController,
                             viewModel = viewModel,
-                            articleResponse = getAllArticleData.value!![index]
+                            articleResponse = allArticleData.value!![index],
+                            likeIconClicked = {
+                                viewModel.articleId.value = allArticleData.value!![index].id
+                                viewModel.like(
+                                    likeBody = LikeBody(
+                                        article_id = viewModel.articleId.value,
+                                        username = viewModel.currentUser.value.username
+                                    )
+                                )
+                            },
+                            likeCount = allArticleData.value!![index].like_num
                         )
                     }
                 }

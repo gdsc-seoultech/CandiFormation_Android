@@ -1,6 +1,7 @@
 package com.example.candiformation.ui.screens.news
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -26,7 +28,9 @@ import com.example.candiformation.ui.theme.VeryLightGrey_type1
 fun NewsArticleUnit(
     navController: NavHostController,
     viewModel: SharedViewModel,
-    articleResponse: ArticleResponse
+    articleResponse: ArticleResponse,
+    likeIconClicked: () -> Unit,
+    likeCount: Int
 ) {
     Box(
         modifier = Modifier
@@ -43,9 +47,7 @@ fun NewsArticleUnit(
                 viewModel.articleImage.value = articleResponse.images
 
                 navController.navigate("news/articles/selectedArticle") {
-                    popUpTo("news/articles") {
-                        inclusive = true
-                    }
+                    popUpTo("news/articles") { inclusive = true }
                 }
             }
     ) {
@@ -69,36 +71,40 @@ fun NewsArticleUnit(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+                    .padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
             ) {
-                Icon(
-                    modifier = Modifier.clickable {
-                        viewModel.articleId.value = articleResponse.id
-                        viewModel.like(
-                            likeBody = LikeBody(
-                                article_id = viewModel.articleId.value,
-                                username = viewModel.currentUser.value.username
-                            )
-                        )
-                    },
-                    imageVector = Icons.Filled.FavoriteBorder,
-                    contentDescription = "FavoriteBorder Icon"
-                )
-                Spacer(modifier = Modifier.width(4.dp))
+                Box(
+                    modifier = Modifier
+                        .border(2.dp, Color.Magenta)
+                        .clickable { likeIconClicked() }
+                ) {
+                    Icon(
+                        modifier = Modifier.padding(4.dp),
+                        imageVector = Icons.Filled.FavoriteBorder,
+                        contentDescription = "FavoriteBorder Icon"
+                    )
+                }
+                Spacer(modifier = Modifier.width(2.dp))
                 Text(
-                    text = articleResponse.like_num.toString()
+                    modifier = Modifier.padding(4.dp),
+                    text = likeCount.toString()
                 )
-                Spacer(modifier = Modifier.width(16.dp))
-                Icon(
-                    imageVector = Icons.Filled.ChatBubbleOutline,
-                    contentDescription = "ChatBubbleOutline Icon"
-                )
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(8.dp))
+                Box() {
+                    Icon(
+                        modifier = Modifier.padding(4.dp),
+                        imageVector = Icons.Filled.ChatBubbleOutline,
+                        contentDescription = "ChatBubbleOutline Icon"
+                    )
+                }
+                Spacer(modifier = Modifier.width(2.dp))
                 Text(
+                    modifier = Modifier.padding(4.dp),
                     text = articleResponse.comment_num.toString()
                 )
                 Spacer(modifier = Modifier.width(40.dp))
                 Text(
+                    modifier = Modifier.padding(4.dp),
                     text = articleResponse.news_agency,
                     fontStyle = FontStyle.Italic
                 )

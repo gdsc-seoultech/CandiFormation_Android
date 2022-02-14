@@ -38,7 +38,8 @@ class CandiRepository @Inject constructor(
         return user
     }
 
-    // 기사 불러오기
+
+    // 전체 뉴스기사 정보 불러오기 ================================================================
     suspend fun getArticleResponse(): Resource<List<ArticleResponse>> {
         val articleRes = try {
             articleApi.getArticle()
@@ -47,6 +48,8 @@ class CandiRepository @Inject constructor(
         }
         return Resource.Success(articleRes)
     }
+    // ==========================================================================================
+
 
     // 회원가입
     suspend fun signUp(
@@ -65,7 +68,8 @@ class CandiRepository @Inject constructor(
         return false
     }
 
-    // 로그인
+
+    // 로그인 ====================================================================================
     suspend fun signIn(
         loginBody: LoginBody
     ): Pair<String, Boolean> {
@@ -90,6 +94,8 @@ class CandiRepository @Inject constructor(
         }
         return Pair(signInRes.usernickname, true)
     }
+    // ========================================================================================
+
 
     // 좋아요 클릭
     suspend fun like(
@@ -161,6 +167,8 @@ class CandiRepository @Inject constructor(
         return Pair("Authorization", "Bearer " + tokenSharedPref.getString("TOKEN", null) ?: "")
     }
 
+
+    // 로그아웃 ====================================================================================
     fun logOut() {
         deleteUser()
         deleteToken()
@@ -169,5 +177,7 @@ class CandiRepository @Inject constructor(
         Log.d("suee97", getSavedUser().toString())
         Log.d("suee97", getSavedToken().toString())
     }
+    // ============================================================================================
+
 
 }
