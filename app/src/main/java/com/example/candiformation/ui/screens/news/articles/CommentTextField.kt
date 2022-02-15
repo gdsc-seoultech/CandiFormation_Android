@@ -1,9 +1,6 @@
 package com.example.candiformation.ui.screens.news.articles
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -20,17 +17,24 @@ import com.example.candiformation.ui.SharedViewModel
 @Composable
 fun CommentTextField(
 ) {
-    Row(modifier = Modifier.fillMaxWidth()) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
         Box(
-            modifier = Modifier.width(40.dp)
+
         ) {
             Text(
                 text = "익명"
             )
         }
-        TextField(value = "", onValueChange = {})
+        TextField(
+            value = "",
+            onValueChange = {}
+        )
         Box(
-            modifier = Modifier.width(40.dp)
+
         ) {
             Icon(imageVector = Icons.Filled.ArrowRight, contentDescription = "")
         }

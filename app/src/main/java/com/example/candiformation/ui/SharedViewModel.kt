@@ -189,7 +189,7 @@ class SharedViewModel @Inject constructor(
         CommentBody(
             articleId = (-1),
             nickname = "",
-            isSecret = false,
+            isSecret = true,
             content = "",
             createdAt = ""
         )

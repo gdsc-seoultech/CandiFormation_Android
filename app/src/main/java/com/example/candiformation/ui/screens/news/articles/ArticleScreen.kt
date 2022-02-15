@@ -47,7 +47,7 @@ fun ArticleScreenContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = CONTENT_INNER_PADDING, end = CONTENT_INNER_PADDING, top = 24.dp)
+            .padding(start = CONTENT_INNER_PADDING, end = CONTENT_INNER_PADDING, top = 12.dp)
     ) {
         articleTitle(viewModel = viewModel)
         ArticleTime()
@@ -57,6 +57,7 @@ fun ArticleScreenContent(
         ThumbnailBox(navController = navController, viewModel = viewModel)
         LikeAndComments(viewModel = viewModel, likeIconClicked = {})
         Divider()
+        CommentTextField()
     }
 }
 

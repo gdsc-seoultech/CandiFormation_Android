@@ -39,9 +39,7 @@ fun ThumbnailBox(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                uriHandler.openUri(viewModel.articleLink.value)
-            }
+            .clickable { uriHandler.openUri(viewModel.articleLink.value) }
             .clip(RoundedCornerShape(4.dp))
             .border(1.dp, VeryLightGrey_type1, RoundedCornerShape(4.dp))
             .background(VeryLightGrey_type1)
@@ -49,7 +47,7 @@ fun ThumbnailBox(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(CONTENT_INNER_PADDING)
+                .padding(horizontal = CONTENT_INNER_PADDING, vertical = 4.dp)
         ) {
             Row(
                 modifier = Modifier

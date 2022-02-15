@@ -1,6 +1,7 @@
 package com.example.candiformation.ui.screens.setting.appInfo
 
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -32,7 +33,6 @@ fun AppInfoScreen(
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Spacer(modifier = Modifier.height(16.dp))
                 AppInfoTopLogo()
                 Spacer(modifier = Modifier.height(16.dp))
                 AppInfoScreenContent()
@@ -56,7 +56,9 @@ fun AppInfoScreenTopAppBar(
         },
         navigationIcon = {
             IconButton(onClick = {
-                navController.popBackStack()
+                navController.navigate("setting") {
+                    popUpTo("setting") { inclusive = true }
+                }
             }) {
                 Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Arrow Back")
             }
@@ -71,7 +73,8 @@ fun AppInfoTopLogo() {
             .fillMaxWidth()
             .padding(Constants.CONTENT_INNER_PADDING)
     ) {
-        Row(modifier = Modifier.fillMaxWidth())
+        Row(modifier = Modifier.fillMaxWidth()
+            .padding(top = 10.dp))
         {
             Icon(
                 imageVector = Icons.Default.HowToVote,
@@ -105,7 +108,7 @@ fun AppInfoTopLogo() {
 @Composable
 fun AppInfoScreenContent() {
     AppInfoScreenCard(title = "App version", description = "1.0")
-    AppInfoScreenCard(title = "Developers", description = "Wee S.Y.\nShin Y.B.\nOh S.U.\nYang Y.S.")
+    AppInfoScreenCard(title = "Developers", description = "Wee SR\nShin YB\nOh SU\nYang YS")
     AppInfoScreenCard(title = "Contacts / Bug Report", description = "atn1su@gmail.com")
     AppInfoScreenCard(title = "From.", description = "Google Solution Challenge")
 }
@@ -119,8 +122,9 @@ fun AppInfoScreenCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 9.dp)
-            .clip(RoundedCornerShape(8.dp)),
-        backgroundColor = VeryLightGrey_type1
+            .border(width = 1.dp, color = Color.LightGray),
+        backgroundColor = Color.White,
+        elevation = 4.dp
     ) {
         Column(
             modifier = Modifier
@@ -130,12 +134,12 @@ fun AppInfoScreenCard(
             Text(
                 text = title,
                 fontWeight = FontWeight.ExtraBold,
-                fontSize = 17.sp
+                fontSize = 16.sp
             )
             Text(
                 text = description,
                 fontWeight = FontWeight.Bold,
-                fontSize = 13.sp
+                fontSize = 12.sp
             )
         }
     }
