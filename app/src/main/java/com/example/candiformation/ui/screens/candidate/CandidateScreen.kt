@@ -1,13 +1,13 @@
 package com.example.candiformation.ui.screens.candidate
 
+import android.app.assist.AssistContent
+import android.widget.AutoCompleteTextView
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Card
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.material.SnackbarDefaults.backgroundColor
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
@@ -57,7 +58,7 @@ fun CandidateScreen(
                         navController = navController,
                         viewModel = viewModel,
                         name = "이재명",
-                        party = "민주",
+                        party = "민주당",
                         imgSrc = R.drawable.lee,
                         onClick = {}
                     )
@@ -74,7 +75,7 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "심상정",
                         party = "정의당",
-                        imgSrc = R.drawable.lee,
+                        imgSrc = R.drawable.shim,
                         onClick = {}
                     )
                 }
@@ -90,23 +91,23 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "안철수",
                         party = "국민의당",
-                        imgSrc = R.drawable.yoon,
+                        imgSrc = R.drawable.ann,
                         onClick = {}
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
-                        name = "심상정",
-                        party = "정의당",
-                        imgSrc = R.drawable.lee,
+                        name = "오준호",
+                        party = "기본소득당",
+                        imgSrc = R.drawable.oh_5,
                         onClick = {}
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
-                        name = "심상정",
-                        party = "정의당",
-                        imgSrc = R.drawable.lee,
+                        name = "허경영",
+                        party = "국가혁명당",
+                        imgSrc = R.drawable.hu_6,
                         onClick = {}
                     )
                 }
@@ -119,12 +120,83 @@ fun CandidateScreen(
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
-                        name = "오준호",
-                        party = "숭구리당당숭당당",
-                        imgSrc = R.drawable.lee,
+                        name = "이백윤",
+                        party = "노동당",
+                        imgSrc = R.drawable.lee_7,
+                        onClick = {}
+                    )
+                    CandidateCard(
+                        navController = navController,
+                        viewModel = viewModel,
+                        name = "옥은호",
+                        party = "새누리당",
+                        imgSrc = R.drawable.ook_8,
+                        onClick = {}
+                    )
+                    CandidateCard(
+                        navController = navController,
+                        viewModel = viewModel,
+                        name = "김동연",
+                        party = "새로운물결",
+                        imgSrc = R.drawable.kim_9,
                         onClick = {}
                     )
                 }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    CandidateCard(
+                        navController = navController,
+                        viewModel = viewModel,
+                        name = "김경재",
+                        party = "신자유민주연합",
+                        imgSrc = R.drawable.kim_10,
+                        onClick = {}
+                    )
+                    CandidateCard(
+                        navController = navController,
+                        viewModel = viewModel,
+                        name = "조원진",
+                        party = "우리공화당",
+                        imgSrc = R.drawable.choi_11,
+                        onClick = {}
+                    )
+                    CandidateCard(
+                        navController = navController,
+                        viewModel = viewModel,
+                        name = "김재연",
+                        party = "진보당",
+                        imgSrc = R.drawable.kim_12,
+                        onClick = {}
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    CandidateCard(
+                        navController = navController,
+                        viewModel = viewModel,
+                        name = "이경희",
+                        party = "통일한국당",
+                        imgSrc = R.drawable.lee_13,
+                        onClick = {}
+                    )
+                    CandidateCard(
+                        navController = navController,
+                        viewModel = viewModel,
+                        name = "김민찬",
+                        party = "한류연합당",
+                        imgSrc = R.drawable.kim_14,
+                        onClick = {}
+                    )
+                }
+                Spacer(modifier = Modifier.size(60.dp))
             }
         }
     )
