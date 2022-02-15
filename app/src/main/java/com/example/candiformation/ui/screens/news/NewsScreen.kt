@@ -68,13 +68,13 @@ fun NewsScreenContent(
                         articleResponse = viewModel.articleDataList.value[index],
                         likeIconClicked = {
                             viewModel.articleId.value = viewModel.articleDataList.value[index].id
+                            // post
                             viewModel.like(
                                 likeBody = LikeBody(
                                     article_id = viewModel.articleId.value,
                                     username = viewModel.currentUser.value.username
                                 )
                             )
-                            viewModel.getArticle()
                         }
                     )
                 }

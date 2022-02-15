@@ -1,22 +1,17 @@
 package com.example.candiformation.ui.screens.news.articles
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.IosShare
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.rememberImagePainter
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
@@ -52,14 +47,16 @@ fun ArticleScreenContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = CONTENT_INNER_PADDING, end = CONTENT_INNER_PADDING, top = 36.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(start = CONTENT_INNER_PADDING, end = CONTENT_INNER_PADDING, top = 24.dp)
     ) {
         articleTitle(viewModel = viewModel)
-        Spacer(modifier = Modifier.height(32.dp))
+        ArticleTime()
+        Spacer(modifier = Modifier.height(24.dp))
         articleContent(navController = navController, viewModel = viewModel)
+        Spacer(modifier = Modifier.height(12.dp))
         ThumbnailBox(navController = navController, viewModel = viewModel)
-
+        LikeAndComments(viewModel = viewModel, likeIconClicked = {})
+        Divider()
     }
 }
 
@@ -134,4 +131,19 @@ fun ArticleScreenTopAppBar(
             }
         }
     )
+}
+
+@Composable
+fun ArticleTime() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.End
+    ) {
+        Text(
+            text = "01/11 17:35",
+            fontSize = 14.sp,
+            color = Color.LightGray
+        )
+    }
 }

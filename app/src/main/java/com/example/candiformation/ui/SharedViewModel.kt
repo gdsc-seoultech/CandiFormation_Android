@@ -67,6 +67,8 @@ class SharedViewModel @Inject constructor(
     var articleAgency = mutableStateOf("")
     var articleLink = mutableStateOf("")
     var articleImage = mutableStateOf("")
+    var articleLikeNum = mutableStateOf(0)
+    var articleCommentNum = mutableStateOf(0)
     // ===============================================================================
 
 
@@ -150,6 +152,7 @@ class SharedViewModel @Inject constructor(
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.like(likeBody = likeBody)
+            articleDataList.value = repository.getArticleResponse()
         }
     }
     // ==================================================================================
@@ -179,4 +182,22 @@ class SharedViewModel @Inject constructor(
         )
     }
     // ==================================================================================
+
+
+    // 댓글쓰기 =============================================================================
+    var currentCommentBody = mutableStateOf(
+        CommentBody(
+            articleId = (-1),
+            nickname = "",
+            isSecret = false,
+            content = "",
+            createdAt = ""
+        )
+    )
+
+    fun writeComment(commentBody: CommentBody) {
+        viewModelScope.launch {
+            repository.writeComment(commentBody)
+        }
+    }
 }

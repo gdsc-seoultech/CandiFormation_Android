@@ -28,4 +28,10 @@ interface ArticleApiInterface {
         @HeaderMap header: Map<String, String>
     ): LikeResponse
 
+    // 댓글 달기
+    @POST("api/comments")
+    suspend fun writeComment(
+        @Body body: CommentBody,
+        @HeaderMap header: Map<String, String>
+    ): LikeResponse
 }

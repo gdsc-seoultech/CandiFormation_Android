@@ -44,6 +44,8 @@ fun NewsArticleUnit(
                 viewModel.articleAgency.value = articleResponse.news_agency
                 viewModel.articleLink.value = articleResponse.link
                 viewModel.articleImage.value = articleResponse.images
+                viewModel.articleLikeNum.value = articleResponse.like_num
+                viewModel.articleCommentNum.value = articleResponse.comment_num
 
                 navController.navigate("news/articles/selectedArticle") {
                     popUpTo("news/articles") { inclusive = true }

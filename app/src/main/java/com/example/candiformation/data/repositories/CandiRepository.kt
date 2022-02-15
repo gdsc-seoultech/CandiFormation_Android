@@ -175,4 +175,12 @@ class CandiRepository @Inject constructor(
     // ============================================================================================
 
 
+    // 댓글쓰기 ==================================================================================
+    suspend fun writeComment(commentBody: CommentBody) {
+        val commentRes = try {
+            articleApi.writeComment(commentBody, getHeaderMap())
+        } catch (e: Exception) {
+            Log.d("suee97", "$e")
+        }
+    }
 }
