@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.core.content.edit
 import com.example.candiformation.api.ArticleApiInterface
 import com.example.candiformation.models.*
-import com.example.candiformation.utils.Resource
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
@@ -32,6 +31,7 @@ class CandiRepository @Inject constructor(
         if (user.username != "") {
             saveUser(user)
             Log.d("suee97", "저장된 유저 정보 >> ${user.toString()}")
+            Log.d("suee97", "토큰 정보 >> ${getSavedToken().toString()}")
             return user
         }
         Log.d("suee97", "저장된 유저 정보가 없거나 문제가 있음")
@@ -167,10 +167,6 @@ class CandiRepository @Inject constructor(
     fun logOut() {
         deleteUser()
         deleteToken()
-        Log.d("suee97", "로그아웃 버튼 클릭")
-        Log.d("suee97", "로그아웃 이후 정보")
-        Log.d("suee97", getSavedUser().toString())
-        Log.d("suee97", getSavedToken().toString())
     }
     // ============================================================================================
 
@@ -180,7 +176,15 @@ class CandiRepository @Inject constructor(
         val commentRes = try {
             articleApi.writeComment(commentBody, getHeaderMap())
         } catch (e: Exception) {
-            Log.d("suee97", "$e")
+            Log.d("suee97", "write comment error >>> $e")
         }
     }
+    // ==========================================================================================
+
+
+    // 유저가 좋아한 기사 id 불러오기 ==============================================================
+    suspend fun whatArticleLiked(username: String): WhatArticleLikeResponse {
+        return articleApi.whatArticleLiked(username, getHeaderMap())
+    }
+    // ========================================================================================
 }

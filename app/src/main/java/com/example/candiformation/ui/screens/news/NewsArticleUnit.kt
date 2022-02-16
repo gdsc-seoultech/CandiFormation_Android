@@ -9,6 +9,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChatBubbleOutline
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,7 +30,8 @@ fun NewsArticleUnit(
     navController: NavHostController,
     viewModel: SharedViewModel,
     articleResponse: ArticleResponse,
-    likeIconClicked: () -> Unit
+    likeIconClicked: () -> Unit,
+    isLiked: Boolean
 ) {
     Box(
         modifier = Modifier
@@ -76,14 +78,23 @@ fun NewsArticleUnit(
             ) {
                 Box(
                     modifier = Modifier
-                        .border(2.dp, Color.Magenta)
                         .clickable { likeIconClicked() }
                 ) {
-                    Icon(
-                        modifier = Modifier.padding(4.dp),
-                        imageVector = Icons.Filled.FavoriteBorder,
-                        contentDescription = "FavoriteBorder Icon"
-                    )
+                    if(isLiked) {
+                        Icon(
+                            modifier = Modifier.padding(4.dp),
+                            imageVector = Icons.Filled.Favorite,
+                            contentDescription = "Favorite Icon",
+                            tint = Color.Red
+                        )
+                    } else {
+                        Icon(
+                            modifier = Modifier.padding(4.dp),
+                            imageVector = Icons.Filled.FavoriteBorder,
+                            contentDescription = "Favorite Icon",
+                            tint = Color.Red
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.width(2.dp))
                 Text(

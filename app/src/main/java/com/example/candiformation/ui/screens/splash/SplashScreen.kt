@@ -33,7 +33,7 @@ fun SplashScreen(
         navController.navigate("home_root") {
             popUpTo("splash") { inclusive = true }
         }
-        viewModel.bottomBarShown.value = true
+
     }
     Surface(
         modifier = Modifier

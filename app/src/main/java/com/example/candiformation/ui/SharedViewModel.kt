@@ -200,4 +200,16 @@ class SharedViewModel @Inject constructor(
             repository.writeComment(commentBody)
         }
     }
+    // ===================================================================================
+
+
+    // 유저가 좋아한 기사 id 불러오기 ==============================================================
+    var whatArticleLiked = mutableStateOf(WhatArticleLikeResponse(listOf(), ""))
+
+    fun whatArticleLiked(username: String) {
+        viewModelScope.launch {
+            whatArticleLiked.value = repository.whatArticleLiked(username)
+        }
+    }
+    // =======================================================================================
 }

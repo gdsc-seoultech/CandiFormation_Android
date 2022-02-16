@@ -1,6 +1,7 @@
 package com.example.candiformation.api
 
 import com.example.candiformation.models.*
+import retrofit2.Call
 import retrofit2.http.*
 
 interface ArticleApiInterface {
@@ -34,4 +35,11 @@ interface ArticleApiInterface {
         @Body body: CommentBody,
         @HeaderMap header: Map<String, String>
     ): LikeResponse
+
+    // 유저가 좋아한 기사가 뭘까요?
+    @GET("api/articles/likes/{username}")
+    suspend fun whatArticleLiked(
+        @Path("username") username: String,
+        @HeaderMap header: Map<String, String>
+    ): WhatArticleLikeResponse
 }

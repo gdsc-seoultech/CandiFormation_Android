@@ -34,6 +34,9 @@ fun ArticleScreen(
                 navController = navController,
                 viewModel = viewModel
             )
+        },
+        bottomBar = {
+            CommentTextField(viewModel = viewModel)
         }
     )
 }
@@ -55,9 +58,10 @@ fun ArticleScreenContent(
         articleContent(navController = navController, viewModel = viewModel)
         Spacer(modifier = Modifier.height(12.dp))
         ThumbnailBox(navController = navController, viewModel = viewModel)
+        Spacer(modifier = Modifier.height(8.dp))
         LikeAndComments(viewModel = viewModel, likeIconClicked = {})
+        Spacer(modifier = Modifier.height(8.dp))
         Divider()
-        CommentTextField()
     }
 }
 
