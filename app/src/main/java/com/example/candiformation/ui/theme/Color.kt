@@ -17,3 +17,6 @@ val MinjudangColor = Color(0xFF008CCD)
 val GukkimColor = Color(0xFFE61E2B)
 val JusticeColor = Color(0xFFFFCC00)
 val Gukmin = Color(0xFFEA5504)
+
+val SemiRed = Color(0xFFFF4646)
+val TimeColor = Color(0xFF969696)

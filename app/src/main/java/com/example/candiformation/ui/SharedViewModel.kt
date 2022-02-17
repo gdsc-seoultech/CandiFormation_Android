@@ -36,21 +36,6 @@ class SharedViewModel @Inject constructor(
 
 
     // Article Response ===================================================================
-//    var isArticleLoading = mutableStateOf(false)
-//    private var _getArticleData: MutableLiveData<List<ArticleResponse>> =
-//        MutableLiveData<List<ArticleResponse>>()
-//    var getArticleData: LiveData<List<ArticleResponse>> = _getArticleData
-//
-//    suspend fun getArticleData(): Resource<List<ArticleResponse>> {
-//        val result = repository.getArticleResponse()
-//        if (result is Resource.Success) {
-//            isArticleLoading.value = true
-//            _getArticleData.value = result.data!!
-//        }
-//
-//        return result
-//    }
-
     var articleDataList = mutableStateOf(listOf<ArticleResponse>())
 
     fun getArticle() {

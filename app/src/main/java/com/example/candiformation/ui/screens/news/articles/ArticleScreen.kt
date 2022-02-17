@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.IosShare
@@ -96,6 +97,7 @@ fun ArticleScreenContent(
         Divider()
         Spacer(modifier = Modifier.height(8.dp))
         CommentView(commentList = commentList)
+        Spacer(modifier = Modifier.height(48.dp))
     }
 }
 
