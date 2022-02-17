@@ -42,4 +42,10 @@ interface ArticleApiInterface {
         @Path("username") username: String,
         @HeaderMap header: Map<String, String>
     ): WhatArticleLikeResponse
+
+    // 선택된 기사에 대한 모든 댓글 가져오기
+    @GET("api/comments/{articleId}")
+    suspend fun getSelectedArticleComments(
+        @Path("articleId") articleId: Int
+    ): List<CommentResponse>
 }

@@ -1,20 +1,27 @@
 package com.example.candiformation.ui.screens.news.articles
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.IosShare
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.candiformation.models.CommentResponse
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
+import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @Composable
@@ -22,6 +29,12 @@ fun ArticleScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    var commentList by remember { mutableStateOf(listOf<CommentResponse>()) }
+    viewModel.getSelectedArticleComments(viewModel.articleId.value)
+    commentList = viewModel.selectedArticleComments.value
+    var comment by remember { mutableStateOf("") }
+
+
     Scaffold(
         topBar = {
             ArticleScreenTopAppBar(
@@ -32,11 +45,26 @@ fun ArticleScreen(
         content = {
             ArticleScreenContent(
                 navController = navController,
-                viewModel = viewModel
+                viewModel = viewModel,
+                commentList = commentList
             )
         },
         bottomBar = {
-            CommentTextField(viewModel = viewModel)
+            CommentTextField(
+                viewModel = viewModel,
+                comment = comment,
+                onClick = {
+                    if (comment.isNotBlank()) {
+                        viewModel.currentCommentBody.value.articleId = viewModel.articleId.value
+                        viewModel.currentCommentBody.value.content = comment
+                        viewModel.currentCommentBody.value.nickname =
+                            viewModel.currentUser.value.nickname
+                        viewModel.writeComment(viewModel.currentCommentBody.value) // POST
+                        comment = ""
+                    }
+                },
+                onValueChanged = { comment = it }
+            )
         }
     )
 }
@@ -45,12 +73,16 @@ fun ArticleScreen(
 @Composable
 fun ArticleScreenContent(
     navController: NavHostController,
-    viewModel: SharedViewModel
+    viewModel: SharedViewModel,
+    commentList: List<CommentResponse>
 ) {
+    var scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = CONTENT_INNER_PADDING, end = CONTENT_INNER_PADDING, top = 12.dp)
+            .verticalScroll(scrollState)
     ) {
         articleTitle(viewModel = viewModel)
         ArticleTime()
@@ -62,6 +94,8 @@ fun ArticleScreenContent(
         LikeAndComments(viewModel = viewModel, likeIconClicked = {})
         Spacer(modifier = Modifier.height(8.dp))
         Divider()
+        Spacer(modifier = Modifier.height(8.dp))
+        CommentView(commentList = commentList)
     }
 }
 

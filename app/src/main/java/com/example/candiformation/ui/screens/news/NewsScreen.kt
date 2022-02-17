@@ -27,9 +27,9 @@ fun NewsScreen(
     viewModel: SharedViewModel,
     navController: NavHostController
 ) {
-
-    viewModel.getArticle() // 화면 들어왔을 때 모든 기사 정보 불러오기
-
+    LaunchedEffect(true) {
+        viewModel.getArticle() // 화면 들어왔을 때 모든 기사 정보 불러오기
+    }
 
     Scaffold(
         topBar = {
@@ -49,10 +49,11 @@ fun NewsScreenContent(
     viewModel: SharedViewModel,
     navController: NavHostController
 ) {
-
-    viewModel.whatArticleLiked(viewModel.currentUser.value.username)
-    Log.d("suee97", "what article liked >>> " +
-            "${viewModel.whatArticleLiked.value}")
+    if(viewModel.currentUser.value.nickname != "") {
+        viewModel.whatArticleLiked(viewModel.currentUser.value.username)
+        Log.d("suee97", "what article liked >>> " +
+                "${viewModel.whatArticleLiked.value}")
+    }
 
 //    val allArticleData = viewModel.getArticleData.observeAsState()
 

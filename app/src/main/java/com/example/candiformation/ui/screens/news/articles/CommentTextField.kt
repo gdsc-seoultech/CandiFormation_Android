@@ -9,11 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,12 +18,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.candiformation.ui.SharedViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun CommentTextField(
-    viewModel: SharedViewModel
+    viewModel: SharedViewModel,
+    comment: String,
+    onValueChanged: (String) -> Unit,
+    onClick: () -> Unit
 ) {
-    var comment by remember { mutableStateOf("") }
+
     var isSecret by remember { mutableStateOf(true) }
 
     Row(
@@ -52,18 +52,13 @@ fun CommentTextField(
         TextField(
             value = comment,
             onValueChange = {
-                comment = it
+                onValueChanged(it)
             }
         )
         Box(
             modifier = Modifier
                 .clickable {
-                    viewModel.currentCommentBody.value.articleId = viewModel.articleId.value
-                    viewModel.currentCommentBody.value.content = comment
-                    viewModel.currentCommentBody.value.nickname =
-                        viewModel.currentUser.value.nickname
-                    viewModel.writeComment(viewModel.currentCommentBody.value)
-                    comment = ""
+                    onClick()
                 }
                 .border(2.dp, Color.Magenta)
         ) {

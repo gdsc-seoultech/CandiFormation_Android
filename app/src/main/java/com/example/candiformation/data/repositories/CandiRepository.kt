@@ -187,4 +187,11 @@ class CandiRepository @Inject constructor(
         return articleApi.whatArticleLiked(username, getHeaderMap())
     }
     // ========================================================================================
+
+
+    // 선택된 기사에 대한 모든 댓글 가져오기 =========================================================
+    suspend fun getSelectedArticleComments(articleId: Int): List<CommentResponse> {
+        return articleApi.getSelectedArticleComments(articleId)
+    }
+    // ========================================================================================
 }
