@@ -1,7 +1,9 @@
 package com.example.candiformation.ui.screens.news.articles
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -18,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.candiformation.models.CommentResponse
+import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.ui.theme.VeryLightGrey_type3
 import com.example.candiformation.ui.theme.TimeColor
@@ -25,18 +28,23 @@ import com.example.candiformation.ui.theme.SemiRed
 
 @Composable
 fun CommentView(
-    commentList: List<CommentResponse>
+    commentList: List<CommentResponse>,
+    viewModel: SharedViewModel
 ) {
     commentList.forEach { item ->
-        CommentViewUnit(item)
+        CommentViewUnit(item, viewModel = viewModel)
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
 @Composable
 fun CommentViewUnit(
-    commentResponse: CommentResponse
+    commentResponse: CommentResponse,
+    viewModel: SharedViewModel
 ) {
+    var intRangeDate = IntRange(5, 9)
+    var intRangeTime = IntRange(11, 15)
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,8 +73,13 @@ fun CommentViewUnit(
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "   02.17 18:49",
+                        text = "${commentResponse.createdAt.slice(intRangeDate)} ${
+                            commentResponse.createdAt.slice(
+                                intRangeTime
+                            )
+                        }",
                         color = TimeColor
                     )
                 }
@@ -80,9 +93,20 @@ fun CommentViewUnit(
                         contentDescription = "",
                         tint = SemiRed
                     )
-                    Text(" 17 ")
+                    Text(" ${commentResponse.likeNum} ")
                     Icon(
-                        modifier = Modifier.size(22.dp),
+                        modifier = Modifier
+                            .size(22.dp)
+                            .clickable {
+                                if(commentResponse.nickname == viewModel.currentUser.value.nickname) {
+                                    Log.d("suee97", "삭제된 코멘트 아이디 >>> ${commentResponse.id}")
+                                    viewModel.deleteComment(
+                                        commentResponse.id
+                                    )
+                                } else {
+                                    Log.d("suee97", "작성자가 아니라 삭제를 못해요~")
+                                }
+                            },
                         imageVector = Icons.Filled.Clear,
                         contentDescription = "",
                         tint = Color.LightGray

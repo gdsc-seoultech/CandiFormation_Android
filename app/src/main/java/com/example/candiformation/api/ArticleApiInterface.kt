@@ -48,4 +48,12 @@ interface ArticleApiInterface {
     suspend fun getSelectedArticleComments(
         @Path("articleId") articleId: Int
     ): List<CommentResponse>
+
+    @DELETE("api/comments/{nickname}/{articleId}/{commentId}")
+    suspend fun deleteComment(
+        @Path("nickname") nickname: String,
+        @Path("articleId") articleId: Int,
+        @Path("commentId") commentId: Int,
+        @HeaderMap header: Map<String, String>
+    )
 }

@@ -107,4 +107,8 @@ dependencies {
     // Extra animation
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
+    // accompanist
+    implementation "com.google.accompanist:accompanist-insets:0.24.2-alpha"
+    implementation "com.google.accompanist:accompanist-insets-ui:0.24.2-alpha"
+
 }

@@ -212,4 +212,13 @@ class SharedViewModel @Inject constructor(
         }
     }
     // ========================================================================================
+
+
+    // 코멘트 삭제 ============================================================================
+    fun deleteComment(commentId: Int) {
+        viewModelScope.launch {
+            repository.deleteComment(currentUser.value.nickname, articleId.value, commentId)
+            selectedArticleComments.value = repository.getSelectedArticleComments(articleId.value)
+        }
+    }
 }

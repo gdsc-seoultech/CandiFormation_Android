@@ -7,7 +7,7 @@ object Constants {
 
     // rest api url
     // 서버좀 그만바꿨으면. ㅎ
-    const val ARTICLE_BASE_URL = "http://15.164.170.191:80/"
+    const val ARTICLE_BASE_URL = "http://15.164.226.99:80/"
 
     // font
     val SEMI_TITLE_SIZE = 24.sp

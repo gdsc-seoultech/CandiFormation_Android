@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.candiformation.navigation.SetupNavigation
@@ -20,14 +22,16 @@ class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
     private val sharedViewModel: SharedViewModel by viewModels()
 
+
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
+
             navController = rememberNavController()
             sharedViewModel.loginRefresh() // 저장된 로그인 정보 불러오기
 
-//            CandiformationTheme {
                 Scaffold(
                     content = {
                         SetupNavigation(
@@ -42,7 +46,6 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 )
-//            }
         }
     }
 }

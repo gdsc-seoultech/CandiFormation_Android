@@ -1,17 +1,14 @@
 package com.example.candiformation.ui.screens.news.articles
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.IosShare
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -22,7 +19,6 @@ import com.example.candiformation.models.CommentResponse
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
-import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @Composable
@@ -34,7 +30,7 @@ fun ArticleScreen(
     viewModel.getSelectedArticleComments(viewModel.articleId.value)
     commentList = viewModel.selectedArticleComments.value
     var comment by remember { mutableStateOf("") }
-
+    var isSecret by remember { mutableStateOf(true) }
 
     Scaffold(
         topBar = {
@@ -54,17 +50,22 @@ fun ArticleScreen(
             CommentTextField(
                 viewModel = viewModel,
                 comment = comment,
-                onClick = {
+                sendReq = {
                     if (comment.isNotBlank()) {
                         viewModel.currentCommentBody.value.articleId = viewModel.articleId.value
                         viewModel.currentCommentBody.value.content = comment
                         viewModel.currentCommentBody.value.nickname =
                             viewModel.currentUser.value.nickname
+                        viewModel.currentCommentBody.value.isSecret = isSecret
                         viewModel.writeComment(viewModel.currentCommentBody.value) // POST
                         comment = ""
                     }
                 },
-                onValueChanged = { comment = it }
+                onValueChanged = { comment = it },
+                isSecret = isSecret,
+                anonymousClicked = {
+                    isSecret = !isSecret
+                }
             )
         }
     )
@@ -96,7 +97,7 @@ fun ArticleScreenContent(
         Spacer(modifier = Modifier.height(8.dp))
         Divider()
         Spacer(modifier = Modifier.height(8.dp))
-        CommentView(commentList = commentList)
+        CommentView(commentList = commentList, viewModel = viewModel)
         Spacer(modifier = Modifier.height(48.dp))
     }
 }

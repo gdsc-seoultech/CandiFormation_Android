@@ -1,71 +1,94 @@
 package com.example.candiformation.ui.screens.news.articles
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
+import androidx.compose.material.icons.filled.TrendingFlat
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.candiformation.ui.SharedViewModel
-import kotlinx.coroutines.launch
+import com.example.candiformation.ui.theme.VeryLightGrey_type2
+import com.google.accompanist.insets.navigationBarsHeight
+import com.google.accompanist.insets.statusBarsHeight
 
 @Composable
 fun CommentTextField(
     viewModel: SharedViewModel,
     comment: String,
     onValueChanged: (String) -> Unit,
-    onClick: () -> Unit
+    sendReq: () -> Unit,
+    isSecret: Boolean,
+    anonymousClicked: () -> Unit
 ) {
-
-    var isSecret by remember { mutableStateOf(true) }
-
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceAround,
+            .fillMaxWidth()
+            .height(52.dp)
+            .background(Color.White)
+            .border(1.dp, Color.Black),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        Box(
-            modifier = Modifier
-                .clickable { }
-                .border(2.dp, Color.Magenta)
+        Row(modifier = Modifier
+            .fillMaxHeight()
+            .weight(1f)
+            .clickable { anonymousClicked() }
+            .border(1.dp, Color.Black),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
             Text(
                 modifier = Modifier.padding(12.dp),
                 text = "익명",
                 fontSize = 16.sp,
-                fontWeight = FontWeight.ExtraBold
+                fontWeight = FontWeight.ExtraBold,
+                color = if(isSecret) Color.Black else Color.LightGray
             )
         }
+
         TextField(
-            value = comment,
-            onValueChange = {
-                onValueChanged(it)
-            }
-        )
-        Box(
             modifier = Modifier
-                .clickable {
-                    onClick()
-                }
-                .border(2.dp, Color.Magenta)
+                .fillMaxHeight()
+                .weight(4f),
+            value = comment,
+            onValueChange = { onValueChanged(it) },
+            placeholder = { Text("댓글을 입력해주세요") },
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.White,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                cursorColor = Color.Black,
+                focusedLabelColor = Color.Black,
+                unfocusedLabelColor = Color.LightGray,
+                placeholderColor = VeryLightGrey_type2
+            ),
+        )
+
+        Row(modifier = Modifier
+            .fillMaxHeight()
+            .weight(1f)
+            .clickable { sendReq() }
+            .border(1.dp, Color.Black),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
             Icon(
-                modifier = Modifier.padding(12.dp),
-                imageVector = Icons.Filled.ArrowRight,
-                contentDescription = ""
+                modifier = Modifier.size(28.dp),
+                imageVector = Icons.Filled.TrendingFlat,
+                contentDescription = "TrendingFlat"
             )
         }
     }

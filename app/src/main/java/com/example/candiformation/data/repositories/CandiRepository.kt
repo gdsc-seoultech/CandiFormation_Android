@@ -194,4 +194,14 @@ class CandiRepository @Inject constructor(
         return articleApi.getSelectedArticleComments(articleId)
     }
     // ========================================================================================
+
+
+    // 코멘트 삭제
+    suspend fun deleteComment(
+        nickname: String,
+        articleId: Int,
+        commentId: Int
+    ) {
+        articleApi.deleteComment(nickname, articleId, commentId, getHeaderMap())
+    }
 }
