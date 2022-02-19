@@ -6,7 +6,6 @@ import androidx.compose.ui.unit.sp
 object Constants {
 
     // rest api url
-    // 서버좀 그만바꿨으면. ㅎ
     const val ARTICLE_BASE_URL = "http://15.164.226.99:80/"
 
     // font

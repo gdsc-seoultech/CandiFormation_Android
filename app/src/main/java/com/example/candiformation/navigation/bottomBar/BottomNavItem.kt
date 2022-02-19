@@ -10,28 +10,28 @@ sealed class BottomNavItem(
     val route: List<String>
 ) {
     object InfoBottomIcon: BottomNavItem(
-        label = "정보",
+        label = "Information",
         icon = Icons.Filled.Info,
         route = listOf("info")
     )
     object CandidateBottomIcon: BottomNavItem(
-        label = "후보",
+        label = "Candidates",
         icon = Icons.Filled.Attribution,
         route = listOf("candidate")
     )
     object HomeBottomIcon: BottomNavItem(
-        label = "홈",
+        label = "Home",
         icon = Icons.Filled.Home,
         route = listOf("home")
     )
     object NewsBottomIcon: BottomNavItem(
-        label = "뉴스",
+        label = "Articles",
         icon = Icons.Filled.Article,
         route = listOf("news", "news/articles/selectedArticle")
     )
     object SettingBottomIcon: BottomNavItem(
-        label = "설정",
-        icon = Icons.Filled.Settings,
+        label = "Profile",
+        icon = Icons.Filled.AccountCircle,
         route = listOf(
             "setting",
             "setting/appInfo",

@@ -153,7 +153,6 @@ class SharedViewModel @Inject constructor(
     fun loginRefresh() {
         viewModelScope.launch {
             val tempUser = repository.loginRefresh()
-
             currentUser.value.username = tempUser.username
             currentUser.value.nickname = tempUser.nickname
             currentUser.value.password = tempUser.password

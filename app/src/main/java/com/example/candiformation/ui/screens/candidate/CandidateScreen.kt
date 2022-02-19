@@ -40,7 +40,7 @@ import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
 @Composable
 fun CandidateScreen(
     navController: NavHostController,
-    viewModel: SharedViewModel,
+    viewModel: SharedViewModel
 ) {
     var dialogState by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
@@ -62,8 +62,6 @@ fun CandidateScreen(
                     .padding(horizontal = CONTENT_INNER_PADDING)
                     .verticalScroll(state = scrollState)
             ) {
-
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -7,7 +7,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.candiformation.ui.SharedViewModel
@@ -36,7 +38,13 @@ fun BottomNavBar(
             items.forEach { item ->
                 BottomNavigationItem(
                     icon = { Icon(imageVector = item.icon, contentDescription = item.label) },
-                    label = { Text(text = item.label) },
+                    label = {
+                        Text(
+                            text = item.label,
+                            fontSize = 9.2.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    },
                     selectedContentColor = Color.Black,
                     unselectedContentColor = Color.LightGray,
                     alwaysShowLabel = true,

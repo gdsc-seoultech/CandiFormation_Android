@@ -24,9 +24,6 @@ import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
-
-
-
 @Composable
 fun LoginScreen(
     navController: NavHostController,
@@ -113,8 +110,6 @@ fun LoginScreenContent(
                 }
             }
         )
-
-
     }
 }
 

@@ -53,7 +53,7 @@ class CandiRepository @Inject constructor(
         val signUpRes = try {
             articleApi.signUp(signUpBody)
         } catch (e: Exception) {
-            Log.d("suee97", "$e")
+            Log.d("suee97", "회원가입 에러 >>> ${e.localizedMessage}")
             return false
         }
         if (signUpRes.status == "200") {

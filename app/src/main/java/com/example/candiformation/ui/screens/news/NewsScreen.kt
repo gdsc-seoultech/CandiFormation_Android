@@ -123,14 +123,20 @@ fun NewsScreenContent(
 
 @Composable
 fun NewsScreenTopAppBar() {
-    TopAppBar(
-        backgroundColor = Color.White,
-        title = {
-            Text(
-                text = "뉴스 기사",
-                fontSize = Constants.TOP_APP_BAR_FONT,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    )
+    Column(modifier = Modifier.fillMaxWidth()) {
+        TopAppBar(
+            backgroundColor = Color.White,
+            title = {
+                Text(
+                    text = "Articles",
+                    fontSize = Constants.TOP_APP_BAR_FONT,
+                    fontWeight = FontWeight.ExtraBold
+                )
+            }
+        )
+        Divider(
+            color = Color.Black,
+            modifier = Modifier.height(5.dp).padding(horizontal = 8.dp)
+        )
+    }
 }

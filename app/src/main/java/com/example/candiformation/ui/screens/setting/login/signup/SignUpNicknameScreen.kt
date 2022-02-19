@@ -55,8 +55,6 @@ fun SignUpNicknameScreenContent(
         Button(onClick = {
             viewModel.signUpBody.value.nickname = nicknameText
             viewModel.postLoginBody()
-            val initLoginBody = SignUpBody("", "", "", "0000")
-            viewModel.signUpBody.value = initLoginBody
         }) {
             Text("회원가입")
         }

@@ -1,11 +1,13 @@
 package com.example.candiformation.ui.screens.news
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChatBubbleOutline
@@ -34,12 +36,10 @@ fun NewsArticleUnit(
     isLiked: Boolean,
     articleDataList: List<ArticleResponse>
 ) {
-    Box(
+    Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 12.dp, horizontal = 16.dp)
-            .clip(RoundedCornerShape(6.dp))
-            .background(VeryLightGrey_type1)
             .clickable {
                 viewModel.articleId.value = articleResponse.id
                 viewModel.articleTitle.value = articleResponse.title
@@ -53,8 +53,11 @@ fun NewsArticleUnit(
                 navController.navigate("news/articles/selectedArticle") {
                     popUpTo("news/articles") { inclusive = true }
                 }
-            }
+            },
+        elevation = 4.dp,
+        border = BorderStroke(1.dp, Color.Black)
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -81,7 +84,7 @@ fun NewsArticleUnit(
                     modifier = Modifier
                         .clickable { likeIconClicked() }
                 ) {
-                    if(isLiked) {
+                    if (isLiked) {
                         Icon(
                             modifier = Modifier.padding(4.dp),
                             imageVector = Icons.Filled.Favorite,
@@ -123,6 +126,8 @@ fun NewsArticleUnit(
                 )
             }
         }
+
     }
+
 }
 

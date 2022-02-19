@@ -6,6 +6,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,6 +14,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.candiformation.navigation.navGraph.*
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.screens.splash.SplashScreen
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @ExperimentalMaterialApi
 @Composable
@@ -27,6 +29,10 @@ fun SetupNavigation(
     } else {
         viewModel.bottomBarShown.value = true
     }
+
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(color = Color.Black)
+
 
     NavHost(
         navController = navController,

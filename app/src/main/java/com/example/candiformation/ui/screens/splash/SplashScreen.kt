@@ -25,9 +25,6 @@ fun SplashScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(color = Color.LightGray)
-
     LaunchedEffect(key1 = true) {
         delay(1000) // 테스트 거슬려서 줄여놨음
         navController.navigate("home_root") {
