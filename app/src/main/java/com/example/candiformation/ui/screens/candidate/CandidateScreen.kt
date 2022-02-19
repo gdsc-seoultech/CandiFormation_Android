@@ -33,6 +33,7 @@ import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.R
+import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.ui.theme.GukkimColor
 import com.example.candiformation.ui.theme.MinjudangColor
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
@@ -51,7 +52,12 @@ fun CandidateScreen(
 
     Scaffold(
         topBar = {
-            CandidateScreenTopAppBar()
+                 CustomTopAppBar(
+                     navController = navController,
+                     title = "Candidates",
+                     navBack = false
+                 )
+//            CandidateScreenTopAppBar()
         },
         content = {
 

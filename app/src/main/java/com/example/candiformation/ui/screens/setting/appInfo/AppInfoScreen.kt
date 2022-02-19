@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.utils.Constants
@@ -27,7 +28,7 @@ fun AppInfoScreen(
 ) {
     Scaffold(
         topBar = {
-            AppInfoScreenTopAppBar(navController = navController)
+            CustomTopAppBar(navController = navController, title = "Information", navBack = true)
         },
         content = {
             Column(
@@ -42,39 +43,17 @@ fun AppInfoScreen(
 }
 
 @Composable
-fun AppInfoScreenTopAppBar(
-    navController: NavHostController
-) {
-    TopAppBar(
-        backgroundColor = Color.White,
-        title = {
-            Text(
-                text = "앱 정보",
-                fontSize = Constants.TOP_APP_BAR_FONT,
-                fontWeight = FontWeight.Bold
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = {
-                navController.navigate("setting") {
-                    popUpTo("setting") { inclusive = true }
-                }
-            }) {
-                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Arrow Back")
-            }
-        }
-    )
-}
-
-@Composable
 fun AppInfoTopLogo() {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(Constants.CONTENT_INNER_PADDING)
     ) {
-        Row(modifier = Modifier.fillMaxWidth()
-            .padding(top = 10.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp)
+        )
         {
             Icon(
                 imageVector = Icons.Default.HowToVote,
@@ -109,7 +88,10 @@ fun AppInfoTopLogo() {
 fun AppInfoScreenContent() {
     AppInfoScreenCard(title = "App version", description = "1.0")
     AppInfoScreenCard(title = "Developers", description = "Wee SR\nShin YB\nOh SU\nYang YS")
-    AppInfoScreenCard(title = "Contacts / Bug Report", description = "atn1su@gmail.com\n010-5458-3928")
+    AppInfoScreenCard(
+        title = "Contacts / Bug Report",
+        description = "atn1su@gmail.com\n010-5458-3928"
+    )
     AppInfoScreenCard(title = "From.", description = "Google Solution Challenge")
 }
 

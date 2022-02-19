@@ -67,14 +67,20 @@ fun SettingList(
             navController = navController,
             viewModel = viewModel,
             title = "Comments",
-            onClicked = {/* 각자 맞는 화면으로 이동 */ }
+            onClicked = { navController.navigate("setting/comments") {
+                popUpTo("setting")
+            } }
         )
         GreyDivider()
         SettingListUnit(
             navController = navController,
             viewModel = viewModel,
             title = "Likes",
-            onClicked = {/* 각자 맞는 화면으로 이동 */ }
+            onClicked = {
+                navController.navigate("setting/like") {
+                    popUpTo("setting")
+                }
+            }
         )
         GreyDivider()
         Spacer(modifier = Modifier.height(24.dp))

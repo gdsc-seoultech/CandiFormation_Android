@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
@@ -23,9 +24,10 @@ fun InfoScreen(
 
     Scaffold(
         topBar = {
-            InfoScreenTopAppBar(
+            CustomTopAppBar(
                 navController = navController,
-                scrollState = scrollState
+                title = "Information",
+                navBack = false
             )
         },
         content = {
@@ -55,21 +57,4 @@ fun InfoScreenContent(
     ) {
         InfoMainLogo()
     }
-}
-
-@Composable
-fun InfoScreenTopAppBar(
-    navController: NavHostController,
-    scrollState: ScrollState
-) {
-    TopAppBar(
-        backgroundColor = Color.White,
-        title = {
-            Text(
-                text = "정보",
-                fontSize = Constants.TOP_APP_BAR_FONT,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    )
 }

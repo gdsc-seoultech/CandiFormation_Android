@@ -7,6 +7,8 @@ import androidx.navigation.navigation
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.screens.setting.SettingScreen
 import com.example.candiformation.ui.screens.setting.appInfo.AppInfoScreen
+import com.example.candiformation.ui.screens.setting.comments.CommentsScreen
+import com.example.candiformation.ui.screens.setting.like.LikeScreen
 import com.example.candiformation.ui.screens.setting.login.LoginScreen
 import com.example.candiformation.ui.screens.setting.login.signup.SignUpAuthScreen
 import com.example.candiformation.ui.screens.setting.login.signup.SignUpNicknameScreen
@@ -52,6 +54,12 @@ fun NavGraphBuilder.settingNavGraph(
         }
         composable(route = "setting/login/signup/setnickname") {
             SignUpNicknameScreen(navController = navController, viewModel = viewModel)
+        }
+        composable(route = "setting/like") {
+            LikeScreen(navController = navController, viewModel = viewModel)
+        }
+        composable(route = "setting/comments") {
+            CommentsScreen(navController = navController, viewModel = viewModel)
         }
     }
 }

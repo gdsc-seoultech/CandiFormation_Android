@@ -38,7 +38,9 @@ sealed class BottomNavItem(
             "setting/login",
             "setting/login/signup",
             "setting/login/signup/auth",
-            "setting/login/signup/setnickname"
+            "setting/login/signup/setnickname",
+            "setting/like",
+            "setting/comments"
         )
     )
 }

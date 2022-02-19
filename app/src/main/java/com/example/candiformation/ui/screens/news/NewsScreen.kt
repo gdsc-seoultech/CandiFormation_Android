@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.models.ArticleResponse
 import com.example.candiformation.models.LikeBody
 import com.example.candiformation.ui.SharedViewModel
@@ -34,7 +35,11 @@ fun NewsScreen(
 
     Scaffold(
         topBar = {
-            NewsScreenTopAppBar()
+            CustomTopAppBar(
+                navController = navController,
+                title = "Articles",
+                navBack = false
+            )
         },
         content = {
             NewsScreenContent(
@@ -121,22 +126,3 @@ fun NewsScreenContent(
 }
 
 
-@Composable
-fun NewsScreenTopAppBar() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        TopAppBar(
-            backgroundColor = Color.White,
-            title = {
-                Text(
-                    text = "Articles",
-                    fontSize = Constants.TOP_APP_BAR_FONT,
-                    fontWeight = FontWeight.ExtraBold
-                )
-            }
-        )
-        Divider(
-            color = Color.Black,
-            modifier = Modifier.height(5.dp).padding(horizontal = 8.dp)
-        )
-    }
-}
