@@ -30,7 +30,6 @@ fun NewsScreen(
     LaunchedEffect(true) {
         viewModel.getArticle() // 화면 들어왔을 때 모든 기사 정보 불러오기
     }
-
     val articleDataList by viewModel.articleDataList.observeAsState()
 
     Scaffold(

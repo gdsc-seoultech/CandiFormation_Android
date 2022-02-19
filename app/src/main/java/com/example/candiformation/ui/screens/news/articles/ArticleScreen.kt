@@ -1,5 +1,6 @@
 package com.example.candiformation.ui.screens.news.articles
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -16,21 +17,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.candiformation.models.ArticleResponse
 import com.example.candiformation.models.CommentResponse
 import com.example.candiformation.models.LikeBody
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @ExperimentalMaterialApi
 @Composable
 fun ArticleScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-    // 코멘트 불러오기
+    // 코멘트, 전체 기사 불러오기
     val commentList by viewModel.selectedArticleComments.observeAsState()
-    viewModel.getSelectedArticleComments(viewModel.articleId.value)
+    val articleDataList by viewModel.articleDataList.observeAsState()
+
+    val scope = rememberCoroutineScope()
+    scope.launch {
+        viewModel.getSelectedArticleComments(viewModel.articleId.value)
+        viewModel.getArticle() // 화면 들어왔을 때 모든 기사 정보 불러오기
+    }
 
     // 코멘트 작성
     var comment by remember { mutableStateOf("") }
@@ -47,7 +58,8 @@ fun ArticleScreen(
             ArticleScreenContent(
                 navController = navController,
                 viewModel = viewModel,
-                commentList = commentList!!
+                commentList = commentList!!,
+                articleDataList = articleDataList!!
             )
         },
         bottomBar = {
@@ -80,7 +92,8 @@ fun ArticleScreen(
 fun ArticleScreenContent(
     navController: NavHostController,
     viewModel: SharedViewModel,
-    commentList: List<CommentResponse>
+    commentList: List<CommentResponse>,
+    articleDataList: List<ArticleResponse>
 ) {
     var scrollState = rememberScrollState()
 
@@ -108,7 +121,7 @@ fun ArticleScreenContent(
                 )
             },
             isLiked = viewModel.whatArticleLiked.value.articles.contains(viewModel.articleId.value),
-            likeNum = viewModel.articleLikeNum.value,
+            likeNum = articleDataList[viewModel.articleId.value-1].like_num,
             commentNum = commentList.size
         )
         Spacer(modifier = Modifier.height(8.dp))

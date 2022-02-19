@@ -120,7 +120,7 @@ class SharedViewModel @Inject constructor(
         onSuccess: () -> Unit,
         onFailure: () -> Unit
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch() {
             val result = repository.signIn(LoginBody(idText, passwordText))
 
             if (result!!.second) {
@@ -140,9 +140,10 @@ class SharedViewModel @Inject constructor(
     fun like(
         likeBody: LikeBody
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch() {
             repository.like(likeBody = likeBody)
             articleDataList.postValue(repository.getArticleResponse())
+            whatArticleLiked.value = repository.whatArticleLiked(likeBody.username)
         }
     }
     // ==================================================================================

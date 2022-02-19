@@ -109,7 +109,7 @@ fun AppInfoTopLogo() {
 fun AppInfoScreenContent() {
     AppInfoScreenCard(title = "App version", description = "1.0")
     AppInfoScreenCard(title = "Developers", description = "Wee SR\nShin YB\nOh SU\nYang YS")
-    AppInfoScreenCard(title = "Contacts / Bug Report", description = "atn1su@gmail.com")
+    AppInfoScreenCard(title = "Contacts / Bug Report", description = "atn1su@gmail.com\n010-5458-3928")
     AppInfoScreenCard(title = "From.", description = "Google Solution Challenge")
 }
 
