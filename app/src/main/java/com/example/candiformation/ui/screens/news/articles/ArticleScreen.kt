@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.IosShare
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,9 +27,8 @@ fun ArticleScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-    var commentList by remember { mutableStateOf(listOf<CommentResponse>()) }
+    val commentList by viewModel.selectedArticleComments.observeAsState()
     viewModel.getSelectedArticleComments(viewModel.articleId.value)
-    commentList = viewModel.selectedArticleComments.value
     var comment by remember { mutableStateOf("") }
     var isSecret by remember { mutableStateOf(true) }
 
@@ -43,7 +43,7 @@ fun ArticleScreen(
             ArticleScreenContent(
                 navController = navController,
                 viewModel = viewModel,
-                commentList = commentList
+                commentList = commentList!!
             )
         },
         bottomBar = {
@@ -93,7 +93,13 @@ fun ArticleScreenContent(
         Spacer(modifier = Modifier.height(12.dp))
         ThumbnailBox(navController = navController, viewModel = viewModel)
         Spacer(modifier = Modifier.height(8.dp))
-        LikeAndComments(viewModel = viewModel, likeIconClicked = {})
+        LikeAndComments(
+            viewModel = viewModel,
+            likeIconClicked = {},
+            isLiked = viewModel.whatArticleLiked.value.articles.contains(viewModel.articleId.value),
+            likeNum = 0,
+            commentNum = commentList.size
+        )
         Spacer(modifier = Modifier.height(8.dp))
         Divider()
         Spacer(modifier = Modifier.height(8.dp))

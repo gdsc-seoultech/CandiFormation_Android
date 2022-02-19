@@ -111,4 +111,6 @@ dependencies {
     implementation "com.google.accompanist:accompanist-insets:0.24.2-alpha"
     implementation "com.google.accompanist:accompanist-insets-ui:0.24.2-alpha"
 
+    // Google SignIn
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
 }

@@ -21,6 +21,11 @@ import com.example.candiformation.components.CustomTextField
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+
+
+
 
 @Composable
 fun LoginScreen(
@@ -108,6 +113,8 @@ fun LoginScreenContent(
                 }
             }
         )
+
+
     }
 }
 

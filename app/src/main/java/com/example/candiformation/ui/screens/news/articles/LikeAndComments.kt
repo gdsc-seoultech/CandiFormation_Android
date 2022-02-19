@@ -7,18 +7,26 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChatBubbleOutline
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
+import com.example.candiformation.models.ArticleResponse
 import com.example.candiformation.ui.SharedViewModel
+import com.example.candiformation.ui.theme.SemiRed
 
 @Composable
 fun LikeAndComments(
     viewModel: SharedViewModel,
-    likeIconClicked: () -> Unit
+    likeIconClicked: () -> Unit,
+    isLiked: Boolean,
+    likeNum: Int,
+    commentNum: Int
 ) {
     Row(
         modifier = Modifier
@@ -30,14 +38,15 @@ fun LikeAndComments(
         ) {
             Icon(
                 modifier = Modifier.padding(4.dp),
-                imageVector = Icons.Filled.FavoriteBorder,
-                contentDescription = "FavoriteBorder Icon"
+                imageVector = if(isLiked) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                contentDescription = "Favorite Icon",
+                tint = SemiRed
             )
         }
         Spacer(modifier = Modifier.width(2.dp))
         Text(
             modifier = Modifier.padding(4.dp),
-            text = viewModel.articleLikeNum.value.toString()
+            text = likeNum.toString()
         )
         Spacer(modifier = Modifier.width(8.dp))
         Box() {
@@ -50,7 +59,7 @@ fun LikeAndComments(
         Spacer(modifier = Modifier.width(2.dp))
         Text(
             modifier = Modifier.padding(4.dp),
-            text = viewModel.articleCommentNum.value.toString()
+            text = commentNum.toString()
         )
     }
 }
