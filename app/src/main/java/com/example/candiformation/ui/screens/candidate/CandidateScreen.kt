@@ -2,19 +2,28 @@ package com.example.candiformation.ui.screens.candidate
 
 import android.app.assist.AssistContent
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -31,14 +40,20 @@ import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
 @Composable
 fun CandidateScreen(
     navController: NavHostController,
-    viewModel: SharedViewModel
+    viewModel: SharedViewModel,
 ) {
+    var dialogState by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
+
+    CandidateDialog(
+        dialogState = dialogState,
+        onDismissRequest = { dialogState = !it })
+
     Scaffold(
         topBar = {
             CandidateScreenTopAppBar()
         },
         content = {
-            val scrollState = rememberScrollState()
 
 
             Column(
@@ -47,6 +62,8 @@ fun CandidateScreen(
                     .padding(horizontal = CONTENT_INNER_PADDING)
                     .verticalScroll(state = scrollState)
             ) {
+
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -60,7 +77,7 @@ fun CandidateScreen(
                         name = "이재명",
                         party = "민주당",
                         imgSrc = R.drawable.lee,
-                        onClick = {}
+                        onClick = { dialogState = true },
                     )
                     CandidateCard(
                         navController = navController,
@@ -68,7 +85,7 @@ fun CandidateScreen(
                         name = "윤석열",
                         party = "국민의힘",
                         imgSrc = R.drawable.yoon,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                     CandidateCard(
                         navController = navController,
@@ -76,13 +93,13 @@ fun CandidateScreen(
                         name = "심상정",
                         party = "정의당",
                         imgSrc = R.drawable.shim,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                 }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 8.dp),
+                        .padding(vertical = 8.dp),
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -92,7 +109,7 @@ fun CandidateScreen(
                         name = "안철수",
                         party = "국민의당",
                         imgSrc = R.drawable.ann,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                     CandidateCard(
                         navController = navController,
@@ -100,7 +117,7 @@ fun CandidateScreen(
                         name = "오준호",
                         party = "기본소득당",
                         imgSrc = R.drawable.oh_5,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                     CandidateCard(
                         navController = navController,
@@ -108,13 +125,14 @@ fun CandidateScreen(
                         name = "허경영",
                         party = "국가혁명당",
                         imgSrc = R.drawable.hu_6,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                 }
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start,
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CandidateCard(
@@ -123,7 +141,7 @@ fun CandidateScreen(
                         name = "이백윤",
                         party = "노동당",
                         imgSrc = R.drawable.lee_7,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                     CandidateCard(
                         navController = navController,
@@ -131,7 +149,7 @@ fun CandidateScreen(
                         name = "옥은호",
                         party = "새누리당",
                         imgSrc = R.drawable.ook_8,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                     CandidateCard(
                         navController = navController,
@@ -139,13 +157,14 @@ fun CandidateScreen(
                         name = "김동연",
                         party = "새로운물결",
                         imgSrc = R.drawable.kim_9,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                 }
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start,
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CandidateCard(
@@ -154,7 +173,7 @@ fun CandidateScreen(
                         name = "김경재",
                         party = "신자유민주연합",
                         imgSrc = R.drawable.kim_10,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                     CandidateCard(
                         navController = navController,
@@ -162,7 +181,7 @@ fun CandidateScreen(
                         name = "조원진",
                         party = "우리공화당",
                         imgSrc = R.drawable.choi_11,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                     CandidateCard(
                         navController = navController,
@@ -170,13 +189,14 @@ fun CandidateScreen(
                         name = "김재연",
                         party = "진보당",
                         imgSrc = R.drawable.kim_12,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                 }
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start,
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CandidateCard(
@@ -185,7 +205,7 @@ fun CandidateScreen(
                         name = "이경희",
                         party = "통일한국당",
                         imgSrc = R.drawable.lee_13,
-                        onClick = {}
+                        onClick = { dialogState = true }
                     )
                     CandidateCard(
                         navController = navController,
@@ -193,7 +213,9 @@ fun CandidateScreen(
                         name = "김민찬",
                         party = "한류연합당",
                         imgSrc = R.drawable.kim_14,
-                        onClick = {}
+                        onClick = {
+                            dialogState = true
+                        }
                     )
                 }
                 Spacer(modifier = Modifier.size(60.dp))
@@ -220,4 +242,72 @@ fun CandidateScreenTopAppBar() {
             }
         },
     )
+}
+
+@Composable
+fun CandidateDialog(
+    dialogState: Boolean,
+    onDismissRequest: (dialogState: Boolean) -> Unit
+) {
+    if (dialogState) {
+        AlertDialog(
+            backgroundColor = Color.LightGray,
+            onDismissRequest = {
+                onDismissRequest(dialogState)
+            },
+            title = null,
+            text = null,
+            buttons = {
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally)
+                {
+                    Spacer(modifier = Modifier.padding(vertical = 16.dp))
+
+                    Image(
+                        painter = painterResource(id = R.drawable.lee),
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .size(200.dp)
+                            .clip(CircleShape)
+                    )
+
+                    Spacer(modifier = Modifier.padding(vertical = 16.dp))
+
+                    Text(
+                        text = "이재명 후보가 궁금하신가요?",
+                        fontWeight = FontWeight.ExtraLight,
+                        fontSize = 12.sp,
+                        color = Color.White
+                    )
+
+                    Spacer(modifier = Modifier.padding(vertical = 16.dp))
+
+                    val context = LocalContext.current
+
+                    TextButton(
+                        modifier = Modifier
+                            .height(40.dp)
+                            .weight(1f)
+                            .padding(all = 4.dp)
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(4.dp)),
+                        onClick = {
+                            onDismissRequest(dialogState)
+                            Toast.makeText(context, "확인", Toast.LENGTH_LONG).show()
+                        },
+                        colors = ButtonDefaults.textButtonColors(
+                            backgroundColor = Color.Black,
+                            contentColor = Color.White
+                        )
+                    ) {
+
+
+                    }
+                }
+
+            },
+            shape = RoundedCornerShape(4.dp)
+        )
+    }
 }
