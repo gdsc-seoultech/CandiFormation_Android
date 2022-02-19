@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.candiformation.models.CommentResponse
+import com.example.candiformation.models.LikeBody
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
@@ -27,8 +28,11 @@ fun ArticleScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    // 코멘트 불러오기
     val commentList by viewModel.selectedArticleComments.observeAsState()
     viewModel.getSelectedArticleComments(viewModel.articleId.value)
+
+    // 코멘트 작성
     var comment by remember { mutableStateOf("") }
     var isSecret by remember { mutableStateOf(true) }
 
@@ -95,9 +99,16 @@ fun ArticleScreenContent(
         Spacer(modifier = Modifier.height(8.dp))
         LikeAndComments(
             viewModel = viewModel,
-            likeIconClicked = {},
+            likeIconClicked = {
+                viewModel.like(
+                    likeBody = LikeBody(
+                        article_id = viewModel.articleId.value,
+                        username = viewModel.currentUser.value.username
+                    )
+                )
+            },
             isLiked = viewModel.whatArticleLiked.value.articles.contains(viewModel.articleId.value),
-            likeNum = 0,
+            likeNum = viewModel.articleLikeNum.value,
             commentNum = commentList.size
         )
         Spacer(modifier = Modifier.height(8.dp))

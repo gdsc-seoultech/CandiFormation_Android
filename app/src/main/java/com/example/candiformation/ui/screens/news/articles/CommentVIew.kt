@@ -42,6 +42,7 @@ fun CommentViewUnit(
     commentResponse: CommentResponse,
     viewModel: SharedViewModel
 ) {
+    // 날짜 String Slice
     var intRangeDate = IntRange(5, 9)
     var intRangeTime = IntRange(11, 15)
 

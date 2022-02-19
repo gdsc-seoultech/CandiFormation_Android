@@ -32,23 +32,25 @@ class SharedViewModel @Inject constructor(
     )
     // ==================================================================================
 
-    // Bottom bar shown
+    // 바텀 바 show boolean ==================================================================
     var bottomBarShown = mutableStateOf(false)
+    // ======================================================================================
 
 
-    // Article Response ===================================================================
-    var articleDataList = mutableStateOf(listOf<ArticleResponse>())
+    // 모든 기사 정보 불러오기 ===================================================================
+    val articleDataList: MutableLiveData<List<ArticleResponse>> =
+        MutableLiveData(listOf<ArticleResponse>())
 
     fun getArticle() {
-        viewModelScope.launch {
-            articleDataList.value = repository.getArticleResponse()
+        viewModelScope.launch(Dispatchers.IO) {
+            articleDataList.postValue(repository.getArticleResponse())
         }
     }
 
-    // ===============================================================================
+    // =======================================================================================
 
 
-    // Current Article data ==========================================================
+    // Current Article data =================================================================
     var articleId = mutableStateOf(-1)
     var articleTitle = mutableStateOf("")
     var articleContent = mutableStateOf("")
@@ -140,7 +142,7 @@ class SharedViewModel @Inject constructor(
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.like(likeBody = likeBody)
-            articleDataList.value = repository.getArticleResponse()
+            articleDataList.postValue(repository.getArticleResponse())
         }
     }
     // ==================================================================================
@@ -186,7 +188,7 @@ class SharedViewModel @Inject constructor(
     fun writeComment(commentBody: CommentBody) {
         viewModelScope.launch {
             repository.writeComment(commentBody)
-            selectedArticleComments.value = repository.getSelectedArticleComments(articleId.value)
+            selectedArticleComments.postValue(repository.getSelectedArticleComments(articleId.value))
         }
     }
     // ===================================================================================
@@ -212,7 +214,7 @@ class SharedViewModel @Inject constructor(
 
     fun getSelectedArticleComments(articleId: Int) {
         viewModelScope.launch {
-            selectedArticleComments.value = repository.getSelectedArticleComments(articleId)
+            selectedArticleComments.postValue(repository.getSelectedArticleComments(articleId))
         }
     }
     // ========================================================================================
@@ -222,7 +224,7 @@ class SharedViewModel @Inject constructor(
     fun deleteComment(commentId: Int) {
         viewModelScope.launch {
             repository.deleteComment(currentUser.value.nickname, articleId.value, commentId)
-            selectedArticleComments.value = repository.getSelectedArticleComments(articleId.value)
+            selectedArticleComments.postValue(repository.getSelectedArticleComments(articleId.value))
         }
     }
     // ======================================================================================

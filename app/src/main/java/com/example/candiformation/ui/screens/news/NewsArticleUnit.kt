@@ -31,7 +31,8 @@ fun NewsArticleUnit(
     viewModel: SharedViewModel,
     articleResponse: ArticleResponse,
     likeIconClicked: () -> Unit,
-    isLiked: Boolean
+    isLiked: Boolean,
+    articleDataList: List<ArticleResponse>
 ) {
     Box(
         modifier = Modifier

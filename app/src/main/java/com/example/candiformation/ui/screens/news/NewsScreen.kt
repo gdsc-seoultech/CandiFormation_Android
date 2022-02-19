@@ -31,6 +31,8 @@ fun NewsScreen(
         viewModel.getArticle() // 화면 들어왔을 때 모든 기사 정보 불러오기
     }
 
+    val articleDataList by viewModel.articleDataList.observeAsState()
+
     Scaffold(
         topBar = {
             NewsScreenTopAppBar()
@@ -38,7 +40,8 @@ fun NewsScreen(
         content = {
             NewsScreenContent(
                 navController = navController,
-                viewModel = viewModel
+                viewModel = viewModel,
+                articleDataList = articleDataList!!
             )
         }
     )
@@ -47,7 +50,8 @@ fun NewsScreen(
 @Composable
 fun NewsScreenContent(
     viewModel: SharedViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    articleDataList: List<ArticleResponse>
 ) {
     if(viewModel.currentUser.value.nickname != "") {
         viewModel.whatArticleLiked(viewModel.currentUser.value.username)
@@ -63,17 +67,17 @@ fun NewsScreenContent(
             .padding(top = 12.dp, bottom = 48.dp)
     ) {
 
-        if (viewModel.articleDataList.value.isNullOrEmpty()) {
+        if (articleDataList.isNullOrEmpty()) {
             Log.d("suee97", "getArticleData is null or empty")
         } else {
             LazyColumn() {
-                items(viewModel.articleDataList.value.size) { index ->
+                items(articleDataList.size) { index ->
                     NewsArticleUnit(
                         navController = navController,
                         viewModel = viewModel,
-                        articleResponse = viewModel.articleDataList.value[index],
+                        articleResponse = articleDataList[index],
                         likeIconClicked = {
-                            viewModel.articleId.value = viewModel.articleDataList.value[index].id
+                            viewModel.articleId.value = articleDataList[index].id
                             viewModel.like(
                                 likeBody = LikeBody(
                                     article_id = viewModel.articleId.value,
@@ -85,7 +89,8 @@ fun NewsScreenContent(
                             true
                         } else {
                             false
-                        }
+                        },
+                        articleDataList = articleDataList
                     )
                 }
             }
