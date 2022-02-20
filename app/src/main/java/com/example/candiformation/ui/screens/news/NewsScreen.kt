@@ -70,7 +70,6 @@ fun NewsScreenContent(
             .fillMaxWidth()
             .padding(top = 12.dp, bottom = 48.dp)
     ) {
-
         if (articleDataList.isNullOrEmpty()) {
             Log.d("suee97", "getArticleData is null or empty")
         } else {
@@ -94,7 +93,7 @@ fun NewsScreenContent(
                         } else {
                             false
                         },
-                        articleDataList = articleDataList
+                        articleDataList = articleDataList[index]
                     )
                 }
             }

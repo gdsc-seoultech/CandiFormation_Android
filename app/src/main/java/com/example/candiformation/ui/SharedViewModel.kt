@@ -46,7 +46,6 @@ class SharedViewModel @Inject constructor(
             articleDataList.postValue(repository.getArticleResponse())
         }
     }
-
     // =======================================================================================
 
 
@@ -226,18 +225,5 @@ class SharedViewModel @Inject constructor(
         }
     }
     // ======================================================================================
-
-
-    // 구글 로그인
-    var userState: MutableLiveData<GoogleUserModel> =
-        MutableLiveData(GoogleUserModel("", ""))
-
-    fun fetchSignInUser(email: String, name: String) {
-        viewModelScope.launch {
-            userState.postValue(
-                GoogleUserModel(email = email, name = name)
-            )
-        }
-    }
 
 }

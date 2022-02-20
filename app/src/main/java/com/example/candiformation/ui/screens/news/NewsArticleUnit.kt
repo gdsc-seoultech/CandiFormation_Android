@@ -34,7 +34,7 @@ fun NewsArticleUnit(
     articleResponse: ArticleResponse,
     likeIconClicked: () -> Unit,
     isLiked: Boolean,
-    articleDataList: List<ArticleResponse>
+    articleDataList: ArticleResponse
 ) {
     Surface(
         modifier = Modifier

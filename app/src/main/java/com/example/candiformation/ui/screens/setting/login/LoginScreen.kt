@@ -128,28 +128,21 @@ fun LoginScreenContent(
                     val gsa = task?.getResult(ApiException::class.java)
 
                     if(gsa != null) {
-                        Log.d("suee97", "gsa email >>> ${gsa.email}")
-                        Log.d("suee97", "gsa account >>> ${gsa.account}")
-                        Log.d("suee97", "gsa idToken >>> ${gsa.idToken}")
-                        Log.d("suee97", "gsa isExpired >>> ${gsa.isExpired}")
-                        Log.d("suee97", "gsa id >>> ${gsa.id}")
-                        Log.d("suee97", "gsa displayName >>> ${gsa.displayName}")
-
-//                        viewModel.fetchSignInUser(gsa.email!!, gsa.displayName!!)
                         viewModel.signUpBody.value.username = gsa.email.toString()
                         viewModel.signUpBody.value.password = ""
-                        viewModel.signUpBody.value.nickname = "test"
+                        viewModel.signUpBody.value.nickname = gsa.displayName.toString()
                         viewModel.signUp()
 
                         viewModel.login(
                             idText = viewModel.signUpBody.value.username,
                             passwordText = "",
                             onFailure = {},
-                            onSuccess = {}
+                            onSuccess = {
+                                navController.navigate("setting") {
+                                    popUpTo("setting")
+                                }
+                            }
                         )
-                        navController.navigate("setting") {
-                            popUpTo("setting")
-                        }
                     }
                 } catch (e: ApiException) {
                     Log.d("suee97", "authResultLauncher 에러 >>> ${e.localizedMessage}")
