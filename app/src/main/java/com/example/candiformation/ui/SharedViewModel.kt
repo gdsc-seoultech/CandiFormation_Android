@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,8 +27,7 @@ class SharedViewModel @Inject constructor(
         SignUpBody(
             username = "",
             password = "",
-            nickname = "",
-            tel = "0000"
+            nickname = ""
         )
     )
     // ==================================================================================
@@ -96,18 +96,13 @@ class SharedViewModel @Inject constructor(
         SignUpBody(
             username = "",
             password = "",
-            nickname = "",
-            tel = "0000"
+            nickname = ""
         )
     )
 
-    fun postLoginBody() {
+    fun signUp() {
         viewModelScope.launch {
-            if (repository.signUp(signUpBody.value)) {
-                Log.d("suee97", "회원가입 성공")
-            } else {
-                Log.d("suee97", "회원가입 실패")
-            }
+            repository.signUp(signUpBody.value)
         }
     }
     // ==================================================================================
@@ -128,8 +123,10 @@ class SharedViewModel @Inject constructor(
                 currentUser.value.username = idText
                 currentUser.value.password = passwordText
                 onSuccess()
+                Log.d("suee97", "로그인성공 >>> ${result!!.second}")
             } else {
                 onFailure()
+                Log.d("suee97", "로그인에러 >>> ${result!!.second}")
             }
         }
     }
@@ -167,9 +164,10 @@ class SharedViewModel @Inject constructor(
         currentUser.value = SignUpBody(
             username = "",
             password = "",
-            nickname = "",
-            tel = "0000"
+            nickname = ""
         )
+        whatArticleLiked.value.articles = listOf()
+        whatArticleLiked.value.username = ""
     }
     // ==================================================================================
 
@@ -228,5 +226,18 @@ class SharedViewModel @Inject constructor(
         }
     }
     // ======================================================================================
+
+
+    // 구글 로그인
+    var userState: MutableLiveData<GoogleUserModel> =
+        MutableLiveData(GoogleUserModel("", ""))
+
+    fun fetchSignInUser(email: String, name: String) {
+        viewModelScope.launch {
+            userState.postValue(
+                GoogleUserModel(email = email, name = name)
+            )
+        }
+    }
 
 }

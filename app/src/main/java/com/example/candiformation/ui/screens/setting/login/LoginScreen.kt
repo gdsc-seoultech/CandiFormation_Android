@@ -2,6 +2,7 @@ package com.example.candiformation.ui.screens.setting.login
 
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -9,6 +10,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,11 +20,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.candiformation.components.CustomButton
 import com.example.candiformation.components.CustomTextField
+import com.example.candiformation.data.google.GoogleApiContract
+import com.example.candiformation.models.SignUpBody
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.nio.charset.Charset
+
 
 @Composable
 fun LoginScreen(
@@ -110,6 +117,50 @@ fun LoginScreenContent(
                 }
             }
         )
+
+        // 구글 로그인
+        val signInRequestCode = 1
+
+        val authResultLauncher =
+            rememberLauncherForActivityResult(contract = GoogleApiContract()) { task ->
+                try {
+                    Log.d("suee97", "task >>> ${task?.toString()}")
+                    val gsa = task?.getResult(ApiException::class.java)
+
+                    if(gsa != null) {
+                        Log.d("suee97", "gsa email >>> ${gsa.email}")
+                        Log.d("suee97", "gsa account >>> ${gsa.account}")
+                        Log.d("suee97", "gsa idToken >>> ${gsa.idToken}")
+                        Log.d("suee97", "gsa isExpired >>> ${gsa.isExpired}")
+                        Log.d("suee97", "gsa id >>> ${gsa.id}")
+                        Log.d("suee97", "gsa displayName >>> ${gsa.displayName}")
+
+//                        viewModel.fetchSignInUser(gsa.email!!, gsa.displayName!!)
+                        viewModel.signUpBody.value.username = gsa.email.toString()
+                        viewModel.signUpBody.value.password = ""
+                        viewModel.signUpBody.value.nickname = "test"
+                        viewModel.signUp()
+
+                        viewModel.login(
+                            idText = viewModel.signUpBody.value.username,
+                            passwordText = "",
+                            onFailure = {},
+                            onSuccess = {}
+                        )
+                        navController.navigate("setting") {
+                            popUpTo("setting")
+                        }
+                    }
+                } catch (e: ApiException) {
+                    Log.d("suee97", "authResultLauncher 에러 >>> ${e.localizedMessage}")
+                }
+            }
+
+        Button(onClick = {
+            authResultLauncher.launch(signInRequestCode)
+        }) {
+            Text("구글 로그인")
+        }
     }
 }
 
@@ -135,3 +186,4 @@ fun LoginScreenTopAppBar(
         }
     )
 }
+

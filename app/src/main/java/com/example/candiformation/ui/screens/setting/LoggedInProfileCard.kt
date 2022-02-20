@@ -3,12 +3,12 @@ package com.example.candiformation.ui.screens.setting
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.SupervisedUserCircle
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.candiformation.components.CustomDialog
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
 
@@ -26,6 +27,9 @@ fun LoggedInProfileCard(
     viewModel: SharedViewModel,
     logOutClicked: () -> Unit
 ) {
+    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+    CustomDialog(showDialog = showDialog, setShowDialog = setShowDialog)
+
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -65,6 +69,7 @@ fun LoggedInProfileCard(
                 Text(
                     modifier = Modifier
                         .clickable {
+                            setShowDialog(true)
                             logOutClicked()
                         },
                     text = "로그아웃",
@@ -76,3 +81,22 @@ fun LoggedInProfileCard(
         }
     }
 }
+
+@Composable
+fun CustomDialogDemo() {
+    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Button(
+            onClick = {
+                setShowDialog(true)
+            }) {
+            Text("Show Dialog")
+        }
+        CustomDialog(showDialog, setShowDialog)
+    }
+}
+

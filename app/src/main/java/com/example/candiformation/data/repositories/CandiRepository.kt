@@ -49,20 +49,16 @@ class CandiRepository @Inject constructor(
     // 회원가입
     suspend fun signUp(
         signUpBody: SignUpBody
-    ): Boolean {
-        val signUpRes = try {
+    ): Pair<String, Boolean> {
+        val res = try {
             articleApi.signUp(signUpBody)
         } catch (e: Exception) {
-            Log.d("suee97", "회원가입 에러 >>> ${e.localizedMessage}")
-            return false
+            Log.d("suee97", "${e.localizedMessage}")
+            return Pair(e.toString(), false)
         }
-        if (signUpRes.status == "200") {
-            Log.d("suee97", "sign up response status is 200")
-            return true
-        }
-        return false
-    }
 
+        return Pair(res.status.toString(), true)
+    }
 
     // 로그인 ====================================================================================
     suspend fun signIn(
@@ -84,7 +80,6 @@ class CandiRepository @Inject constructor(
             putString("UN", signInRes.username)
             putString("PW", loginBody.password)
             putString("NN", signInRes.usernickname)
-            putString("TL", "")
             commit()
         }
         return Pair(signInRes.usernickname, true)
@@ -109,7 +104,6 @@ class CandiRepository @Inject constructor(
             putString("UN", signUpBody.username)
             putString("PW", signUpBody.password)
             putString("NN", signUpBody.nickname)
-            putString("TL", signUpBody.tel)
             commit()
         }
         Log.d("login shared", signUpBody.toString())
@@ -120,7 +114,6 @@ class CandiRepository @Inject constructor(
             putString("UN", "")
             putString("PW", "")
             putString("NN", "")
-            putString("TL", "")
             commit()
         }
     }
@@ -129,7 +122,6 @@ class CandiRepository @Inject constructor(
         userSharedPref.getString("UN", "") ?: "",
         userSharedPref.getString("PW", "") ?: "",
         userSharedPref.getString("NN", "") ?: "",
-        userSharedPref.getString("TL", "") ?: ""
     )
 
     fun saveToken(loginResponse: LoginResponse) {
