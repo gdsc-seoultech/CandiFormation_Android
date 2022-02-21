@@ -18,6 +18,9 @@ class GoogleApiContract : ActivityResultContract<Int, Task<GoogleSignInAccount>?
             .build()
 
         val intent = GoogleSignIn.getClient(context, gso)
+
+
+
         return intent.signInIntent
     }
 

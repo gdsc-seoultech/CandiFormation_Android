@@ -61,6 +61,7 @@ class SharedViewModel @Inject constructor(
     var articleImage = mutableStateOf("")
     var articleLikeNum = mutableStateOf(0)
     var articleCommentNum = mutableStateOf(0)
+    var articleDateTime = mutableStateOf("")
     // ===============================================================================
 
 
@@ -246,7 +247,7 @@ class SharedViewModel @Inject constructor(
 
 
     // 이메일 인증
-    var tempEmail = mutableStateOf("")
+    var authEmail = mutableStateOf("")
 
     fun emailAuth(email: String) {
         viewModelScope.launch {

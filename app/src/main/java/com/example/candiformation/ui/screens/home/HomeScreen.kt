@@ -1,10 +1,16 @@
 package com.example.candiformation.ui.screens.home
 
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,30 +20,30 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.candiformation.ui.SharedViewModel
+import kotlinx.coroutines.launch
 
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun HomeScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        HomeScreenContent(
-            navController = navController,
-            viewModel = viewModel
-        )
-
-        Text("서비스 준비중 : 주변 투표소 정보", fontSize = 20.sp)
-
-
-
-        // 웹뷰로 주변 투표소 보여줄 계획
-//        HomeWebView(
-//            url = "https://velog.io/@suee97"
-//        )
+    val scope = rememberCoroutineScope()
+    scope.launch {
+        viewModel.getArticle()
     }
+
+    Scaffold(
+        topBar = {},
+        content = {
+//            Image(
+//                painter = ,
+//                contentDescription = "Thumbnail Image",
+//                modifier = Modifier.size(256.dp)
+//            )
+        }
+    )
 }
 
 @Composable
@@ -78,4 +84,9 @@ fun HomeScreenContent(
             color = Color.Red
         )
     }
+}
+
+@Composable
+fun MainArticles() {
+
 }

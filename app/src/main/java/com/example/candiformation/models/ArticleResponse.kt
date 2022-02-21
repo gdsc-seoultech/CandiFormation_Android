@@ -13,6 +13,7 @@ data class ArticleResponse(
     val link: String,
     val like_num: Int,
     val comment_num: Int,
-    val images: String
+    val images: String,
+    val date_time: String
 
 )

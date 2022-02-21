@@ -159,7 +159,7 @@ fun ArticleScreenContent(
             .verticalScroll(scrollState)
     ) {
         articleTitle(viewModel = viewModel)
-        ArticleTime()
+        ArticleTime(viewModel = viewModel)
         Spacer(modifier = Modifier.height(24.dp))
         articleContent(navController = navController, viewModel = viewModel)
         Spacer(modifier = Modifier.height(12.dp))
@@ -241,14 +241,16 @@ fun articleTitle(
 }
 
 @Composable
-fun ArticleTime() {
+fun ArticleTime(
+    viewModel: SharedViewModel
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.End
     ) {
         Text(
-            text = "01/11 17:35",
+            text = "${viewModel.articleDateTime.value}",
             fontSize = 14.sp,
             color = Color.LightGray
         )

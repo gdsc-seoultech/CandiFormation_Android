@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -42,8 +42,24 @@ fun SignUpAuthScreenContent(
         modifier = Modifier
             .fillMaxWidth()
     ) {
+        var tempVerifyCode by remember { mutableStateOf("") }
 
-        Text("이메일 인증", fontSize = 30.sp)
+        Text(
+            text = "${viewModel.authEmail} 로 인증코드를 보냈습니다."
+        )
+        TextField(
+            value = tempVerifyCode,
+            onValueChange = {
+                tempVerifyCode = it
+            }
+        )
+
+        Button(onClick = {
+
+        }) {
+            Text("인증하기")
+        }
+
         Button(onClick = {
             navController.navigate("setting/login/signup/setnickname") {
                 popUpTo(route = "setting/login/signup/setnickname") { inclusive = true }

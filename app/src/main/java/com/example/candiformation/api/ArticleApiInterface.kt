@@ -59,8 +59,14 @@ interface ArticleApiInterface {
     )
 
     // 이메일 인증
-    @POST("/api/users/authenticate/mail/{email}")
+    @POST("/api/authenticate/mail/{email}")
     suspend fun emailAuth(
         @Path("email") email: String
     )
+
+    @POST("api/verifyCode/{email}/{code}")
+    suspend fun verifyCode(
+        @Path("email") email: String,
+        @Path("code") code: String
+    ): VerifyResponse
 }

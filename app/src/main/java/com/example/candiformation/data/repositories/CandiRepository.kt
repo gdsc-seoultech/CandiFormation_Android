@@ -207,4 +207,13 @@ class CandiRepository @Inject constructor(
             Log.d("suee97", "emailAuth 에러 >>> ${e.localizedMessage}")
         }
     }
+
+    suspend fun verifyCode(email: String, code: String): VerifyResponse {
+        val res = try {
+            articleApi.verifyCode(email, code)
+        } catch (e: Exception) {
+            VerifyResponse("", false)
+        }
+        return res
+    }
 }
