@@ -20,9 +20,6 @@ fun SettingScreen(
     viewModel: SharedViewModel
 ) {
     Scaffold(
-//        topBar = {
-//            SettingTopAppBar()
-//        },
         content = {
             Column(
                 modifier = Modifier

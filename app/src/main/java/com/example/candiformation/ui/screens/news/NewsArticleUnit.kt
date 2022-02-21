@@ -126,8 +126,6 @@ fun NewsArticleUnit(
                 )
             }
         }
-
     }
-
 }
 

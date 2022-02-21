@@ -22,13 +22,11 @@ class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
     private val sharedViewModel: SharedViewModel by viewModels()
 
-
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-
             navController = rememberNavController()
             sharedViewModel.loginRefresh() // 저장된 로그인 정보 불러오기
 

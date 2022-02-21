@@ -4,6 +4,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,9 +19,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.candiformation.components.CustomButton
 import com.example.candiformation.components.CustomTextField
+import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.data.google.GoogleApiContract
 import com.example.candiformation.models.SignUpBody
 import com.example.candiformation.ui.SharedViewModel
@@ -38,20 +42,17 @@ fun LoginScreen(
 ) {
     Scaffold(
         topBar = {
-            LoginScreenTopAppBar(navController = navController)
+            CustomTopAppBar(
+                navController = navController,
+                title = "Login",
+                navBack = true
+            )
         },
         content = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = CONTENT_INNER_PADDING),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                LoginScreenContent(
-                    navController = navController,
-                    viewModel = viewModel
-                )
-            }
+            LoginScreenContent(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
     )
 }
@@ -61,12 +62,17 @@ fun LoginScreenContent(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    // 데이터 넘기기
     var idText = remember { mutableStateOf("") }
     var passwordText = remember { mutableStateOf("") }
 
+    // 로그인 메세지
+    var loginMsg by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(horizontal = CONTENT_INNER_PADDING),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(60.dp))
@@ -84,6 +90,12 @@ fun LoginScreenContent(
             text = passwordText
         )
         Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            modifier = Modifier.padding(vertical = 16.dp),
+            text = loginMsg,
+            fontSize = 16.sp,
+            color = Color.Red
+        )
         CustomButton(
             viewModel = viewModel,
             navController = navController,
@@ -91,16 +103,19 @@ fun LoginScreenContent(
             widthDp = 100.dp,
             onClick = {
                 if (idText.value.isBlank() || passwordText.value.isBlank()) {
-
+                    loginMsg = "올바른 아이디 또는 비밀번호가 아닙니다."
                 } else {
-                    navController.navigate("setting") {
-                        popUpTo("setting") { inclusive = true }
-                    }
                     viewModel.login(
                         idText = idText.value,
                         passwordText = passwordText.value,
-                        onSuccess = {},
-                        onFailure = {}
+                        onSuccess = {
+                            navController.navigate("setting") {
+                                popUpTo("setting") { inclusive = true }
+                            }
+                        },
+                        onFailure = {
+                            loginMsg = "아이디 또는 비밀번호를 확인해주세요."
+                        }
                     )
                 }
             }
@@ -127,7 +142,7 @@ fun LoginScreenContent(
                     Log.d("suee97", "task >>> ${task?.toString()}")
                     val gsa = task?.getResult(ApiException::class.java)
 
-                    if(gsa != null) {
+                    if (gsa != null) {
                         viewModel.signUpBody.value.username = gsa.email.toString()
                         viewModel.signUpBody.value.password = ""
                         viewModel.signUpBody.value.nickname = gsa.displayName.toString()
@@ -155,28 +170,5 @@ fun LoginScreenContent(
             Text("구글 로그인")
         }
     }
-}
-
-@Composable
-fun LoginScreenTopAppBar(
-    navController: NavHostController
-) {
-    TopAppBar(
-        backgroundColor = Color.White,
-        title = {
-            Text(
-                text = "로그인",
-                fontSize = Constants.TOP_APP_BAR_FONT,
-                fontWeight = FontWeight.Bold
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = {
-                navController.popBackStack()
-            }) {
-                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Arrow Back")
-            }
-        }
-    )
 }
 

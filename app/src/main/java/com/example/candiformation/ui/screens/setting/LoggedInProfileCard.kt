@@ -27,9 +27,6 @@ fun LoggedInProfileCard(
     viewModel: SharedViewModel,
     logOutClicked: () -> Unit
 ) {
-    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
-    CustomDialog(showDialog = showDialog, setShowDialog = setShowDialog)
-
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -69,7 +66,6 @@ fun LoggedInProfileCard(
                 Text(
                     modifier = Modifier
                         .clickable {
-                            setShowDialog(true)
                             logOutClicked()
                         },
                     text = "로그아웃",
@@ -96,7 +92,7 @@ fun CustomDialogDemo() {
             }) {
             Text("Show Dialog")
         }
-        CustomDialog(showDialog, setShowDialog)
+        CustomDialog(showDialog)
     }
 }
 

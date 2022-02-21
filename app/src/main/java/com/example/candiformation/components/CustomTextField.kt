@@ -64,6 +64,7 @@ fun CustomTextField(
                 unfocusedLabelColor = Color.LightGray,
                 placeholderColor = VeryLightGrey_type2
             ),
+            // ***으로 뜨게 하기
             visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
     }

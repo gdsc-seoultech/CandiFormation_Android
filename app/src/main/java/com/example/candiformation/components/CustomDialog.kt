@@ -6,16 +6,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CustomDialog(
-    showDialog: Boolean,
-    setShowDialog: (Boolean) -> Unit
+    showDialog: Boolean
 ) {
     if (showDialog) {
         AlertDialog(
@@ -26,18 +24,14 @@ fun CustomDialog(
             },
             confirmButton = {
                 Button(
-                    onClick = {
-                        setShowDialog(false)
-                    },
+                    onClick = { !showDialog },
                 ) {
                     Text("Confirm")
                 }
             },
             dismissButton = {
                 Button(
-                    onClick = {
-                        setShowDialog(false)
-                    },
+                    onClick = { !showDialog },
                 ) {
                     Text("Dismiss")
                 }

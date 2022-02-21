@@ -41,7 +41,6 @@ fun CommentTextField(
             .border(1.dp, Color.Black),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         Row(modifier = Modifier
             .fillMaxHeight()
             .weight(1f)

@@ -1,9 +1,8 @@
 package com.example.candiformation.ui
 
 import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.runtime.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,7 +21,7 @@ class SharedViewModel @Inject constructor(
     private val repository: CandiRepository
 ) : ViewModel() {
 
-    // 서버 로그인 정보 ======================================================================
+    // 로그인 정보 ======================================================================
     var currentUser = mutableStateOf(
         SignUpBody(
             username = "",
@@ -203,9 +202,6 @@ class SharedViewModel @Inject constructor(
 
 
     //선택된 기사에 대한 모든 댓글 가져오기 =========================================================
-//    var selectedArticleComments: MutableState<List<CommentResponse>> =
-//        mutableStateOf(listOf())
-
     var selectedArticleComments: MutableLiveData<List<CommentResponse>> =
         MutableLiveData(listOf())
 
