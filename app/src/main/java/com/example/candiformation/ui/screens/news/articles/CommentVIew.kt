@@ -1,23 +1,21 @@
 package com.example.candiformation.ui.screens.news.articles
 
 import android.util.Log
-import android.widget.Toast
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Snackbar
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,21 +24,19 @@ import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.ui.theme.VeryLightGrey_type3
 import com.example.candiformation.ui.theme.TimeColor
-import com.example.candiformation.ui.theme.SemiRed
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @Composable
 fun CommentView(
     commentList: List<CommentResponse>,
-    viewModel: SharedViewModel
+    viewModel: SharedViewModel,
+    scrollState: ScrollState
 ) {
-    var scrollState = rememberScrollState()
-
     commentList.forEach { item ->
         CommentViewUnit(
             commentResponse = item,
-            viewModel = viewModel,
-            scrollState = scrollState
+            viewModel = viewModel
         )
         Spacer(modifier = Modifier.height(16.dp))
     }
@@ -49,15 +45,11 @@ fun CommentView(
 @Composable
 fun CommentViewUnit(
     commentResponse: CommentResponse,
-    viewModel: SharedViewModel,
-    scrollState: ScrollState
+    viewModel: SharedViewModel
 ) {
     // 날짜 String Slice
     var intRangeDate = IntRange(5, 9)
     var intRangeTime = IntRange(11, 15)
-
-    val scope = rememberCoroutineScope()
-
 
     Box(
         modifier = Modifier
@@ -109,16 +101,18 @@ fun CommentViewUnit(
 //                        tint = SemiRed
 //                    )
 //                    Text(" ${commentResponse.likeNum} ")
+
+                    // 댓글 삭제 로직
                     if (commentResponse.nickname == viewModel.currentUser.value.nickname) {
                         Icon(
                             modifier = Modifier
                                 .size(22.dp)
                                 .clickable {
-                                    Log.d("suee97", "삭제된 코멘트 아이디 >>> ${commentResponse.id}")
+                                    Log.d(
+                                        "suee97",
+                                        "삭제된 코멘트 아이디 >>> ${commentResponse.id}"
+                                    )
                                     viewModel.deleteComment(commentResponse.id)
-                                    scope.launch {
-                                        scrollState.scrollTo(scrollState.maxValue)
-                                    }
                                 },
                             imageVector = Icons.Filled.Clear,
                             contentDescription = "",

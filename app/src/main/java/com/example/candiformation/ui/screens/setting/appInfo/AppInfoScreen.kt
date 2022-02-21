@@ -90,7 +90,7 @@ fun AppInfoScreenContent() {
     AppInfoScreenCard(title = "Developers", description = "Wee SR\nShin YB\nOh SU\nYang YS")
     AppInfoScreenCard(
         title = "Contacts / Bug Report",
-        description = "atn1su@gmail.com\n010-5458-3928"
+        description = "atn1su@gmail.com"
     )
     AppInfoScreenCard(title = "From.", description = "Google Solution Challenge")
 }

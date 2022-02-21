@@ -29,7 +29,9 @@ import com.example.candiformation.models.SignUpBody
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.GoogleApiClient
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.nio.charset.Charset
@@ -135,7 +137,6 @@ fun LoginScreenContent(
 
         // 구글 로그인
         val signInRequestCode = 1
-
         val authResultLauncher =
             rememberLauncherForActivityResult(contract = GoogleApiContract()) { task ->
                 try {
@@ -151,7 +152,7 @@ fun LoginScreenContent(
                         viewModel.login(
                             idText = viewModel.signUpBody.value.username,
                             passwordText = "",
-                            onFailure = {},
+                            onFailure = { },
                             onSuccess = {
                                 navController.navigate("setting") {
                                     popUpTo("setting")

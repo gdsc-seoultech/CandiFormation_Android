@@ -55,6 +55,18 @@ fun ArticleScreen(
     var comment by remember { mutableStateOf("") }
     var isSecret by remember { mutableStateOf(true) }
 
+    val snackState = remember { SnackbarHostState() }
+    val snackScope = rememberCoroutineScope()
+
+    fun launchSnackBar(msg: String) {
+        snackScope.launch {
+            snackState.showSnackbar(
+                message = msg,
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
+
     Scaffold(
         topBar = {
             CustomTopAppBar(
@@ -71,13 +83,28 @@ fun ArticleScreen(
                 articleDataList = articleDataList!!,
                 scrollState = scrollState
             )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(.9f),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                SnackbarHost(
+                    hostState = snackState
+                )
+            }
         },
         bottomBar = {
             CommentTextField(
                 viewModel = viewModel,
                 comment = comment,
                 sendReq = {
-                    if (comment.isNotBlank()) {
+                    if(viewModel.currentUser.value.username.isNullOrEmpty()) {
+                        launchSnackBar("로그인이 필요한 서비스입니다.")
+                    } else if (comment.isBlank()) {
+                        launchSnackBar("댓글을 작성해주세요.")
+                    } else {
                         viewModel.currentCommentBody.value.articleId = viewModel.articleId.value
                         viewModel.currentCommentBody.value.content = comment
                         viewModel.currentCommentBody.value.nickname =
@@ -141,7 +168,7 @@ fun ArticleScreenContent(
         LikeAndComments(
             viewModel = viewModel,
             likeIconClicked = {
-                if(viewModel.currentUser.value.username.isNullOrEmpty()) {
+                if (viewModel.currentUser.value.username.isNullOrEmpty()) {
                     launchSnackBar()
                 } else {
                     viewModel.like(
@@ -153,7 +180,7 @@ fun ArticleScreenContent(
                 }
             },
             isLiked = viewModel.whatArticleLiked.value.articles.contains(viewModel.articleId.value),
-            likeNum = articleDataList[viewModel.articleId.value-1].like_num,
+            likeNum = articleDataList[viewModel.articleId.value - 1].like_num,
             commentNum = commentList.size
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -161,14 +188,16 @@ fun ArticleScreenContent(
         Spacer(modifier = Modifier.height(8.dp))
         CommentView(
             commentList = commentList,
-            viewModel = viewModel
+            viewModel = viewModel,
+            scrollState = scrollState
         )
         Spacer(modifier = Modifier.height(48.dp))
     }
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight(.9f),
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(.9f),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

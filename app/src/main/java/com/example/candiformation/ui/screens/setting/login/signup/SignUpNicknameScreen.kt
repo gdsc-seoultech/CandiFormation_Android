@@ -52,6 +52,7 @@ fun SignUpNicknameScreenContent(
             }
         )
         Button(onClick = {
+
             viewModel.signUpBody.value.nickname = nicknameText
             viewModel.signUp()
         }) {
