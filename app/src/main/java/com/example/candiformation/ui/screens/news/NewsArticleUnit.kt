@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.candiformation.models.ArticleResponse
 import com.example.candiformation.models.LikeBody
@@ -54,10 +55,8 @@ fun NewsArticleUnit(
                     popUpTo("news/articles") { inclusive = true }
                 }
             },
-        elevation = 4.dp,
-        border = BorderStroke(1.dp, Color.Black)
+        elevation = 0.dp
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -66,7 +65,10 @@ fun NewsArticleUnit(
                 modifier = Modifier
                     .padding(top = 12.dp, start = 12.dp, end = 12.dp),
                 text = articleResponse.title,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
             Text(
                 modifier = Modifier
@@ -78,53 +80,56 @@ fun NewsArticleUnit(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
+                    .padding(start = 12.dp, end = 12.dp, bottom = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Box(
-                    modifier = Modifier
-                        .clickable { likeIconClicked() }
-                ) {
-                    if (isLiked) {
+                Row() {
+                    Box(
+                        modifier = Modifier
+                            .clickable { likeIconClicked() }
+                    ) {
+                        if (isLiked) {
+                            Icon(
+                                modifier = Modifier.padding(4.dp),
+                                imageVector = Icons.Filled.Favorite,
+                                contentDescription = "Favorite Icon",
+                                tint = Color.Red
+                            )
+                        } else {
+                            Icon(
+                                modifier = Modifier.padding(4.dp),
+                                imageVector = Icons.Filled.FavoriteBorder,
+                                contentDescription = "Favorite Icon",
+                                tint = Color.Red
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Text(
+                        modifier = Modifier.padding(4.dp),
+                        text = articleResponse.like_num.toString()
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Box() {
                         Icon(
                             modifier = Modifier.padding(4.dp),
-                            imageVector = Icons.Filled.Favorite,
-                            contentDescription = "Favorite Icon",
-                            tint = Color.Red
-                        )
-                    } else {
-                        Icon(
-                            modifier = Modifier.padding(4.dp),
-                            imageVector = Icons.Filled.FavoriteBorder,
-                            contentDescription = "Favorite Icon",
-                            tint = Color.Red
+                            imageVector = Icons.Filled.ChatBubbleOutline,
+                            contentDescription = "ChatBubbleOutline Icon"
                         )
                     }
-                }
-                Spacer(modifier = Modifier.width(2.dp))
-                Text(
-                    modifier = Modifier.padding(4.dp),
-                    text = articleResponse.like_num.toString()
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Box() {
-                    Icon(
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Text(
                         modifier = Modifier.padding(4.dp),
-                        imageVector = Icons.Filled.ChatBubbleOutline,
-                        contentDescription = "ChatBubbleOutline Icon"
+                        text = articleResponse.comment_num.toString()
                     )
                 }
-                Spacer(modifier = Modifier.width(2.dp))
-                Text(
-                    modifier = Modifier.padding(4.dp),
-                    text = articleResponse.comment_num.toString()
-                )
-                Spacer(modifier = Modifier.width(40.dp))
                 Text(
                     modifier = Modifier.padding(4.dp),
                     text = articleResponse.news_agency,
                     fontStyle = FontStyle.Italic
                 )
             }
+
         }
     }
 }

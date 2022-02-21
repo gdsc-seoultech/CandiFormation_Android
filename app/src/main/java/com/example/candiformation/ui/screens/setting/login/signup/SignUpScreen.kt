@@ -87,6 +87,10 @@ fun SignUpScreenContent(
                 viewModel.signUpBody.value.username = emailText
                 viewModel.signUpBody.value.password = pwdText
 
+                // 이메일 인증
+                viewModel.tempEmail.value = emailText
+                viewModel.emailAuth(viewModel.tempEmail.value)
+
                 navController.navigate("setting/login/signup/auth") {
                     popUpTo(route = "setting/login/signup/auth") { inclusive = true }
                 }

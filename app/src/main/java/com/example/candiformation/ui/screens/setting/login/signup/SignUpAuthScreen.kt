@@ -42,6 +42,7 @@ fun SignUpAuthScreenContent(
         modifier = Modifier
             .fillMaxWidth()
     ) {
+
         Text("이메일 인증", fontSize = 30.sp)
         Button(onClick = {
             navController.navigate("setting/login/signup/setnickname") {

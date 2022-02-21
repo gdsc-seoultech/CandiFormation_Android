@@ -11,6 +11,10 @@ import com.example.candiformation.data.repositories.CandiRepository
 import com.example.candiformation.models.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -224,5 +228,29 @@ class SharedViewModel @Inject constructor(
 
 
 
+    // Article Loading
+    private val _isRefreshing = MutableStateFlow(false)
 
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
+
+    fun refresh() {
+        // This doesn't handle multiple 'refreshing' tasks, don't use this
+        viewModelScope.launch {
+            // A fake 2 second 'refresh'
+            _isRefreshing.emit(true)
+            articleDataList.postValue(repository.getArticleResponse())
+            _isRefreshing.emit(false)
+        }
+    }
+
+
+    // 이메일 인증
+    var tempEmail = mutableStateOf("")
+
+    fun emailAuth(email: String) {
+        viewModelScope.launch {
+            repository.emailAuth(email)
+        }
+    }
 }

@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -45,22 +46,40 @@ fun CandidateScreen(
 ) {
     var dialogState by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
+    var candidateNum by remember { mutableStateOf(0) }
 
-    CandidateDialog(
-        dialogState = dialogState,
-        onDismissRequest = { dialogState = !it })
+    val candidateItemList = listOf(
+        CandidateItem.lee_1,
+        CandidateItem.yoon_2,
+        CandidateItem.shim_3,
+        CandidateItem.ann_4,
+        CandidateItem.oh_5,
+        CandidateItem.hu_6,
+        CandidateItem.lee_7,
+        CandidateItem.ook_8,
+        CandidateItem.kim_9,
+        CandidateItem.kim_10,
+        CandidateItem.choi_11,
+        CandidateItem.kim_12,
+        CandidateItem.lee_13,
+        CandidateItem.kim_14
+    )
 
     Scaffold(
         topBar = {
-                 CustomTopAppBar(
-                     navController = navController,
-                     title = "Candidates",
-                     navBack = false
-                 )
-//            CandidateScreenTopAppBar()
+            CustomTopAppBar(
+                navController = navController,
+                title = "Candidates",
+                navBack = false
+            )
         },
         content = {
-
+            CandidateDialog(
+                dialogState = dialogState,
+                onDismissRequest = { dialogState = !it },
+                candidateNum = candidateNum,
+                candidateList = candidateItemList
+            )
 
             Column(
                 modifier = Modifier
@@ -80,24 +99,33 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "이재명",
                         party = "민주당",
-                        imgSrc = R.drawable.lee,
-                        onClick = { dialogState = true },
+                        imgSrc = candidateItemList[0].imageSrc,
+                        onClick = {
+                            candidateNum = 0
+                            dialogState = true
+                        },
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "윤석열",
                         party = "국민의힘",
-                        imgSrc = R.drawable.yoon,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[1].imageSrc,
+                        onClick = {
+                            candidateNum = 1
+                            dialogState = true
+                        }
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "심상정",
                         party = "정의당",
-                        imgSrc = R.drawable.shim,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[2].imageSrc,
+                        onClick = {
+                            candidateNum = 2
+                            dialogState = true
+                        }
                     )
                 }
                 Row(
@@ -112,24 +140,33 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "안철수",
                         party = "국민의당",
-                        imgSrc = R.drawable.ann,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[3].imageSrc,
+                        onClick = {
+                            candidateNum = 3
+                            dialogState = true
+                        }
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "오준호",
                         party = "기본소득당",
-                        imgSrc = R.drawable.oh_5,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[4].imageSrc,
+                        onClick = {
+                            candidateNum = 4
+                            dialogState = true
+                        }
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "허경영",
                         party = "국가혁명당",
-                        imgSrc = R.drawable.hu_6,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[5].imageSrc,
+                        onClick = {
+                            candidateNum = 5
+                            dialogState = true
+                        }
                     )
                 }
                 Row(
@@ -144,24 +181,33 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "이백윤",
                         party = "노동당",
-                        imgSrc = R.drawable.lee_7,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[6].imageSrc,
+                        onClick = {
+                            candidateNum = 6
+                            dialogState = true
+                        }
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "옥은호",
                         party = "새누리당",
-                        imgSrc = R.drawable.ook_8,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[7].imageSrc,
+                        onClick = {
+                            candidateNum = 7
+                            dialogState = true
+                        }
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "김동연",
                         party = "새로운물결",
-                        imgSrc = R.drawable.kim_9,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[8].imageSrc,
+                        onClick = {
+                            candidateNum = 8
+                            dialogState = true
+                        }
                     )
                 }
                 Row(
@@ -176,24 +222,33 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "김경재",
                         party = "신자유민주연합",
-                        imgSrc = R.drawable.kim_10,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[9].imageSrc,
+                        onClick = {
+                            candidateNum = 9
+                            dialogState = true
+                        }
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "조원진",
                         party = "우리공화당",
-                        imgSrc = R.drawable.choi_11,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[10].imageSrc,
+                        onClick = {
+                            candidateNum = 10
+                            dialogState = true
+                        }
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "김재연",
                         party = "진보당",
-                        imgSrc = R.drawable.kim_12,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[11].imageSrc,
+                        onClick = {
+                            candidateNum = 11
+                            dialogState = true
+                        }
                     )
                 }
                 Row(
@@ -208,16 +263,20 @@ fun CandidateScreen(
                         viewModel = viewModel,
                         name = "이경희",
                         party = "통일한국당",
-                        imgSrc = R.drawable.lee_13,
-                        onClick = { dialogState = true }
+                        imgSrc = candidateItemList[12].imageSrc,
+                        onClick = {
+                            candidateNum = 12
+                            dialogState = true
+                        }
                     )
                     CandidateCard(
                         navController = navController,
                         viewModel = viewModel,
                         name = "김민찬",
                         party = "한류연합당",
-                        imgSrc = R.drawable.kim_14,
+                        imgSrc = candidateItemList[13].imageSrc,
                         onClick = {
+                            candidateNum = 13
                             dialogState = true
                         }
                     )
@@ -230,88 +289,110 @@ fun CandidateScreen(
 
 
 @Composable
-fun CandidateScreenTopAppBar() {
-    TopAppBar(
-        backgroundColor = Color.White,
-        title = {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start
-            ) {
-                Text(
-                    text = "후보자",
-                    fontSize = Constants.TOP_APP_BAR_FONT,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        },
-    )
-}
-
-@Composable
 fun CandidateDialog(
     dialogState: Boolean,
-    onDismissRequest: (dialogState: Boolean) -> Unit
+    onDismissRequest: (dialogState: Boolean) -> Unit,
+    candidateNum: Int,
+    candidateList: List<CandidateItem>
 ) {
     if (dialogState) {
         AlertDialog(
-            backgroundColor = Color.LightGray,
-            onDismissRequest = {
-                onDismissRequest(dialogState)
-            },
-            title = null,
-            text = null,
-            buttons = {
+            modifier = Modifier.fillMaxWidth(),
+            backgroundColor = Color.White,
+            onDismissRequest = { onDismissRequest(dialogState) },
+            text = {
 
-                Column(horizontalAlignment = Alignment.CenterHorizontally)
-                {
-                    Spacer(modifier = Modifier.padding(vertical = 16.dp))
-
+                // 뒤에 정당 배경
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(.8f),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
                     Image(
-                        painter = painterResource(id = R.drawable.lee),
+                        painter = painterResource(candidateList[candidateNum].partyLogo),
                         contentDescription = null,
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
-                            .size(200.dp)
-                            .clip(CircleShape)
+                            .alpha(0.2f)
                     )
-
-                    Spacer(modifier = Modifier.padding(vertical = 16.dp))
-
-                    Text(
-                        text = "이재명 후보가 궁금하신가요?",
-                        fontWeight = FontWeight.ExtraLight,
-                        fontSize = 12.sp,
-                        color = Color.White
-                    )
-
-                    Spacer(modifier = Modifier.padding(vertical = 16.dp))
-
-                    val context = LocalContext.current
-
-                    TextButton(
-                        modifier = Modifier
-                            .height(40.dp)
-                            .weight(1f)
-                            .padding(all = 4.dp)
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(4.dp)),
-                        onClick = {
-                            onDismissRequest(dialogState)
-                            Toast.makeText(context, "확인", Toast.LENGTH_LONG).show()
-                        },
-                        colors = ButtonDefaults.textButtonColors(
-                            backgroundColor = Color.Black,
-                            contentColor = Color.White
-                        )
-                    ) {
-
-
-                    }
                 }
 
+                // Content
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp)
+                            .border(2.dp, Color.Magenta)
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .size(140.dp)
+                                .padding(top = 12.dp),
+                            painter = painterResource(candidateList[candidateNum].imageSrc),
+                            contentDescription = null
+                        )
+                        Column(modifier = Modifier
+                            .border(2.dp, Color.Blue)
+                        ) {
+                            Text(
+                                text = candidateList[candidateNum].name,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                color = Color.Black
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+
+                            Text(
+                                text = candidateList[candidateNum].party,
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+
+                            Text(
+                                text = candidateList[candidateNum].birth,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Light,
+                                color = Color.Black
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+                            Text(
+                                text = candidateList[candidateNum].campLocation,
+                                fontSize = 8.sp,
+                                fontWeight = FontWeight.Light,
+                                color = Color.Black
+                            )
+                        }
+                    }
+
+                    Divider(modifier = Modifier.padding(vertical = 12.dp))
+
+                    Text(
+                        text = candidateList[candidateNum].slogan,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+
+                    Spacer(modifier = Modifier.height(35.dp))
+                    
+                    Text(
+                        text = "Pledge",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+                }
             },
-            shape = RoundedCornerShape(4.dp)
+            shape = RoundedCornerShape(4.dp),
+            buttons = {}
         )
     }
 }

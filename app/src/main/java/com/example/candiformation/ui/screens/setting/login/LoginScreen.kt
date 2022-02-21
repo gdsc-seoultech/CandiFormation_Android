@@ -153,12 +153,11 @@ fun LoginScreenContent(
                             idText = viewModel.signUpBody.value.username,
                             passwordText = "",
                             onFailure = { },
-                            onSuccess = {
-                                navController.navigate("setting") {
-                                    popUpTo("setting")
-                                }
-                            }
+                            onSuccess = { }
                         )
+                        navController.navigate("setting") {
+                            popUpTo("setting")
+                        }
                     }
                 } catch (e: ApiException) {
                     Log.d("suee97", "authResultLauncher 에러 >>> ${e.localizedMessage}")

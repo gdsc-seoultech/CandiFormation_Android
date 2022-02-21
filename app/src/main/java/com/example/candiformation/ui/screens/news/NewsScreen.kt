@@ -8,12 +8,15 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.models.ArticleResponse
 import com.example.candiformation.models.LikeBody
 import com.example.candiformation.ui.SharedViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -52,6 +55,8 @@ fun NewsScreenContent(
     navController: NavHostController,
     articleDataList: List<ArticleResponse>
 ) {
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
+
     if(viewModel.currentUser.value.nickname != "") {
         viewModel.whatArticleLiked(viewModel.currentUser.value.username)
         Log.d("suee97", "what article liked >>> " +
@@ -68,6 +73,14 @@ fun NewsScreenContent(
                 duration = SnackbarDuration.Short
             )
         }
+    }
+
+
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing),
+        onRefresh = { }
+    ) {
+
     }
 
     Column(
@@ -104,13 +117,18 @@ fun NewsScreenContent(
                         },
                         articleDataList = articleDataList[index]
                     )
+                    Divider(
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                    )
                 }
             }
         }
     }
 
     Column(modifier = Modifier
-        .fillMaxWidth().fillMaxHeight(.9f),
+        .fillMaxWidth()
+        .fillMaxHeight(.9f),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

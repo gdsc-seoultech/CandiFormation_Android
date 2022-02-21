@@ -49,11 +49,18 @@ interface ArticleApiInterface {
         @Path("articleId") articleId: Int
     ): List<CommentResponse>
 
+    // 댓글 삭제
     @DELETE("api/comments/{nickname}/{articleId}/{commentId}")
     suspend fun deleteComment(
         @Path("nickname") nickname: String,
         @Path("articleId") articleId: Int,
         @Path("commentId") commentId: Int,
         @HeaderMap header: Map<String, String>
+    )
+
+    // 이메일 인증
+    @POST("/api/users/authenticate/mail/{email}")
+    suspend fun emailAuth(
+        @Path("email") email: String
     )
 }

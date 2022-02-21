@@ -196,4 +196,15 @@ class CandiRepository @Inject constructor(
     ) {
         articleApi.deleteComment(nickname, articleId, commentId, getHeaderMap())
     }
+
+
+    // 이메일 인증
+    suspend fun emailAuth(email: String) {
+        val res = try {
+            articleApi.emailAuth(email)
+            Log.d("suee97", "emailAuth 성공")
+        } catch (e: Exception) {
+            Log.d("suee97", "emailAuth 에러 >>> ${e.localizedMessage}")
+        }
+    }
 }
