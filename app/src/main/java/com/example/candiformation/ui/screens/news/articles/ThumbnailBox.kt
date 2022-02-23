@@ -8,6 +8,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -26,6 +27,8 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
+import com.example.candiformation.ui.theme.VeryLightGrey_type2
+import com.example.candiformation.ui.theme.VeryLightGrey_type3
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
 
 @ExperimentalMaterialApi
@@ -40,18 +43,18 @@ fun ThumbnailBox(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { uriHandler.openUri(viewModel.articleLink.value) }
-            .clip(RoundedCornerShape(4.dp))
-            .border(1.dp, VeryLightGrey_type1, RoundedCornerShape(4.dp))
-            .background(VeryLightGrey_type1)
+            .background(Color.White)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = CONTENT_INNER_PADDING, vertical = 4.dp)
         ) {
+            Divider(modifier = Modifier.padding(vertical = 4.dp))
+
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth().padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
@@ -73,6 +76,9 @@ fun ThumbnailBox(
                     )
                 }
             }
+
+            Divider(modifier = Modifier.padding(vertical = 4.dp))
+
         }
     }
 }

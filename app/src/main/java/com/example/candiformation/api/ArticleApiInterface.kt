@@ -58,15 +58,24 @@ interface ArticleApiInterface {
         @HeaderMap header: Map<String, String>
     )
 
-    // 이메일 인증
-    @POST("/api/authenticate/mail/{email}")
+    // 이메일 인증을 위한 POST
+    @POST("api/authenticate/mail/{email}")
     suspend fun emailAuth(
         @Path("email") email: String
     )
 
-    @POST("api/verifyCode/{email}/{code}")
+    // 코드 인증
+    @POST("api/authenticate/verifyCode/{email}/{code}")
     suspend fun verifyCode(
         @Path("email") email: String,
         @Path("code") code: String
     ): VerifyResponse
+
+
+    // 모든 댓글 가져오기
+    @GET("api/comments/users/{username}")
+    suspend fun getAllComments(
+        @Path("username") username: String,
+        @HeaderMap header: Map<String, String>
+    ): List<CommentResponse>
 }

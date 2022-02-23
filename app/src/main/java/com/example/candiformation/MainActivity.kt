@@ -14,6 +14,7 @@ import com.example.candiformation.navigation.SetupNavigation
 import com.example.candiformation.navigation.bottomBar.BottomNavBar
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.CandiformationTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
     private val sharedViewModel: SharedViewModel by viewModels()
 
+    @ExperimentalPagerApi
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

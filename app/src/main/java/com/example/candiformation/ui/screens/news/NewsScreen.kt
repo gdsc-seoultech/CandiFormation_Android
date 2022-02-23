@@ -55,10 +55,12 @@ fun NewsScreenContent(
 ) {
     val isRefreshing by viewModel.isRefreshing.collectAsState()
 
-    if(viewModel.currentUser.value.nickname != "") {
+    if (viewModel.currentUser.value.nickname != "") {
         viewModel.whatArticleLiked(viewModel.currentUser.value.username)
-        Log.d("suee97", "what article liked >>> " +
-                "${viewModel.whatArticleLiked.value}")
+        Log.d(
+            "suee97", "what article liked >>> " +
+                    "${viewModel.whatArticleLiked.value}"
+        )
     }
 
     val snackState = remember { SnackbarHostState() }
@@ -73,60 +75,63 @@ fun NewsScreenContent(
         }
     }
 
-
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing),
-        onRefresh = { }
+        onRefresh = {
+            viewModel.refresh()
+        }
     ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 4.dp, bottom = 48.dp)
+        ) {
+            Log.d("suee97", "articleDataList size >> ${articleDataList.size}")
 
-    }
+            if (articleDataList.isNullOrEmpty()) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 4.dp, bottom = 48.dp)
-    ) {
-        if (articleDataList.isNullOrEmpty()) {
-            Log.d("suee97", "getArticleData is null or empty")
-        } else {
-            LazyColumn() {
-                items(articleDataList.size) { index ->
-                    NewsArticleUnit(
-                        navController = navController,
-                        viewModel = viewModel,
-                        articleResponse = articleDataList[index],
-                        likeIconClicked = {
-                            if(viewModel.currentUser.value.username.isNullOrEmpty()) {
-                                launchSnackBar()
-                            } else {
-                                viewModel.articleId.value = articleDataList[index].id
-                                viewModel.like(
-                                    likeBody = LikeBody(
-                                        article_id = viewModel.articleId.value,
-                                        username = viewModel.currentUser.value.username
+            } else {
+                LazyColumn() {
+                    items(articleDataList.size) { index ->
+                        NewsArticleUnit(
+                            navController = navController,
+                            viewModel = viewModel,
+                            articleResponse = articleDataList[articleDataList.size -1 - index],
+                            likeIconClicked = {
+                                if (viewModel.currentUser.value.username.isNullOrEmpty()) {
+                                    launchSnackBar()
+                                } else {
+                                    viewModel.articleId.value = articleDataList[articleDataList.size -1 - index].id
+                                    viewModel.like(
+                                        likeBody = LikeBody(
+                                            article_id = viewModel.articleId.value,
+                                            username = viewModel.currentUser.value.username
+                                        )
                                     )
-                                )
-                            }
-                        },
-                        isLiked = if(viewModel.whatArticleLiked.value.articles.contains(index+1)) {
-                            true
-                        } else {
-                            false
-                        },
-                        articleDataList = articleDataList[index]
-                    )
-                    Divider(
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                    )
+                                }
+                            },
+                            isLiked = if (viewModel.whatArticleLiked.value.articles.contains(articleDataList.size -1 - index + 1)) {
+                                true
+                            } else {
+                                false
+                            },
+                            articleDataList = articleDataList[articleDataList.size -1 - index]
+                        )
+                        Divider(
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                        )
+                    }
                 }
             }
         }
     }
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight(.9f),
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(.9f),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

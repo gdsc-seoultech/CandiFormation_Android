@@ -1,9 +1,13 @@
 package com.example.candiformation.ui.screens.setting
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -13,12 +17,21 @@ import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
 import com.example.candiformation.utils.Constants.TOP_APP_BAR_FONT
+import kotlinx.coroutines.launch
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun SettingScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    val scope = rememberCoroutineScope()
+    scope.launch {
+        viewModel.getAllComments(username = viewModel.currentUser.value.username)
+    }
+
+
+
     Scaffold(
         content = {
             Column(
@@ -51,6 +64,21 @@ fun SettingList(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    val snackState = remember { SnackbarHostState() }
+    val snackScope = rememberCoroutineScope()
+
+    fun launchSnackBar() {
+        snackScope.launch {
+            snackState.showSnackbar(
+                message = "로그인이 필요한 서비스입니다.",
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
+
+
+
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(24.dp))
         SettingTitleUnit("My Activity")
@@ -64,9 +92,15 @@ fun SettingList(
             navController = navController,
             viewModel = viewModel,
             title = "Comments",
-            onClicked = { navController.navigate("setting/comments") {
-                popUpTo("setting")
-            } }
+            onClicked = {
+                if(viewModel.currentUser.value.username.isNullOrEmpty()) {
+                    launchSnackBar()
+                } else {
+                    navController.navigate("setting/comments") {
+                        popUpTo("setting")
+                    }
+                }
+            }
         )
         GreyDivider()
         SettingListUnit(
@@ -111,6 +145,19 @@ fun SettingList(
             onClicked = {/* 각자 맞는 화면으로 이동 */ }
         )
         GreyDivider()
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(.5f),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            SnackbarHost(
+                hostState = snackState
+            )
+        }
+
     }
 }
 

@@ -14,8 +14,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.candiformation.navigation.navGraph.*
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.screens.splash.SplashScreen
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
 fun SetupNavigation(

@@ -147,14 +147,14 @@ fun LoginScreenContent(
                         viewModel.signUpBody.value.username = gsa.email.toString()
                         viewModel.signUpBody.value.password = ""
                         viewModel.signUpBody.value.nickname = gsa.displayName.toString()
-                        viewModel.signUp()
 
-                        viewModel.login(
+                        viewModel.googleLogin(
                             idText = viewModel.signUpBody.value.username,
                             passwordText = "",
                             onFailure = { },
                             onSuccess = { }
                         )
+
                         navController.navigate("setting") {
                             popUpTo("setting")
                         }

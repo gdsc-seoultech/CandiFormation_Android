@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
+import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
 
@@ -20,7 +21,11 @@ fun SignUpNicknameScreen(
 ) {
     Scaffold(
         topBar = {
-            SignUpNicknameScreenTopAppBar(navController = navController)
+            CustomTopAppBar(
+                navController = navController,
+                title = "회원가입", 
+                navBack = false
+            )
         },
         content = {
             SignUpNicknameScreenContent(
@@ -42,6 +47,7 @@ fun SignUpNicknameScreenContent(
         modifier = Modifier
             .fillMaxWidth()
     ) {
+        Text(text = "인증완료. 닉네임 설정하고 버튼 눌러야 SignUp 실행")
         TextField(
             value = nicknameText,
             onValueChange = {
@@ -52,34 +58,10 @@ fun SignUpNicknameScreenContent(
             }
         )
         Button(onClick = {
-
             viewModel.signUpBody.value.nickname = nicknameText
             viewModel.signUp()
         }) {
             Text("회원가입")
         }
     }
-}
-
-@Composable
-fun SignUpNicknameScreenTopAppBar(
-    navController: NavHostController
-) {
-    TopAppBar(
-        backgroundColor = Color.White,
-        title = {
-            Text(
-                text = "회원가입",
-                fontSize = Constants.TOP_APP_BAR_FONT,
-                fontWeight = FontWeight.Bold
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = {
-                navController.popBackStack()
-            }) {
-                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Arrow Back")
-            }
-        }
-    )
 }

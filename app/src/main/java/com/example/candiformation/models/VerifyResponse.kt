@@ -1,6 +1,6 @@
 package com.example.candiformation.models
 
 data class VerifyResponse(
-    val email: String,
+    val message: String,
     val verify: Boolean
 )

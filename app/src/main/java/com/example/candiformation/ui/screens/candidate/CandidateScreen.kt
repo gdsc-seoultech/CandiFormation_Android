@@ -295,6 +295,8 @@ fun CandidateDialog(
     candidateNum: Int,
     candidateList: List<CandidateItem>
 ) {
+    var scrollState = rememberScrollState()
+
     if (dialogState) {
         AlertDialog(
             modifier = Modifier.fillMaxWidth(),
@@ -323,6 +325,7 @@ fun CandidateDialog(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .verticalScroll(state = scrollState)
                 ) {
                     Row(
                         modifier = Modifier

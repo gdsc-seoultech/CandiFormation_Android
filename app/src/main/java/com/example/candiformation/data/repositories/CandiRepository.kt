@@ -216,4 +216,16 @@ class CandiRepository @Inject constructor(
         }
         return res
     }
+
+    // 모든 댓글 가져오기
+    suspend fun getAllComments(username: String): List<CommentResponse> {
+        val res = try {
+            articleApi.getAllComments(username = username, header = getHeaderMap())
+        } catch (e: Exception) {
+            listOf<CommentResponse>()
+        }
+
+        return res
+    }
+
 }

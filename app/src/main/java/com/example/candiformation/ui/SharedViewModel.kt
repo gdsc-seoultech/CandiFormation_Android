@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 import javax.inject.Inject
 
@@ -40,7 +41,7 @@ class SharedViewModel @Inject constructor(
     // ======================================================================================
 
 
-    // 모든 기사 정보 불러오기 ===================================================================
+    // 모든 기사 정보 불러오기 + 메인 5개 =========================================================
     val articleDataList: MutableLiveData<List<ArticleResponse>> =
         MutableLiveData(listOf<ArticleResponse>())
 
@@ -228,7 +229,6 @@ class SharedViewModel @Inject constructor(
     // ======================================================================================
 
 
-
     // Article Loading
     private val _isRefreshing = MutableStateFlow(false)
 
@@ -240,7 +240,8 @@ class SharedViewModel @Inject constructor(
         viewModelScope.launch {
             // A fake 2 second 'refresh'
             _isRefreshing.emit(true)
-            articleDataList.postValue(repository.getArticleResponse())
+            getArticle()
+            delay(1000)
             _isRefreshing.emit(false)
         }
     }
@@ -252,6 +253,50 @@ class SharedViewModel @Inject constructor(
     fun emailAuth(email: String) {
         viewModelScope.launch {
             repository.emailAuth(email)
+        }
+    }
+
+    val isVerified: MutableLiveData<VerifyResponse> = MutableLiveData()
+
+    fun verifyCode(tempCode: String) {
+        viewModelScope.launch {
+            val res = mutableStateOf(VerifyResponse("", false))
+            res.value = repository.verifyCode(authEmail.value, tempCode)
+            isVerified.value = res.value
+        }
+    }
+
+    // 구글 signUp + Login
+    fun googleLogin(
+        idText: String,
+        passwordText: String,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
+        viewModelScope.launch {
+            repository.signUp(signUpBody.value)
+            val result = repository.signIn(LoginBody(idText, passwordText))
+
+            if (result!!.second) {
+                currentUser.value.nickname = result!!.first
+                currentUser.value.username = idText
+                currentUser.value.password = passwordText
+                onSuccess()
+                Log.d("suee97", "로그인성공 >>> ${result!!.second}")
+            } else {
+                onFailure()
+                Log.d("suee97", "로그인에러 >>> ${result!!.second}")
+            }
+            delay(1000)
+        }
+    }
+
+    // 모든 댓글 가져오기
+    val userComments: MutableLiveData<List<CommentResponse>> = MutableLiveData()
+
+    fun getAllComments(username: String) {
+        viewModelScope.launch {
+            userComments.value = repository.getAllComments(username)
         }
     }
 }

@@ -93,14 +93,6 @@ fun CommentViewUnit(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(bottom = 12.dp)
                 ) {
-                    // 일단 미구현
-//                    Icon(
-//                        modifier = Modifier.size(20.dp),
-//                        imageVector = Icons.Filled.Favorite,
-//                        contentDescription = "",
-//                        tint = SemiRed
-//                    )
-//                    Text(" ${commentResponse.likeNum} ")
 
                     // 댓글 삭제 로직
                     if (commentResponse.nickname == viewModel.currentUser.value.nickname) {

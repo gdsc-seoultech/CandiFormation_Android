@@ -6,7 +6,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.screens.home.HomeScreen
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalPagerApi
 fun NavGraphBuilder.homeNavGraph(
     navController: NavHostController,
     viewModel: SharedViewModel
