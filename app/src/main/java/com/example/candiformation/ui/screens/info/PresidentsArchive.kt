@@ -4,11 +4,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -173,25 +169,27 @@ fun FormerPresidentDialog(
 ) {
     if (dialogState) {
         AlertDialog(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(.5f),
             backgroundColor = Color.White,
             onDismissRequest = { onDismissRequest(dialogState) },
             text = {
-
                 // 뒤에 정당 배경
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(.8f),
+                        .fillMaxHeight(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Image(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .alpha(0.4f),
                         painter = painterResource(id = R.drawable.president_archive_logo),
                         contentDescription = null,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .alpha(0.2f)
+                        contentScale = ContentScale.Fit
                     )
                 }
 
@@ -203,20 +201,17 @@ fun FormerPresidentDialog(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 12.dp)
-                            .border(2.dp, Color.Magenta)
+                            .padding(top = 12.dp),
+                        horizontalArrangement = Arrangement.Center
                     ) {
                         Image(
                             modifier = Modifier
-                                .size(140.dp)
-                                .padding(top = 12.dp),
+                                .size(140.dp),
                             painter = painterResource(presidentsArchiveList[presidentArchiveNum].imageSrc),
                             contentDescription = null
                         )
-                        Column(
-                            modifier = Modifier
-                                .border(2.dp, Color.Blue)
-                        ) {
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Column() {
                             Text(
                                 text = presidentsArchiveList[presidentArchiveNum].name,
                                 fontSize = 24.sp,
@@ -236,29 +231,26 @@ fun FormerPresidentDialog(
                             Text(
                                 text = presidentsArchiveList[presidentArchiveNum].tenure,
                                 fontSize = 10.sp,
-                                fontWeight = FontWeight.Light,
+                                fontWeight = FontWeight.Bold,
                                 color = Color.Black
                             )
                             Spacer(modifier = Modifier.height(6.dp))
                             Text(
                                 text = presidentsArchiveList[presidentArchiveNum].religion,
-                                fontSize = 8.sp,
-                                fontWeight = FontWeight.Light,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
                                 color = Color.Black
                             )
+                            Spacer(modifier = Modifier.height(6.dp))
                             Text(
                                 text = presidentsArchiveList[presidentArchiveNum].family,
-                                fontSize = 8.sp,
-                                fontWeight = FontWeight.Light,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
                                 color = Color.Black
                             )
                         }
                     }
-
-                    Divider(modifier = Modifier.padding(vertical = 12.dp))
-
-
-                    Spacer(modifier = Modifier.height(35.dp))
+//                    Spacer(modifier = Modifier.height(35.dp))
                 }
             },
             shape = RoundedCornerShape(4.dp),

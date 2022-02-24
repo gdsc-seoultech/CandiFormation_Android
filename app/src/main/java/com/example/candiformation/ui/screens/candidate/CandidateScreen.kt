@@ -1,17 +1,10 @@
 package com.example.candiformation.ui.screens.candidate
 
-import android.app.assist.AssistContent
-import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -19,24 +12,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.utils.Constants
 import com.example.candiformation.R
 import com.example.candiformation.components.CustomTopAppBar
-import com.example.candiformation.ui.theme.GukkimColor
-import com.example.candiformation.ui.theme.MinjudangColor
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
 
 @Composable
@@ -48,22 +34,8 @@ fun CandidateScreen(
     val scrollState = rememberScrollState()
     var candidateNum by remember { mutableStateOf(0) }
 
-    val candidateItemList = listOf(
-        CandidateItem.lee_1,
-        CandidateItem.yoon_2,
-        CandidateItem.shim_3,
-        CandidateItem.ann_4,
-        CandidateItem.oh_5,
-        CandidateItem.hu_6,
-        CandidateItem.lee_7,
-        CandidateItem.ook_8,
-        CandidateItem.kim_9,
-        CandidateItem.kim_10,
-        CandidateItem.choi_11,
-        CandidateItem.kim_12,
-        CandidateItem.lee_13,
-        CandidateItem.kim_14
-    )
+    // 펼치지 마세요
+    val candidateItemList = listOf(CandidateItem.lee_1, CandidateItem.yoon_2, CandidateItem.shim_3, CandidateItem.ann_4, CandidateItem.oh_5, CandidateItem.hu_6, CandidateItem.lee_7, CandidateItem.ook_8, CandidateItem.kim_9, CandidateItem.kim_10, CandidateItem.choi_11, CandidateItem.kim_12, CandidateItem.lee_13, CandidateItem.kim_14)
 
     Scaffold(
         topBar = {
@@ -316,8 +288,7 @@ fun CandidateDialog(
                         painter = painterResource(candidateList[candidateNum].partyLogo),
                         contentDescription = null,
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .alpha(0.2f)
+                        modifier = Modifier.alpha(0.2f)
                     )
                 }
 
@@ -325,23 +296,25 @@ fun CandidateDialog(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .verticalScroll(state = scrollState)
+                        .verticalScroll(state = scrollState),
+                    horizontalAlignment = Alignment.Start
                 ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 12.dp)
-                            .border(2.dp, Color.Magenta)
+                            .padding(top = 12.dp),
+                        horizontalArrangement = Arrangement.Center
                     ) {
                         Image(
                             modifier = Modifier
-                                .size(140.dp)
-                                .padding(top = 12.dp),
+                                .size(140.dp),
                             painter = painterResource(candidateList[candidateNum].imageSrc),
                             contentDescription = null
                         )
-                        Column(modifier = Modifier
-                            .border(2.dp, Color.Blue)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.Start
                         ) {
                             Text(
                                 text = candidateList[candidateNum].name,
@@ -358,18 +331,17 @@ fun CandidateDialog(
                                 color = Color.Black
                             )
                             Spacer(modifier = Modifier.height(6.dp))
-
                             Text(
                                 text = candidateList[candidateNum].birth,
                                 fontSize = 10.sp,
-                                fontWeight = FontWeight.Light,
+                                fontWeight = FontWeight.Bold,
                                 color = Color.Black
                             )
                             Spacer(modifier = Modifier.height(6.dp))
                             Text(
                                 text = candidateList[candidateNum].campLocation,
-                                fontSize = 8.sp,
-                                fontWeight = FontWeight.Light,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
                                 color = Color.Black
                             )
                         }
@@ -384,13 +356,16 @@ fun CandidateDialog(
                         color = Color.Black
                     )
 
-                    Spacer(modifier = Modifier.height(35.dp))
-                    
+                    Spacer(modifier = Modifier.height(12.dp))
+
                     Text(
                         text = "Pledge",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
+                    )
+                    Text(
+                        text = stringResource(id = candidateList[candidateNum].stringSrc)
                     )
                 }
             },

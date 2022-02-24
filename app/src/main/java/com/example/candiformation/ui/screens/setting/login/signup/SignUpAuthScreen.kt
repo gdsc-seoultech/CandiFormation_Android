@@ -80,7 +80,6 @@ fun SignUpAuthScreenContent(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-
         Row(
             modifier = Modifier
                 .height(50.dp)

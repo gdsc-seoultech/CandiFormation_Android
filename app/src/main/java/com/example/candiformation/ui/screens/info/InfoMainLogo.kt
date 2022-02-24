@@ -2,9 +2,10 @@ package com.example.candiformation.ui.screens.info
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,12 +16,25 @@ import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.screens.setting.SettingListUnit
 import com.example.candiformation.ui.screens.setting.SettingTitleUnit
+import kotlinx.coroutines.launch
 
 @Composable
 fun InfoMainLogo(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    val snackState = remember { SnackbarHostState() }
+    val snackScope = rememberCoroutineScope()
+
+    fun launchSnackBar(msg: String) {
+        snackScope.launch {
+            snackState.showSnackbar(
+                message = msg,
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
+
     Column(modifier = Modifier.fillMaxWidth()) {
         InfoTitleUnit("Archive")
         Divider(
@@ -35,7 +49,7 @@ fun InfoMainLogo(
             title = "Presidents Archive",
             onClicked = {
                 navController.navigate("info/presidentArchive") {
-                    popUpTo("presidentArchive")
+                    popUpTo("info")
                 }
             }
         )
@@ -45,9 +59,7 @@ fun InfoMainLogo(
             viewModel = viewModel,
             title = "Party Archive",
             onClicked = {
-                navController.navigate("info/partyArchive"){
-                    popUpTo("partyArchive")
-                }
+                launchSnackBar("준비중입니다.")
             }
         )
         GreyDivider()
@@ -63,9 +75,25 @@ fun InfoMainLogo(
             navController = navController,
             viewModel = viewModel,
             title = "Debates",
-            onClicked = {}
+            onClicked = {
+                launchSnackBar("준비중입니다.")
+            }
         )
         GreyDivider()
+        Spacer(modifier = Modifier.height(32.dp))
+
+
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(.9f),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        SnackbarHost(
+            hostState = snackState
+        )
     }
 }
 

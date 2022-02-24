@@ -29,7 +29,7 @@ sealed class PresidentsArchiveItem (
     object former_3_park: PresidentsArchiveItem(
         name = "박정희",
         birth = "1917. 11. 14. ~ 1979. 10. 26",
-        tenure = "1962. 3 ~ 1979. 10(권한대행 기간포함)",
+        tenure = "1962. 3 ~ 1979. 10",
         religion = "불교",
         family = "영부인 : 육영수, 자녀 : 1남2녀",
         imageSrc = R.drawable.former_3_park
@@ -37,7 +37,7 @@ sealed class PresidentsArchiveItem (
     object former_4_choi: PresidentsArchiveItem(
         name = "최규하",
         birth = "1919. 7. 16 ~ 2006. 10. 22",
-        tenure = "1979. 10 ~ 1980. 8(권한대행 기간포함)",
+        tenure = "1979. 10 ~ 1980. 8",
         religion = "없음",
         family = "영부인 : 홍기, 자녀 : 2남1녀",
         imageSrc = R.drawable.former_4_choi
