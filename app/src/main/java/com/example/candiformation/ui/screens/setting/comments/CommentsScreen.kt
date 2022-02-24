@@ -1,5 +1,6 @@
 package com.example.candiformation.ui.screens.setting.comments
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -20,11 +21,13 @@ import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.screens.news.articles.CommentView
 import kotlinx.coroutines.launch
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun CommentsScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    viewModel.getAllComments(viewModel.currentUser.value.username)
     val commentList by viewModel.userComments.observeAsState()
 
     Log.d("suee97", "commentList >>> ${commentList}")
@@ -50,7 +53,8 @@ fun CommentsScreen(
                 CommentView(
                     commentList = commentList!!.asReversed(),
                     viewModel = viewModel,
-                    scrollState = scrollState
+                    scrollState = scrollState,
+                    isDeletable = false
                 )
                 Spacer(modifier = Modifier.height(48.dp))
             }

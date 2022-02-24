@@ -34,8 +34,7 @@ fun NewsArticleUnit(
     viewModel: SharedViewModel,
     articleResponse: ArticleResponse,
     likeIconClicked: () -> Unit,
-    isLiked: Boolean,
-    articleDataList: ArticleResponse
+    isLiked: Boolean
 ) {
     Surface(
         modifier = Modifier
@@ -130,7 +129,6 @@ fun NewsArticleUnit(
                     fontStyle = FontStyle.Italic
                 )
             }
-
         }
     }
 }

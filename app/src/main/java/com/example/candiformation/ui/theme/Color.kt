@@ -20,3 +20,5 @@ val Gukmin = Color(0xFFEA5504)
 
 val SemiRed = Color(0xFFFF4646)
 val TimeColor = Color(0xFF969696)
+
+val googleColor = Color(0x8A000000)

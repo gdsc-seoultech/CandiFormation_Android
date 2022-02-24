@@ -78,4 +78,11 @@ interface ArticleApiInterface {
         @Path("username") username: String,
         @HeaderMap header: Map<String, String>
     ): List<CommentResponse>
+
+
+    // 한 기사에 대한 좋아요 수
+    @GET("api/articles/{articleId}/likes")
+    suspend fun getArticleLikes(
+        @Path("articleId") articleId: Int
+    ): ArticleLikeNumResponse
 }

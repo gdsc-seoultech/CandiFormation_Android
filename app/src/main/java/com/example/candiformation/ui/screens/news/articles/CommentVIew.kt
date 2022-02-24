@@ -1,9 +1,10 @@
 package com.example.candiformation.ui.screens.news.articles
 
 import android.util.Log
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -11,7 +12,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,22 +21,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.candiformation.models.CommentResponse
 import com.example.candiformation.ui.SharedViewModel
+import com.example.candiformation.ui.theme.TimeColor
 import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.ui.theme.VeryLightGrey_type3
-import com.example.candiformation.ui.theme.TimeColor
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 @Composable
 fun CommentView(
     commentList: List<CommentResponse>,
     viewModel: SharedViewModel,
-    scrollState: ScrollState
+    scrollState: ScrollState,
+    isDeletable: Boolean
 ) {
     commentList.forEach { item ->
         CommentViewUnit(
             commentResponse = item,
-            viewModel = viewModel
+            viewModel = viewModel,
+            isDeletable = isDeletable
         )
         Spacer(modifier = Modifier.height(16.dp))
     }
@@ -45,12 +45,9 @@ fun CommentView(
 @Composable
 fun CommentViewUnit(
     commentResponse: CommentResponse,
-    viewModel: SharedViewModel
+    viewModel: SharedViewModel,
+    isDeletable: Boolean
 ) {
-    // 날짜 String Slice
-    var intRangeDate = IntRange(5, 9)
-    var intRangeTime = IntRange(11, 15)
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,11 +78,7 @@ fun CommentViewUnit(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "${commentResponse.createdAt.slice(intRangeDate)} ${
-                            commentResponse.createdAt.slice(
-                                intRangeTime
-                            )
-                        }",
+                        text = commentResponse.createdAt,
                         color = TimeColor
                     )
                 }
@@ -96,20 +89,23 @@ fun CommentViewUnit(
 
                     // 댓글 삭제 로직
                     if (commentResponse.nickname == viewModel.currentUser.value.nickname) {
-                        Icon(
-                            modifier = Modifier
-                                .size(22.dp)
-                                .clickable {
-                                    Log.d(
-                                        "suee97",
-                                        "삭제된 코멘트 아이디 >>> ${commentResponse.id}"
-                                    )
-                                    viewModel.deleteComment(commentResponse.id)
-                                },
-                            imageVector = Icons.Filled.Clear,
-                            contentDescription = "",
-                            tint = Color.LightGray
-                        )
+                        if(isDeletable) {
+                            Icon(
+                                modifier = Modifier
+                                    .size(22.dp)
+                                    .clickable {
+                                        Log.d(
+                                            "suee97",
+                                            "삭제된 코멘트 아이디 >>> ${commentResponse.id}"
+                                        )
+                                        viewModel.deleteComment(commentResponse.id)
+                                    },
+                                imageVector = Icons.Filled.Clear,
+                                contentDescription = "",
+                                tint = Color.LightGray
+                            )
+                        }
+
                     }
                 }
             }

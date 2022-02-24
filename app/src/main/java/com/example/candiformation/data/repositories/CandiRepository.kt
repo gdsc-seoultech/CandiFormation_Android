@@ -41,7 +41,7 @@ class CandiRepository @Inject constructor(
 
     // 전체 뉴스기사 정보 불러오기 ================================================================
     suspend fun getArticleResponse(): List<ArticleResponse> {
-        return articleApi.getArticle()
+        return articleApi.getArticle().asReversed()
     }
     // ==========================================================================================
 
@@ -227,5 +227,11 @@ class CandiRepository @Inject constructor(
 
         return res
     }
+
+    // article id로 like 수 가져오기
+    suspend fun getArticleLikes(articleId: Int): ArticleLikeNumResponse {
+        return articleApi.getArticleLikes(articleId)
+    }
+
 
 }

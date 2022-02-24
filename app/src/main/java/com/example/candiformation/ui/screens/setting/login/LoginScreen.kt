@@ -3,6 +3,10 @@ package com.example.candiformation.ui.screens.setting.login
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,16 +21,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.candiformation.R
 import com.example.candiformation.components.CustomButton
 import com.example.candiformation.components.CustomTextField
 import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.data.google.GoogleApiContract
 import com.example.candiformation.models.SignUpBody
 import com.example.candiformation.ui.SharedViewModel
+import com.example.candiformation.ui.theme.googleColor
 import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -37,6 +46,7 @@ import kotlinx.coroutines.launch
 import java.nio.charset.Charset
 
 
+@ExperimentalMaterialApi
 @Composable
 fun LoginScreen(
     navController: NavHostController,
@@ -59,6 +69,7 @@ fun LoginScreen(
     )
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun LoginScreenContent(
     navController: NavHostController,
@@ -102,7 +113,7 @@ fun LoginScreenContent(
             viewModel = viewModel,
             navController = navController,
             title = "로그인",
-            widthDp = 100.dp,
+            widthDp = 180.dp,
             onClick = {
                 if (idText.value.isBlank() || passwordText.value.isBlank()) {
                     loginMsg = "올바른 아이디 또는 비밀번호가 아닙니다."
@@ -127,7 +138,7 @@ fun LoginScreenContent(
             viewModel = viewModel,
             navController = navController,
             title = "회원가입",
-            widthDp = 100.dp,
+            widthDp = 180.dp,
             onClick = {
                 navController.navigate("setting/login/signup") {
                     popUpTo("setting/login")
@@ -164,11 +175,102 @@ fun LoginScreenContent(
                 }
             }
 
-        Button(onClick = {
-            authResultLauncher.launch(signInRequestCode)
-        }) {
-            Text("구글 로그인")
-        }
+        Spacer(modifier = Modifier.height(8.dp))
+        
+        SignInView(
+            errorText = "",
+            onClick = {
+                authResultLauncher.launch(signInRequestCode)
+            }
+        )
     }
 }
 
+@ExperimentalMaterialApi
+@Composable
+fun SignInView(errorText: String?, onClick: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        GoogleSignInButtonUi(
+            text = "Sign In With Google",
+            loadingText = "Signing In....",
+            onClicked = {
+                onClick()
+            }
+            // authResultLauncer launch : SignIn Intent 실행 및 결과 처리 (AuthResultContract)
+        )
+        errorText?.let { // errorText가 전달된 경우 이를 표시
+            Spacer(modifier = Modifier.height(30.dp))
+            Text(text = it)
+        }
+    }
+
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun GoogleSignInButtonUi(
+    text: String = "",
+    loadingText: String = "",
+    onClicked: () -> Unit
+) {
+    var clicked by remember { mutableStateOf(false) }
+    val robotoFont = FontFamily(Font(R.font.roboto_medium))
+
+    Surface(
+        modifier = Modifier.height(40.dp),
+        onClick = {
+            onClicked()
+            clicked = false
+        },
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colors.surface,
+        elevation = 4.dp
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp,
+                    top = 10.5.dp,
+                    bottom = 10.5.dp
+                )
+                .animateContentSize(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearOutSlowInEasing
+                    )
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                modifier = Modifier.size(18.dp),
+                painter = painterResource(id = R.drawable.ic_google_icon),
+                contentDescription = "Google Sign Button",
+                tint = Color.Unspecified
+            )
+            Spacer(modifier = Modifier.width(24.dp))
+            Text(
+                text = if (clicked) loadingText else text,
+                fontFamily = robotoFont,
+                fontSize = 14.sp,
+                color = googleColor
+            ) // 클릭 시 loadingText 보여줌
+
+            if (clicked) { // 클릭 시 실행
+                Spacer(modifier = Modifier.width(16.dp))
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .height(16.dp)
+                        .width(16.dp),
+                    strokeWidth = 2.dp,
+                    color = MaterialTheme.colors.primary
+                )
+                // authResultLauncer launch : SignIn Intent 실행 및 결과 처리 (AuthResultContract)
+            }
+        }
+    }
+}

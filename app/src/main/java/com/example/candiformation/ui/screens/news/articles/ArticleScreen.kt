@@ -1,6 +1,9 @@
 package com.example.candiformation.ui.screens.news.articles
 
 import android.annotation.SuppressLint
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.animateScrollBy
@@ -23,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.candiformation.components.CustomTopAppBar
+import com.example.candiformation.models.ArticleLikeNumResponse
 import com.example.candiformation.models.ArticleResponse
 import com.example.candiformation.models.CommentResponse
 import com.example.candiformation.models.LikeBody
@@ -33,6 +37,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("CoroutineCreationDuringComposition")
 @ExperimentalMaterialApi
 @Composable
@@ -44,9 +49,11 @@ fun ArticleScreen(
     val scope = rememberCoroutineScope()
     val commentList by viewModel.selectedArticleComments.observeAsState()
     val articleDataList by viewModel.articleDataList.observeAsState()
+
     scope.launch {
         viewModel.getSelectedArticleComments(viewModel.articleId.value)
         viewModel.getArticle() // 화면 들어왔을 때 모든 기사 정보 불러오기
+        viewModel.getArticleLikes(viewModel.articleId.value)
     }
 
     // 스크롤 컨트롤
@@ -181,7 +188,7 @@ fun ArticleScreenContent(
                 }
             },
             isLiked = viewModel.whatArticleLiked.value.articles.contains(viewModel.articleId.value),
-            likeNum = articleDataList[viewModel.articleId.value - 1].like_num,
+            likeNum = viewModel.getArticleLikes.value,
             commentNum = commentList.size
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -190,7 +197,8 @@ fun ArticleScreenContent(
         CommentView(
             commentList = commentList,
             viewModel = viewModel,
-            scrollState = scrollState
+            scrollState = scrollState,
+            isDeletable = true
         )
         Spacer(modifier = Modifier.height(48.dp))
     }

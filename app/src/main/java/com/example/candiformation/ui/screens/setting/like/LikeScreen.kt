@@ -8,19 +8,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.candiformation.components.CustomTopAppBar
+import com.example.candiformation.models.ArticleResponse
 import com.example.candiformation.models.LikeBody
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.screens.news.NewsArticleUnit
 import com.example.candiformation.ui.screens.news.articles.CommentView
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -28,6 +28,17 @@ fun LikeScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    val articleDataList by viewModel.articleDataList.observeAsState()
+    val scaffoldState = rememberScaffoldState()
+
+    if (viewModel.currentUser.value.nickname != "") {
+        viewModel.whatArticleLiked(viewModel.currentUser.value.username)
+        Log.d(
+            "suee97", "what article liked id >>> " +
+                    "${viewModel.whatArticleLiked.value.articles}"
+        )
+    }
+
     Scaffold(
         topBar = {
             CustomTopAppBar(
@@ -37,43 +48,52 @@ fun LikeScreen(
             )
         },
         content = {
-            LikeScreenContent(
-                navController = navController,
-                viewModel = viewModel
-            )
-        }
+            if (!viewModel.whatArticleLiked.value.articles.isNullOrEmpty()) {
+                LikeScreenContent(
+                    navController = navController,
+                    viewModel = viewModel,
+                    articleDataList = articleDataList!!
+                )
+            }
+        },
+        scaffoldState = scaffoldState
     )
 }
 
 @Composable
 fun LikeScreenContent(
     navController: NavHostController,
-    viewModel: SharedViewModel
+    viewModel: SharedViewModel,
+    articleDataList: List<ArticleResponse>
 ) {
-    val _getAllArticles by viewModel.articleDataList.observeAsState()
-    val getAllArticles by remember { mutableStateOf(_getAllArticles?.asReversed()) }
+    Log.d("suee97", "data size >>> ${articleDataList.size}")
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 4.dp, bottom = 48.dp)
     ) {
-        if (getAllArticles.isNullOrEmpty()) {
+        if (articleDataList.isNullOrEmpty()) {
 
         } else {
             LazyColumn() {
-                items(getAllArticles!!.size) { index ->
-                    if (index == viewModel.whatArticleLiked.value.articles[index]) {
+                items(articleDataList.size) { index ->
+
+                    if (viewModel.whatArticleLiked.value.articles.contains(
+                            articleDataList[index].id
+                        )
+                    ) {
                         NewsArticleUnit(
                             navController = navController,
                             viewModel = viewModel,
-                            articleResponse = getAllArticles!![index],
+                            articleResponse = articleDataList[index],
                             likeIconClicked = {
+                                Log.d("suee97", "현재 누른 기사 index >>> ${index}")
+                                Log.d("suee97", "현재 누른 기사 id >>> ${articleDataList[index].id}")
                                 if (viewModel.currentUser.value.username.isNullOrEmpty()) {
 
                                 } else {
-                                    viewModel.articleId.value =
-                                        getAllArticles!![index].id
+                                    viewModel.articleId.value = articleDataList[index].id
                                     viewModel.like(
                                         likeBody = LikeBody(
                                             article_id = viewModel.articleId.value,
@@ -83,14 +103,13 @@ fun LikeScreenContent(
                                 }
                             },
                             isLiked = if (viewModel.whatArticleLiked.value.articles.contains(
-                                    getAllArticles!!.size - 1 - index + 1
+                                    articleDataList[index].id
                                 )
                             ) {
                                 true
                             } else {
                                 false
-                            },
-                            articleDataList = getAllArticles!![getAllArticles!!.size - 1 - index]
+                            }
                         )
                         Divider(
                             modifier = Modifier

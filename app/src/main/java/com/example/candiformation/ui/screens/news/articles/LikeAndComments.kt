@@ -1,5 +1,6 @@
 package com.example.candiformation.ui.screens.news.articles
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -28,6 +29,8 @@ fun LikeAndComments(
     likeNum: Int,
     commentNum: Int
 ) {
+    Log.d("suee97", "articleID >>> ${viewModel.articleId.value}")
+
     Row(
         modifier = Modifier
             .fillMaxWidth()

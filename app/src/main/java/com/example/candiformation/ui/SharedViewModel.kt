@@ -1,6 +1,8 @@
 package com.example.candiformation.ui
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.*
 import androidx.lifecycle.LiveData
@@ -18,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
 
@@ -104,10 +107,14 @@ class SharedViewModel @Inject constructor(
         )
     )
 
-    fun signUp() {
+    fun signUp(): String {
+        var res = mutableStateOf("")
+
         viewModelScope.launch {
-            repository.signUp(signUpBody.value)
+            res.value = repository.signUp(signUpBody.value).first
         }
+
+        return res.value
     }
     // ==================================================================================
 
@@ -145,6 +152,7 @@ class SharedViewModel @Inject constructor(
             repository.like(likeBody = likeBody)
             articleDataList.postValue(repository.getArticleResponse())
             whatArticleLiked.value = repository.whatArticleLiked(likeBody.username)
+            getArticleLikes.value = repository.getArticleLikes(articleId.value).likes
         }
     }
     // ==================================================================================
@@ -187,8 +195,15 @@ class SharedViewModel @Inject constructor(
         )
     )
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun writeComment(commentBody: CommentBody) {
+        val formatterDate = DateTimeFormatter.ISO_DATE
+        val formatterTime = DateTimeFormatter.ISO_LOCAL_TIME
+
         viewModelScope.launch {
+            val date = LocalDateTime.now().format(formatterDate).slice(5..9)
+            val time = LocalDateTime.now().format(formatterTime).slice(0..4)
+            currentCommentBody.value.createdAt = "${date} ${time}"
             repository.writeComment(commentBody)
             selectedArticleComments.postValue(repository.getSelectedArticleComments(articleId.value))
         }
@@ -207,7 +222,7 @@ class SharedViewModel @Inject constructor(
     // =======================================================================================
 
 
-    //선택된 기사에 대한 모든 댓글 가져오기 =========================================================
+    // 선택된 기사에 대한 모든 댓글 가져오기 =========================================================
     var selectedArticleComments: MutableLiveData<List<CommentResponse>> =
         MutableLiveData(listOf())
 
@@ -297,6 +312,15 @@ class SharedViewModel @Inject constructor(
     fun getAllComments(username: String) {
         viewModelScope.launch {
             userComments.value = repository.getAllComments(username)
+        }
+    }
+
+    // article id로 like 수 가져오기
+    var getArticleLikes = mutableStateOf(0)
+
+    fun getArticleLikes(_articleId: Int) {
+        viewModelScope.launch {
+            getArticleLikes.value = repository.getArticleLikes(_articleId).likes
         }
     }
 }

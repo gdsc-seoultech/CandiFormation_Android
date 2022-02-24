@@ -7,6 +7,7 @@ import androidx.navigation.navigation
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.screens.home.HomeScreen
 import com.example.candiformation.ui.screens.info.InfoScreen
+import com.example.candiformation.ui.screens.info.PresidentsArchive
 
 fun NavGraphBuilder.infoNavGraph(
     navController: NavHostController,
@@ -18,6 +19,12 @@ fun NavGraphBuilder.infoNavGraph(
     ) {
         composable(route = "info") {
             InfoScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
+        }
+        composable(route = "info/presidentArchive"){
+            PresidentsArchive(
                 navController = navController,
                 viewModel = viewModel
             )

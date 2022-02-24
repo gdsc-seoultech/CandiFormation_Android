@@ -24,7 +24,6 @@ fun NewsScreen(
     viewModel: SharedViewModel,
     navController: NavHostController
 ) {
-
     val articleDataList by viewModel.articleDataList.observeAsState()
     val scaffoldState = rememberScaffoldState()
 
@@ -86,7 +85,7 @@ fun NewsScreenContent(
                 .fillMaxWidth()
                 .padding(top = 4.dp, bottom = 48.dp)
         ) {
-            Log.d("suee97", "articleDataList size >> ${articleDataList.size}")
+            Log.d("suee97", "id순서 >> ${articleDataList}")
 
             if (articleDataList.isNullOrEmpty()) {
 
@@ -96,12 +95,14 @@ fun NewsScreenContent(
                         NewsArticleUnit(
                             navController = navController,
                             viewModel = viewModel,
-                            articleResponse = articleDataList[articleDataList.size -1 - index],
+                            articleResponse = articleDataList[index],
                             likeIconClicked = {
+                                Log.d("suee97", "현재 누른 기사 index >>> ${index}")
+                                Log.d("suee97", "현재 누른 기사 id >>> ${articleDataList[index].id}")
                                 if (viewModel.currentUser.value.username.isNullOrEmpty()) {
                                     launchSnackBar()
                                 } else {
-                                    viewModel.articleId.value = articleDataList[articleDataList.size -1 - index].id
+                                    viewModel.articleId.value = articleDataList[index].id
                                     viewModel.like(
                                         likeBody = LikeBody(
                                             article_id = viewModel.articleId.value,
@@ -110,12 +111,11 @@ fun NewsScreenContent(
                                     )
                                 }
                             },
-                            isLiked = if (viewModel.whatArticleLiked.value.articles.contains(articleDataList.size -1 - index + 1)) {
+                            isLiked = if (viewModel.whatArticleLiked.value.articles.contains(articleDataList[index].id)) {
                                 true
                             } else {
                                 false
-                            },
-                            articleDataList = articleDataList[articleDataList.size -1 - index]
+                            }
                         )
                         Divider(
                             modifier = Modifier

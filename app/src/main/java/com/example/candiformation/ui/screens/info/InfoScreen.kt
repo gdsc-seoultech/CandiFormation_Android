@@ -6,9 +6,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.candiformation.R
 import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants
@@ -55,6 +57,18 @@ fun InfoScreenContent(
             .fillMaxWidth()
             .verticalScroll(scrollState)
     ) {
-        InfoMainLogo()
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Image(
+                painter = painterResource(id = R.drawable.election_visual),
+                contentDescription = null,
+                modifier = Modifier.size(200.dp),
+                alpha = 0.5f
+            )
+        }
+        InfoMainLogo(
+            navController = navController,
+            viewModel = viewModel
+        )
+
     }
 }

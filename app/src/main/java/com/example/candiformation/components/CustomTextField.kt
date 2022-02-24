@@ -31,8 +31,8 @@ fun CustomTextField(
         modifier = Modifier
             .height(50.dp)
             .width(270.dp)
-            .border(1.dp, VeryLightGrey_type2, RoundedCornerShape(8.dp))
-            .background(VeryLightGrey_type3),
+            .border(1.dp, Color.Black, RoundedCornerShape(2.dp))
+            .background(Color.Black),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box() {
@@ -41,7 +41,7 @@ fun CustomTextField(
                     .padding(start = 14.dp, end = 14.dp),
                 imageVector = iconRes,
                 contentDescription = iconRes.toString(),
-                tint = VeryLightGrey_type2
+                tint = Color.White
             )
         }
         Divider(
@@ -52,7 +52,7 @@ fun CustomTextField(
         TextField(
             value = text.value,
             onValueChange = { text.value = it },
-            shape = RoundedCornerShape(4.dp),
+            shape = RoundedCornerShape(0.dp),
             placeholder = { Text(placeHolderMsg) },
             singleLine = true,
             colors = TextFieldDefaults.textFieldColors(

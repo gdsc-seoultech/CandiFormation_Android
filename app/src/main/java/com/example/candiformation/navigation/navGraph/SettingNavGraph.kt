@@ -1,10 +1,12 @@
 package com.example.candiformation.navigation.navGraph
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.candiformation.ui.SharedViewModel
+import com.example.candiformation.ui.screens.info.PresidentsArchive
 import com.example.candiformation.ui.screens.setting.SettingScreen
 import com.example.candiformation.ui.screens.setting.appInfo.AppInfoScreen
 import com.example.candiformation.ui.screens.setting.comments.CommentsScreen
@@ -14,6 +16,7 @@ import com.example.candiformation.ui.screens.setting.login.signup.SignUpAuthScre
 import com.example.candiformation.ui.screens.setting.login.signup.SignUpNicknameScreen
 import com.example.candiformation.ui.screens.setting.login.signup.SignUpScreen
 
+@ExperimentalMaterialApi
 fun NavGraphBuilder.settingNavGraph(
     navController: NavHostController,
     viewModel: SharedViewModel
@@ -61,5 +64,6 @@ fun NavGraphBuilder.settingNavGraph(
         composable(route = "setting/comments") {
             CommentsScreen(navController = navController, viewModel = viewModel)
         }
+
     }
 }

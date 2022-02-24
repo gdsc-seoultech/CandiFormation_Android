@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -14,9 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.candiformation.components.CustomDialog_type_1
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
-import com.example.candiformation.utils.Constants.TOP_APP_BAR_FONT
 import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -26,11 +26,11 @@ fun SettingScreen(
     viewModel: SharedViewModel
 ) {
     val scope = rememberCoroutineScope()
+    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+
     scope.launch {
         viewModel.getAllComments(username = viewModel.currentUser.value.username)
     }
-
-
 
     Scaffold(
         content = {
@@ -47,12 +47,30 @@ fun SettingScreen(
                     LoggedInProfileCard(
                         viewModel = viewModel,
                         navController = navController,
-                        logOutClicked = { viewModel.logOut() }
+                        logOutClicked = {
+                            setShowDialog(true)
+                        }
                     )
                 }
                 SettingList(
                     navController = navController,
                     viewModel = viewModel
+                )
+            }
+
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CustomDialog_type_1(
+                    showDialog = showDialog,
+                    setShowDialog = setShowDialog,
+                    title = "로그아웃 하시겠습니까?",
+                    isConfirmed = {
+                        viewModel.logOut()
+                    },
+                    isDismissed = {/* Cancel */}
                 )
             }
         }
@@ -67,17 +85,14 @@ fun SettingList(
     val snackState = remember { SnackbarHostState() }
     val snackScope = rememberCoroutineScope()
 
-    fun launchSnackBar() {
+    fun launchSnackBar(msg: String) {
         snackScope.launch {
             snackState.showSnackbar(
-                message = "로그인이 필요한 서비스입니다.",
+                message = msg,
                 duration = SnackbarDuration.Short
             )
         }
     }
-
-
-
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(24.dp))
@@ -93,8 +108,8 @@ fun SettingList(
             viewModel = viewModel,
             title = "Comments",
             onClicked = {
-                if(viewModel.currentUser.value.username.isNullOrEmpty()) {
-                    launchSnackBar()
+                if (viewModel.currentUser.value.username.isNullOrEmpty()) {
+                    launchSnackBar("로그인이 필요한 서비스입니다.")
                 } else {
                     navController.navigate("setting/comments") {
                         popUpTo("setting")
@@ -135,14 +150,18 @@ fun SettingList(
             navController = navController,
             viewModel = viewModel,
             title = "Share",
-            onClicked = {/* 각자 맞는 화면으로 이동 */ }
+            onClicked = {
+                launchSnackBar("준비중입니다.")
+            }
         )
         GreyDivider()
         SettingListUnit(
             navController = navController,
             viewModel = viewModel,
             title = "Setting",
-            onClicked = {/* 각자 맞는 화면으로 이동 */ }
+            onClicked = {
+                launchSnackBar("준비중입니다.")
+            }
         )
         GreyDivider()
 

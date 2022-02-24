@@ -1,6 +1,7 @@
 package com.example.candiformation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -16,6 +17,7 @@ import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.CandiformationTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

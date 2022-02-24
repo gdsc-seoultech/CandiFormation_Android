@@ -1,6 +1,7 @@
 package com.example.candiformation.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -26,13 +27,13 @@ fun CustomButton(
     onClick: () -> Unit
 ) {
     Button(
-        modifier = Modifier.width(widthDp),
-        shape = RoundedCornerShape(4.dp),
+        modifier = Modifier.width(widthDp).height(40.dp),
+        shape = RoundedCornerShape(2.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.White
         ),
         onClick = { onClick() },
-        border = BorderStroke(1.dp, VeryLightGrey_type1),
+        border = BorderStroke(1.dp, Color.Black),
         elevation = ButtonDefaults.elevation(0.dp)
     ) {
         Text(

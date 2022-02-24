@@ -12,7 +12,7 @@ sealed class BottomNavItem(
     object InfoBottomIcon: BottomNavItem(
         label = "Information",
         icon = Icons.Filled.Info,
-        route = listOf("info")
+        route = listOf("info", "info/presidentArchive")
     )
     object CandidateBottomIcon: BottomNavItem(
         label = "Candidates",

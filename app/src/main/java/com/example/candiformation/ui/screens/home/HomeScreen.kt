@@ -22,10 +22,7 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.ui.SharedViewModel
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.HorizontalPagerIndicator
-import com.google.accompanist.pager.rememberPagerState
+import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
 
 
@@ -37,12 +34,13 @@ fun HomeScreen(
     viewModel: SharedViewModel
 ) {
     val scope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
+    val pagerState = rememberPagerState()
     scope.launch {
         viewModel.getArticle()
     }
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             CustomTopAppBar(
                 navController = navController,
@@ -52,17 +50,36 @@ fun HomeScreen(
         },
         content = {
             Column(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(12.dp))
                 MainArticlePager(
                     viewModel = viewModel,
-                    navController = navController
+                    navController = navController,
+                    pagerState = pagerState
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    HorizontalPagerIndicator(
+                        modifier = Modifier
+                            .padding(vertical = 4.dp),
+                        pagerState = pagerState
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                TimeCalculateComposable(
+                    navController = navController,
+                    viewModel = viewModel
                 )
             }
-            
-        },
-        scaffoldState = scaffoldState
+        }
     )
 }
 
@@ -70,10 +87,10 @@ fun HomeScreen(
 @Composable
 fun MainArticlePager(
     viewModel: SharedViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    pagerState: PagerState
 ) {
     val articleDataList by viewModel.articleDataList.observeAsState()
-    val pagerState = rememberPagerState()
 
     if (!articleDataList.isNullOrEmpty()) {
         Column(
@@ -87,7 +104,7 @@ fun MainArticlePager(
                 state = pagerState
             ) { page -> // 0, 1, 2
                 Image(
-                    painter = rememberImagePainter(articleDataList!![articleDataList!!.size-1-page].images),
+                    painter = rememberImagePainter(articleDataList!![articleDataList!!.size - 1 - page].images),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -99,15 +116,15 @@ fun MainArticlePager(
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     Text(
-                        text = articleDataList!![articleDataList!!.size-1-page].title,
+                        text = articleDataList!![articleDataList!!.size - 1 - page].title,
                         fontSize = 25.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.White
                     )
                 }
+
             }
 
-            HorizontalPagerIndicator(pagerState = pagerState)
         }
     }
 }
@@ -151,3 +168,4 @@ fun TimeCalculateComposable(
         )
     }
 }
+
