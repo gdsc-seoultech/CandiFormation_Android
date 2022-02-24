@@ -53,9 +53,10 @@ class CandiRepository @Inject constructor(
         val res = try {
             articleApi.signUp(signUpBody)
         } catch (e: Exception) {
-            Log.d("suee97", "${e.localizedMessage}")
+            Log.d("suee97", "sign up error(repo) >>> ${e.localizedMessage}")
             return Pair(e.toString(), false)
         }
+        Log.d("suee97", "sign up error(repo) >>> ${res.message} // ${res.status}")
 
         return Pair(res.status.toString(), true)
     }
@@ -67,7 +68,7 @@ class CandiRepository @Inject constructor(
         val signInRes = try {
             articleApi.signIn(loginBody)
         } catch (e: Exception) {
-            Log.d("suee97", "$e")
+            Log.d("suee97", "sign in error(repository) >>> $e")
             return Pair(e.toString(), false)
         }
         tokenSharedPref.edit {

@@ -125,7 +125,7 @@ fun ShowPoster(
         HorizontalPager(
             count = Int.MAX_VALUE,
             state = pagerState_2,
-            contentPadding = PaddingValues(horizontal = 90.dp)
+            contentPadding = PaddingValues(horizontal = 80.dp)
         ) { index ->
             val page = (index - startIndex).floorMod(pageCount)
             Image(

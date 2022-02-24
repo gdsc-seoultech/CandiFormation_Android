@@ -302,7 +302,6 @@ class SharedViewModel @Inject constructor(
                 onFailure()
                 Log.d("suee97", "로그인에러 >>> ${result!!.second}")
             }
-            delay(1000)
         }
     }
 

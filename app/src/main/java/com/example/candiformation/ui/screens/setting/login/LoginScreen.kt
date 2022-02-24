@@ -32,6 +32,7 @@ import com.example.candiformation.R
 import com.example.candiformation.components.CustomButton
 import com.example.candiformation.components.CustomTextField
 import com.example.candiformation.components.CustomTopAppBar
+import com.example.candiformation.data.google.AuthResult
 import com.example.candiformation.data.google.GoogleApiContract
 import com.example.candiformation.models.SignUpBody
 import com.example.candiformation.ui.SharedViewModel
@@ -147,6 +148,7 @@ fun LoginScreenContent(
         )
 
         // 구글 로그인
+        val scope = rememberCoroutineScope()
         val signInRequestCode = 1
         val authResultLauncher =
             rememberLauncherForActivityResult(contract = GoogleApiContract()) { task ->
@@ -155,19 +157,23 @@ fun LoginScreenContent(
                     val gsa = task?.getResult(ApiException::class.java)
 
                     if (gsa != null) {
-                        viewModel.signUpBody.value.username = gsa.email.toString()
-                        viewModel.signUpBody.value.password = ""
-                        viewModel.signUpBody.value.nickname = gsa.displayName.toString()
+                        scope.launch {
+                            viewModel.signUpBody.value.username = gsa.email.toString()
+                            viewModel.signUpBody.value.password = ""
+                            viewModel.signUpBody.value.nickname = gsa.displayName.toString()
 
-                        viewModel.googleLogin(
-                            idText = viewModel.signUpBody.value.username,
-                            passwordText = "",
-                            onFailure = { },
-                            onSuccess = { }
-                        )
+                            viewModel.googleLogin(
+                                idText = viewModel.signUpBody.value.username,
+                                passwordText = "",
+                                onFailure = {
 
-                        navController.navigate("setting") {
-                            popUpTo("setting")
+                                },
+                                onSuccess = {
+                                    navController.navigate("setting") {
+                                        popUpTo("setting")
+                                    }
+                                }
+                            )
                         }
                     }
                 } catch (e: ApiException) {

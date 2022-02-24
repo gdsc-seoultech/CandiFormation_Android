@@ -4,22 +4,17 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.candiformation.R
 import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
-import kotlinx.coroutines.launch
 
 @Composable
 fun InfoScreen(
@@ -65,7 +60,7 @@ fun InfoScreenContent(
             .fillMaxWidth()
             .verticalScroll(scrollState)
     ) {
-        TimeCalculateComposable(
+        InfoScreenMainLogo(
             navController = navController,
             viewModel = viewModel
         )
@@ -77,7 +72,7 @@ fun InfoScreenContent(
 }
 
 @Composable
-fun TimeCalculateComposable(
+fun InfoScreenMainLogo(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {

@@ -9,7 +9,7 @@ sealed class PresidentsArchiveItem (
     val religion: String,
     val family: String,
     val imageSrc: Int,
-){
+) {
     object former_1_lee: PresidentsArchiveItem(
         name = "이승만",
         birth = "1875. 3. 26 ~ 1965. 7. 19",
@@ -59,7 +59,7 @@ sealed class PresidentsArchiveItem (
         imageSrc = R.drawable.former_6_roh
     )
     object former_7_kim: PresidentsArchiveItem(
-        name = "김영",
+        name = "김영삼",
         birth = "1928.12.4(음)~2015.11.22",
         tenure = "1993. 2 ~ 1998. 2",
         religion = "기독교",
@@ -106,5 +106,4 @@ sealed class PresidentsArchiveItem (
         family = "영부인: 김정숙 , 자녀: 1남1녀",
         imageSrc = R.drawable.former_12_moon
     )
-
 }

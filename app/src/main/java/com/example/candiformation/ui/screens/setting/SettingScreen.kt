@@ -123,8 +123,12 @@ fun SettingList(
             viewModel = viewModel,
             title = "Likes",
             onClicked = {
-                navController.navigate("setting/like") {
-                    popUpTo("setting")
+                if (viewModel.currentUser.value.username.isNullOrEmpty()) {
+                    launchSnackBar("로그인이 필요한 서비스입니다.")
+                } else {
+                    navController.navigate("setting/like") {
+                        popUpTo("setting")
+                    }
                 }
             }
         )
