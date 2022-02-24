@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
 @Composable

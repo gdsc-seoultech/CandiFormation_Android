@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -17,6 +16,7 @@ import com.example.candiformation.ui.screens.splash.SplashScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable

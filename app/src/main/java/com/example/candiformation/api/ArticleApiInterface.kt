@@ -1,7 +1,6 @@
 package com.example.candiformation.api
 
 import com.example.candiformation.models.*
-import retrofit2.Call
 import retrofit2.http.*
 
 interface ArticleApiInterface {

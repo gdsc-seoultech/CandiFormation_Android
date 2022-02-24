@@ -3,14 +3,11 @@ package com.example.candiformation.ui.screens.setting.appInfo
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.HowToVote
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -18,7 +15,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.candiformation.components.CustomTopAppBar
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.ui.theme.VeryLightGrey_type1
 import com.example.candiformation.utils.Constants
 
 @Composable

@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.ui.screens.info.PresidentsArchive
 import com.example.candiformation.ui.screens.setting.SettingScreen
 import com.example.candiformation.ui.screens.setting.appInfo.AppInfoScreen
 import com.example.candiformation.ui.screens.setting.comments.CommentsScreen

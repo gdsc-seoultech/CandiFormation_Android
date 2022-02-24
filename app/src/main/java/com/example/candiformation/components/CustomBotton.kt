@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.candiformation.ui.SharedViewModel
-import com.example.candiformation.ui.theme.VeryLightGrey_type1
 
 @Composable
 fun CustomButton(

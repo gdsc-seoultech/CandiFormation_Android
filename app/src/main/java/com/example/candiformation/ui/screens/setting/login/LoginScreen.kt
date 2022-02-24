@@ -1,30 +1,22 @@
 package com.example.candiformation.ui.screens.setting.login
 
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -32,19 +24,12 @@ import com.example.candiformation.R
 import com.example.candiformation.components.CustomButton
 import com.example.candiformation.components.CustomTextField
 import com.example.candiformation.components.CustomTopAppBar
-import com.example.candiformation.data.google.AuthResult
 import com.example.candiformation.data.google.GoogleApiContract
-import com.example.candiformation.models.SignUpBody
 import com.example.candiformation.ui.SharedViewModel
 import com.example.candiformation.ui.theme.googleColor
-import com.example.candiformation.utils.Constants
 import com.example.candiformation.utils.Constants.CONTENT_INNER_PADDING
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.GoogleApiClient
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.nio.charset.Charset
 
 
 @ExperimentalMaterialApi
