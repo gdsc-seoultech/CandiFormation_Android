@@ -67,8 +67,7 @@ fun CandidateScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "이재명",
                         party = "민주당",
                         imgSrc = candidateItemList[0].imageSrc,
@@ -78,8 +77,7 @@ fun CandidateScreen(
                         },
                     )
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "윤석열",
                         party = "국민의힘",
                         imgSrc = candidateItemList[1].imageSrc,
@@ -89,8 +87,7 @@ fun CandidateScreen(
                         }
                     )
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "심상정",
                         party = "정의당",
                         imgSrc = candidateItemList[2].imageSrc,
@@ -108,8 +105,7 @@ fun CandidateScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "안철수",
                         party = "국민의당",
                         imgSrc = candidateItemList[3].imageSrc,
@@ -119,8 +115,7 @@ fun CandidateScreen(
                         }
                     )
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "오준호",
                         party = "기본소득당",
                         imgSrc = candidateItemList[4].imageSrc,
@@ -130,8 +125,7 @@ fun CandidateScreen(
                         }
                     )
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "허경영",
                         party = "국가혁명당",
                         imgSrc = candidateItemList[5].imageSrc,
@@ -149,8 +143,7 @@ fun CandidateScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "이백윤",
                         party = "노동당",
                         imgSrc = candidateItemList[6].imageSrc,
@@ -160,8 +153,7 @@ fun CandidateScreen(
                         }
                     )
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "옥은호",
                         party = "새누리당",
                         imgSrc = candidateItemList[7].imageSrc,
@@ -171,8 +163,7 @@ fun CandidateScreen(
                         }
                     )
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "김동연",
                         party = "새로운물결",
                         imgSrc = candidateItemList[8].imageSrc,
@@ -190,8 +181,7 @@ fun CandidateScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "김경재",
                         party = "신자유민주연합",
                         imgSrc = candidateItemList[9].imageSrc,
@@ -201,8 +191,7 @@ fun CandidateScreen(
                         }
                     )
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "조원진",
                         party = "우리공화당",
                         imgSrc = candidateItemList[10].imageSrc,
@@ -212,8 +201,7 @@ fun CandidateScreen(
                         }
                     )
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "김재연",
                         party = "진보당",
                         imgSrc = candidateItemList[11].imageSrc,
@@ -231,8 +219,7 @@ fun CandidateScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "이경희",
                         party = "통일한국당",
                         imgSrc = candidateItemList[12].imageSrc,
@@ -242,8 +229,7 @@ fun CandidateScreen(
                         }
                     )
                     CandidateCard(
-                        navController = navController,
-                        viewModel = viewModel,
+                        modifier = Modifier.weight(1f),
                         name = "김민찬",
                         party = "한류연합당",
                         imgSrc = candidateItemList[13].imageSrc,
@@ -252,125 +238,10 @@ fun CandidateScreen(
                             dialogState = true
                         }
                     )
+                    Spacer(modifier = Modifier.weight(1f))
                 }
                 Spacer(modifier = Modifier.size(60.dp))
             }
         }
     )
-}
-
-
-@Composable
-fun CandidateDialog(
-    dialogState: Boolean,
-    onDismissRequest: (dialogState: Boolean) -> Unit,
-    candidateNum: Int,
-    candidateList: List<CandidateItem>
-) {
-    var scrollState = rememberScrollState()
-
-    if (dialogState) {
-        AlertDialog(
-            modifier = Modifier.fillMaxWidth(),
-            backgroundColor = Color.White,
-            onDismissRequest = { onDismissRequest(dialogState) },
-            text = {
-
-                // 뒤에 정당 배경
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(.8f),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Image(
-                        painter = painterResource(candidateList[candidateNum].partyLogo),
-                        contentDescription = null,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier.alpha(0.2f)
-                    )
-                }
-
-                // Content
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(state = scrollState),
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 12.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            modifier = Modifier
-                                .size(140.dp),
-                            painter = painterResource(candidateList[candidateNum].imageSrc),
-                            contentDescription = null
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            Text(
-                                text = candidateList[candidateNum].name,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.ExtraBold,
-                                color = Color.Black
-                            )
-                            Spacer(modifier = Modifier.height(6.dp))
-
-                            Text(
-                                text = candidateList[candidateNum].party,
-                                fontSize = 15.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black
-                            )
-                            Spacer(modifier = Modifier.height(6.dp))
-                            Text(
-                                text = candidateList[candidateNum].birth,
-                                fontSize = 10.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black
-                            )
-                            Spacer(modifier = Modifier.height(6.dp))
-                            Text(
-                                text = candidateList[candidateNum].campLocation,
-                                fontSize = 10.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black
-                            )
-                        }
-                    }
-
-                    Divider(modifier = Modifier.padding(vertical = 12.dp))
-
-                    Text(
-                        text = candidateList[candidateNum].slogan,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Text(
-                        text = "Pledge",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-                    Text(
-                        text = stringResource(id = candidateList[candidateNum].stringSrc)
-                    )
-                }
-            },
-            shape = RoundedCornerShape(4.dp),
-            buttons = {}
-        )
-    }
 }

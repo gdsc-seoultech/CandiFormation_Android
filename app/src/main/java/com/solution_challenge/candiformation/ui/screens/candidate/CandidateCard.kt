@@ -19,20 +19,18 @@ import com.solution_challenge.candiformation.ui.SharedViewModel
 
 @Composable
 fun CandidateCard(
-    navController: NavHostController,
-    viewModel: SharedViewModel,
+    modifier: Modifier,
     name: String,
     party: String,
     imgSrc: Int,
     onClick: () -> Unit
 ) {
-    Card(modifier = Modifier
+    Card(modifier = modifier
         .padding(top = 4.dp, bottom = 4.dp)
-        .clickable { onClick() }) {
+        .clickable { onClick() }
+    ) {
         Column(
-            modifier = Modifier
-                .width(120.dp)
-                .height(180.dp),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -41,9 +39,7 @@ fun CandidateCard(
                     .padding(12.dp)
                     .background(Color.White)
             ) {
-                Column(
-                    modifier = Modifier.padding()
-                ) {
+                Column() {
                     Image(
                         painter = painterResource(id = imgSrc),
                         contentDescription = name
