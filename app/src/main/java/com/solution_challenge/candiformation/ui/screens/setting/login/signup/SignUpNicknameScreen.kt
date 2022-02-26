@@ -52,7 +52,6 @@ fun SignUpNicknameScreenContent(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-    val scope = rememberCoroutineScope()
     var nicknameText = remember { mutableStateOf("") }
 
     Column(
@@ -97,36 +96,24 @@ fun SignUpNicknameScreenContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-//        TextField(
-//            value = nicknameText,
-//            onValueChange = {
-//                nicknameText = it
-//            },
-//            placeholder = {
-//                Text("닉네임")
-//            }
-//        )
-
-
         CustomButton(
             viewModel = viewModel,
             navController = navController,
             title = "회원가입 완료",
             widthDp = 140.dp,
             onClick = {
-                scope.launch {
-                    viewModel.signUpBody.value.nickname = nicknameText.value
-                    viewModel.signUp()
-                    viewModel.login(
-                        idText = viewModel.signUpBody.value.username,
-                        passwordText = viewModel.signUpBody.value.password!!,
-                        onSuccess = {},
-                        onFailure = {}
-                    )
-                    navController.navigate("setting") {
-                        popUpTo("setting") { inclusive = true }
-                    }
-                }
+                viewModel.signUpBody.value.nickname = nicknameText.value
+                viewModel.signUp()
+                viewModel.login(
+                    idText = viewModel.signUpBody.value.username,
+                    passwordText = viewModel.signUpBody.value.password!!,
+                    onSuccess = {
+                        navController.navigate("setting") {
+                            popUpTo("setting") { inclusive = true }
+                        }
+                    },
+                    onFailure = {}
+                )
             }
         )
     }

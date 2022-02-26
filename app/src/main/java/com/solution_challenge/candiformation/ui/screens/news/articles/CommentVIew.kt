@@ -12,6 +12,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.solution_challenge.candiformation.components.CustomDialog_type_1
 import com.solution_challenge.candiformation.models.CommentResponse
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.ui.theme.TimeColor
@@ -48,6 +51,19 @@ fun CommentViewUnit(
     viewModel: SharedViewModel,
     isDeletable: Boolean
 ) {
+    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+
+    CustomDialog_type_1(
+        showDialog = showDialog,
+        setShowDialog = setShowDialog,
+        title = "댓글을 삭제하시겠습니까?",
+        isConfirmed = {
+            viewModel.deleteComment(commentResponse.id)
+            Log.d("suee97", "삭제된 코멘트 아이디 >>> ${commentResponse.id}")
+        },
+        isDismissed = {/* Cancel */}
+    )
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -94,18 +110,13 @@ fun CommentViewUnit(
                                 modifier = Modifier
                                     .size(22.dp)
                                     .clickable {
-                                        Log.d(
-                                            "suee97",
-                                            "삭제된 코멘트 아이디 >>> ${commentResponse.id}"
-                                        )
-                                        viewModel.deleteComment(commentResponse.id)
+                                        setShowDialog(true)
                                     },
                                 imageVector = Icons.Filled.Clear,
                                 contentDescription = "",
                                 tint = Color.LightGray
                             )
                         }
-
                     }
                 }
             }
