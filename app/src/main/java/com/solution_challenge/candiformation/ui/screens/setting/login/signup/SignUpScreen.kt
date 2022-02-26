@@ -105,16 +105,6 @@ fun SignUpScreenContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-//        TextField(
-//            value = emailText,
-//            onValueChange = {
-//                emailText = it
-//            },
-//            placeholder = {
-//                Text("이메일")
-//            }
-//        )
-
         Row(
             modifier = Modifier
                 .height(50.dp)
@@ -152,23 +142,13 @@ fun SignUpScreenContent(
                     unfocusedLabelColor = Color.LightGray,
                     placeholderColor = VeryLightGrey_type2
                 ),
-                // ***으로 뜨게 하기
                 visualTransformation = PasswordVisualTransformation()
             )
         }
 
-//        TextField(
-//            value = pwdText,
-//            onValueChange = {
-//                pwdText = it
-//            },
-//            placeholder = {
-//                Text("패스워드")
-//            }
-//        )
-
         Text(
-            modifier = Modifier.padding(vertical = 16.dp),
+            modifier = Modifier
+                .padding(vertical = 16.dp, horizontal = 32.dp),
             text = signUpMsg,
             fontSize = 16.sp,
             color = Color.Red
@@ -180,10 +160,12 @@ fun SignUpScreenContent(
             title = "인증하기",
             widthDp = 180.dp,
             onClick = {
-                if(emailText.value.isBlank() || pwdText.value.isBlank()) {
+                if (emailText.value.isBlank() || pwdText.value.isBlank()) {
                     signUpMsg = "이메일 또는 비밀번호를 작성해주세요."
                 } else if (!pattern.matcher(emailText.value).matches()) {
                     signUpMsg = "올바른 이메일 형식이 아닙니다."
+                } else if (!Pattern.matches("^(?=.*[A-Za-z])(?=.*[0-9]).{8,15}.\$", pwdText.value)) {
+                    signUpMsg = "비밀번호는 숫자, 문자를 포함하여 \n8~15자로 해주세요."
                 } else {
                     viewModel.signUpBody.value.username = emailText.value
                     viewModel.signUpBody.value.password = pwdText.value
@@ -198,12 +180,6 @@ fun SignUpScreenContent(
                 }
             }
         )
-
-//        Button(onClick = {
-//
-//        }) {
-//            Text("인증하기")
-//        }
     }
 }
 
