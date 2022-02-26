@@ -9,9 +9,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.solution_challenge.candiformation.components.CustomDialog_type_1
 import com.solution_challenge.candiformation.components.CustomTopAppBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.ui.screens.news.articles.CommentView
@@ -49,7 +52,7 @@ fun CommentsScreen(
                     commentList = commentList!!.asReversed(),
                     viewModel = viewModel,
                     scrollState = scrollState,
-                    isDeletable = false
+                    isDeletable = true
                 )
                 Spacer(modifier = Modifier.height(48.dp))
             }

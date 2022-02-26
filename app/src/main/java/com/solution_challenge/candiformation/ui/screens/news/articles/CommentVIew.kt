@@ -102,21 +102,18 @@ fun CommentViewUnit(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(bottom = 12.dp)
                 ) {
-
-                    // 댓글 삭제 로직
-                    if (commentResponse.nickname == viewModel.currentUser.value.nickname) {
-                        if(isDeletable) {
-                            Icon(
-                                modifier = Modifier
-                                    .size(22.dp)
-                                    .clickable {
-                                        setShowDialog(true)
-                                    },
-                                imageVector = Icons.Filled.Clear,
-                                contentDescription = "",
-                                tint = Color.LightGray
-                            )
-                        }
+                    if(commentResponse.nickname == viewModel.currentUser.value.nickname &&
+                            isDeletable) {
+                        Icon(
+                            modifier = Modifier
+                                .size(22.dp)
+                                .clickable {
+                                    setShowDialog(true)
+                                },
+                            imageVector = Icons.Filled.Clear,
+                            contentDescription = "",
+                            tint = Color.LightGray
+                        )
                     }
                 }
             }

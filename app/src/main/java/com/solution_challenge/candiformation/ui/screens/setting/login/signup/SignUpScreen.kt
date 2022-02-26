@@ -164,7 +164,7 @@ fun SignUpScreenContent(
                     signUpMsg = "이메일 또는 비밀번호를 작성해주세요."
                 } else if (!pattern.matcher(emailText.value).matches()) {
                     signUpMsg = "올바른 이메일 형식이 아닙니다."
-                } else if (!Pattern.matches("^(?=.*[A-Za-z])(?=.*[0-9]).{8,15}.\$", pwdText.value)) {
+                } else if (!Pattern.matches("^(?=.*[A-Za-z])(?=.*[0-9]).{7,15}.\$", pwdText.value)) {
                     signUpMsg = "비밀번호는 숫자, 문자를 포함하여 \n8~15자로 해주세요."
                 } else {
                     viewModel.signUpBody.value.username = emailText.value

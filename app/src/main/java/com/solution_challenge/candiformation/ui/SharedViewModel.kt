@@ -237,6 +237,7 @@ class SharedViewModel @Inject constructor(
         viewModelScope.launch {
             repository.deleteComment(currentUser.value.nickname, articleId.value, commentId)
             selectedArticleComments.postValue(repository.getSelectedArticleComments(articleId.value))
+            userComments.value = repository.getAllComments(currentUser.value.username)
         }
     }
     // ======================================================================================
@@ -303,8 +304,8 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    // 모든 댓글 가져오기
-    val userComments: MutableLiveData<List<CommentResponse>> = MutableLiveData()
+    // 유저가 작성한 모든 댓글 가져오기
+    val userComments: MutableLiveData<List<CommentResponse>> = MutableLiveData(listOf())
 
     fun getAllComments(username: String) {
         viewModelScope.launch {

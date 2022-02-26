@@ -51,7 +51,7 @@ fun BottomNavBar(
                     selected = (checkingNavigation(item, currentRoute)),
                     onClick = {
                         navController.navigate(item.route[0]) {
-                            popUpTo(item.route[0])
+                            popUpTo(item.route[0]) { inclusive = true }
                         }
                     }
                 )
