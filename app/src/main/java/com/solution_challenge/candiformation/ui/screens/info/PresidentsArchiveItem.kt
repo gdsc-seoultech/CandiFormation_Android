@@ -94,8 +94,8 @@ sealed class PresidentsArchiveItem (
         name = "박근혜",
         birth = "1952. 2. 2 ~",
         tenure = "2013. 2 ~ 2017. 3",
-        religion = "-",
-        family = "-",
+        religion = "무교",
+        family = "미혼",
         imageSrc = R.drawable.former_11_park
     )
     object former_12_moon: PresidentsArchiveItem(

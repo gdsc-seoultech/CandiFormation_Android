@@ -60,7 +60,7 @@ fun BottomNavBar(
     }
 }
 
-fun checkingNavigation(
+private fun checkingNavigation(
     item: BottomNavItem,
     currentRoute: String?
 ): Boolean {
