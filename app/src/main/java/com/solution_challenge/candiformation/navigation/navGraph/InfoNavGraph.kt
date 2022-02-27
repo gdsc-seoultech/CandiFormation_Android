@@ -6,7 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.ui.screens.info.InfoScreen
-import com.solution_challenge.candiformation.ui.screens.info.PresidentsArchive
+import com.solution_challenge.candiformation.ui.screens.info.partyArchive.PartyArchiveScreen
+import com.solution_challenge.candiformation.ui.screens.info.presidentArchive.PresidentsArchive
 
 fun NavGraphBuilder.infoNavGraph(
     navController: NavHostController,
@@ -24,6 +25,12 @@ fun NavGraphBuilder.infoNavGraph(
         }
         composable(route = "info/presidentArchive"){
             PresidentsArchive(
+                navController = navController,
+                viewModel = viewModel
+            )
+        }
+        composable(route = "info/partyArchive") {
+            PartyArchiveScreen(
                 navController = navController,
                 viewModel = viewModel
             )

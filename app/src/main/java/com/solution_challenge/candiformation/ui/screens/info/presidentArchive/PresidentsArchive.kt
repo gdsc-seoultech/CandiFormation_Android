@@ -1,4 +1,4 @@
-package com.solution_challenge.candiformation.ui.screens.info
+package com.solution_challenge.candiformation.ui.screens.info.presidentArchive
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*

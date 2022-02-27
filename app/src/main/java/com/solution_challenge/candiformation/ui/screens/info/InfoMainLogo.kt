@@ -19,7 +19,7 @@ import com.solution_challenge.candiformation.ui.screens.setting.SettingTitleUnit
 import kotlinx.coroutines.launch
 
 @Composable
-fun InfoMainLogo(
+fun InfoList(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
@@ -59,7 +59,9 @@ fun InfoMainLogo(
             viewModel = viewModel,
             title = "Party Archive",
             onClicked = {
-                launchSnackBar("준비중입니다.")
+                navController.navigate("info/partyArchive") {
+                    popUpTo("info")
+                }
             }
         )
         GreyDivider()

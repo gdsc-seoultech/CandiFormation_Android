@@ -71,7 +71,7 @@ fun InfoScreenContent(
             navController = navController,
             viewModel = viewModel
         )
-        InfoMainLogo(
+        InfoList(
             navController = navController,
             viewModel = viewModel
         )

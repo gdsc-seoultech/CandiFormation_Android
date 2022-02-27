@@ -1,4 +1,4 @@
-package com.solution_challenge.candiformation.ui.screens.info
+package com.solution_challenge.candiformation.ui.screens.info.presidentArchive
 
 import com.solution_challenge.candiformation.R
 
