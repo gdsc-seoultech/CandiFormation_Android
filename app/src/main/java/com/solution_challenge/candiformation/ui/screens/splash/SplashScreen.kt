@@ -25,7 +25,7 @@ fun SplashScreen(
     viewModel: SharedViewModel
 ) {
     LaunchedEffect(key1 = true) {
-        delay(2000) // 테스트 거슬려서 줄여놨음
+        delay(2000)
         navController.navigate("home_root") {
             popUpTo("splash") { inclusive = true }
         }
@@ -64,6 +64,12 @@ fun SplashScreen(
                 Text(
                     text = "Candiformation",
                     fontSize = 27.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = "본 앱은 특정 정당을 지지하지 않습니다.",
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
