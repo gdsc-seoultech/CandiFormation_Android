@@ -29,7 +29,7 @@ fun MainArticlePager(
 ) {
     val pagerState = rememberPagerState()
     val articleDataList by viewModel.articleDataList.observeAsState()
-
+ 
     if (!articleDataList.isNullOrEmpty()) {
         Column(
             modifier = Modifier
