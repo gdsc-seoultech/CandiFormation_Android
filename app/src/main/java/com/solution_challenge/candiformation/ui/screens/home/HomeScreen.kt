@@ -2,7 +2,6 @@ package com.solution_challenge.candiformation.ui.screens.home
 
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -31,9 +30,8 @@ fun HomeScreen(
     viewModel: SharedViewModel
 ) {
     val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
     val startIndex = Int.MAX_VALUE / 2
-    val pagerState_2 = rememberPagerState(initialPage = startIndex)
+    val subPagerState = rememberPagerState(initialPage = startIndex)
 
     scope.launch {
         viewModel.getArticle()
@@ -46,35 +44,13 @@ fun HomeScreen(
         },
         content = {
             Column(
-//                modifier = Modifier
-//                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // MainArticlePager
                 MainArticlePager(
                     viewModel = viewModel,
-                    navController = navController,
-                    pagerState = pagerState
+                    navController = navController
                 )
-
-                // Indicator
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .background(Color.Black),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    HorizontalPagerIndicator(
-                        modifier = Modifier
-                            .padding(vertical = 4.dp),
-                        pagerState = pagerState,
-                        activeColor = Color.White,
-                        inactiveColor = Color.LightGray
-                    )
-                }
-
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // SubArticlePager
@@ -100,7 +76,7 @@ fun HomeScreen(
                             R.drawable.poster_13,
                             R.drawable.poster_14
                         ),
-                        pagerState_2 = pagerState_2,
+                        pagerState_2 = subPagerState,
                         startIndex = startIndex
                     )
                 }

@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -16,16 +17,17 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
+import com.google.accompanist.pager.HorizontalPagerIndicator
+import com.google.accompanist.pager.rememberPagerState
 import com.solution_challenge.candiformation.ui.SharedViewModel
 
 @ExperimentalPagerApi
 @Composable
 fun MainArticlePager(
     viewModel: SharedViewModel,
-    navController: NavHostController,
-    pagerState: PagerState
+    navController: NavHostController
 ) {
+    val pagerState = rememberPagerState()
     val articleDataList by viewModel.articleDataList.observeAsState()
 
     if (!articleDataList.isNullOrEmpty()) {
@@ -38,9 +40,11 @@ fun MainArticlePager(
             HorizontalPager(
                 count = 3,
                 state = pagerState
-            ) { page -> // 0, 1, 2
+            ) { index ->
                 Image(
-                    painter = rememberImagePainter(articleDataList!![articleDataList!!.size - 1 - page].images),
+                    painter = rememberImagePainter(
+                        articleDataList!![index].images
+                    ),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -52,13 +56,31 @@ fun MainArticlePager(
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     Text(
-                        text = articleDataList!![articleDataList!!.size - 1 - page].title,
+                        text = articleDataList!![index].title,
                         fontSize = 25.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.White
                     )
                 }
             }
+        }
+
+        // Indicator
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .background(Color.Black),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            HorizontalPagerIndicator(
+                modifier = Modifier
+                    .padding(vertical = 4.dp),
+                pagerState = pagerState,
+                activeColor = Color.White,
+                inactiveColor = Color.LightGray
+            )
         }
     }
 }
