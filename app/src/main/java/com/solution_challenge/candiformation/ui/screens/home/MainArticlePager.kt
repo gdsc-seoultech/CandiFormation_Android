@@ -2,6 +2,7 @@ package com.solution_challenge.candiformation.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +30,7 @@ fun MainArticlePager(
 ) {
     val pagerState = rememberPagerState()
     val articleDataList by viewModel.articleDataList.observeAsState()
- 
+
     if (!articleDataList.isNullOrEmpty()) {
         Column(
             modifier = Modifier
@@ -46,7 +47,23 @@ fun MainArticlePager(
                         articleDataList!![index].images
                     ),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable{
+                            viewModel.articleId.value = articleDataList!![index].id
+                            viewModel.articleTitle.value = articleDataList!![index].title
+                            viewModel.articleContent.value = articleDataList!![index].thumnail
+                            viewModel.articleAgency.value = articleDataList!![index].news_agency
+                            viewModel.articleLink.value = articleDataList!![index].link
+                            viewModel.articleImage.value = articleDataList!![index].images
+                            viewModel.articleLikeNum.value = articleDataList!![index].like_num
+                            viewModel.articleCommentNum.value = articleDataList!![index].comment_num
+                            viewModel.articleDateTime.value = articleDataList!![index].date_time
+
+                            navController.navigate("news/articles/selectedArticle") {
+                                popUpTo("news/articles") { inclusive = true }
+                            }
+                        }
                 )
                 Column(
                     modifier = Modifier
