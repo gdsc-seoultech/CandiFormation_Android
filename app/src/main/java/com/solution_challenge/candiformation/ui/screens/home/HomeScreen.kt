@@ -2,25 +2,19 @@ package com.solution_challenge.candiformation.ui.screens.home
 
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.rememberImagePainter
 import com.solution_challenge.candiformation.R
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.utils.Constants
@@ -56,11 +50,14 @@ fun HomeScreen(
 //                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                // MainArticlePager
                 MainArticlePager(
                     viewModel = viewModel,
                     navController = navController,
                     pagerState = pagerState
                 )
+
+                // Indicator
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -77,13 +74,16 @@ fun HomeScreen(
                         inactiveColor = Color.LightGray
                     )
                 }
+
                 Spacer(modifier = Modifier.height(16.dp))
+
+                // SubArticlePager
                 Column(
                     modifier = Modifier
                         .padding(horizontal = CONTENT_INNER_PADDING),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    ShowPoster(
+                    SubPosterPager(
                         imgList = listOf(
                             R.drawable.poster_1,
                             R.drawable.poster_2,
@@ -109,90 +109,7 @@ fun HomeScreen(
     )
 }
 
-@ExperimentalPagerApi
-@Composable
-fun ShowPoster(
-    imgList: List<Int>,
-    pagerState_2: PagerState,
-    startIndex: Int
-) {
-    val pageCount = 14
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(.8f)
-    ) {
-        SmallTitle("OFFICIAL POSTER")
-
-        HorizontalPager(
-            count = Int.MAX_VALUE,
-            state = pagerState_2,
-            contentPadding = PaddingValues(horizontal = 80.dp)
-        ) { index ->
-            val page = (index - startIndex).floorMod(pageCount)
-            Image(
-                painter = painterResource(id = imgList[page]),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-            )
-        }
-    }
-}
-
-@Composable
-fun SmallTitle(title: String) {
-    Text(
-        text = title,
-        fontSize = Constants.TOP_APP_BAR_FONT,
-        fontWeight = FontWeight.ExtraBold
-    )
-}
-
-@ExperimentalPagerApi
-@Composable
-fun MainArticlePager(
-    viewModel: SharedViewModel,
-    navController: NavHostController,
-    pagerState: PagerState
-) {
-    val articleDataList by viewModel.articleDataList.observeAsState()
-
-    if (!articleDataList.isNullOrEmpty()) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(.4f)
-                .background(Color.Black)
-        ) {
-            HorizontalPager(
-                count = 3,
-                state = pagerState
-            ) { page -> // 0, 1, 2
-                Image(
-                    painter = rememberImagePainter(articleDataList!![articleDataList!!.size - 1 - page].images),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
-                )
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
-                    verticalArrangement = Arrangement.Bottom
-                ) {
-                    Text(
-                        text = articleDataList!![articleDataList!!.size - 1 - page].title,
-                        fontSize = 25.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = Color.White
-                    )
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun HomeScreenTopAppBar() {
@@ -211,7 +128,3 @@ fun HomeScreenTopAppBar() {
     }
 }
 
-private fun Int.floorMod(other: Int): Int = when (other) {
-    0 -> this
-    else -> this - floorDiv(other) * other
-}
