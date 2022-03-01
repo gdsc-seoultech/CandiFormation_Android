@@ -82,7 +82,7 @@ fun AppInfoTopLogo() {
 
 @Composable
 fun AppInfoScreenContent() {
-    AppInfoScreenCard(title = "App version", description = "1.0")
+    AppInfoScreenCard(title = "App version", description = "3.0")
     AppInfoScreenCard(title = "Developers", description = "Wee SR\nShin YB\nOh SU\nYang YS")
     AppInfoScreenCard(
         title = "Contacts / Bug Report",
