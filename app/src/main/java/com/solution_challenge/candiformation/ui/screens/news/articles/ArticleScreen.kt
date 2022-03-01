@@ -1,7 +1,9 @@
 package com.solution_challenge.candiformation.ui.screens.news.articles
 
 import android.annotation.SuppressLint
+import android.content.ClipData
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
@@ -10,20 +12,30 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.solution_challenge.candiformation.components.CustomTopAppBar
 import com.solution_challenge.candiformation.models.ArticleResponse
 import com.solution_challenge.candiformation.models.CommentResponse
 import com.solution_challenge.candiformation.models.LikeBody
 import com.solution_challenge.candiformation.ui.SharedViewModel
+import com.solution_challenge.candiformation.utils.Constants
 import com.solution_challenge.candiformation.utils.Constants.CONTENT_INNER_PADDING
 import kotlinx.coroutines.launch
 
@@ -65,13 +77,55 @@ fun ArticleScreen(
         }
     }
 
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+
     Scaffold(
         topBar = {
-            CustomTopAppBar(
-                navController = navController,
-                title = "Article",
-                navBack = true
-            )
+            Column(modifier = Modifier.fillMaxWidth()) {
+                TopAppBar(
+                    backgroundColor = Color.White,
+                    title = {
+                        Text(
+                            text = "Article",
+                            fontSize = Constants.TOP_APP_BAR_FONT,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(
+                            modifier = Modifier.alpha(1f),
+                            onClick = { navController.popBackStack() }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "Arrow Back"
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(
+                            modifier = Modifier.alpha(1f),
+                            onClick = {
+                                clipboardManager.setText(AnnotatedString(viewModel.articleLink.value))
+                                launchSnackBar("링크가 클립보드에 복사되었습니다.")
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.ContentCopy,
+                                contentDescription = "Content Copy",
+                                tint = Color.Black
+                            )
+                        }
+                    },
+                    elevation = 0.dp
+                )
+                Divider(
+                    color = Color.Black,
+                    modifier = Modifier
+                        .height(5.dp)
+                        .padding(horizontal = 8.dp)
+                )
+            }
         },
         content = {
             ArticleScreenContent(
@@ -98,7 +152,7 @@ fun ArticleScreen(
                 viewModel = viewModel,
                 comment = comment,
                 sendReq = {
-                    if(viewModel.currentUser.value.username.isNullOrEmpty()) {
+                    if (viewModel.currentUser.value.username.isNullOrEmpty()) {
                         launchSnackBar("로그인이 필요한 서비스입니다.")
                     } else if (comment.isBlank()) {
                         launchSnackBar("댓글을 작성해주세요.")
