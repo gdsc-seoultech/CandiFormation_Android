@@ -33,14 +33,14 @@ sealed class BottomNavItem(
         label = "Profile",
         icon = Icons.Filled.AccountCircle,
         route = listOf(
-            "setting",
-            "setting/appInfo",
-            "setting/login",
-            "setting/login/signup",
-            "setting/login/signup/auth",
-            "setting/login/signup/setnickname",
-            "setting/like",
-            "setting/comments"
+            "profile",
+            "profile/appInfo",
+            "profile/login",
+            "profile/login/signup",
+            "profile/login/signup/auth",
+            "profile/login/signup/setnickname",
+            "profile/like",
+            "profile/comments"
         )
     )
 }

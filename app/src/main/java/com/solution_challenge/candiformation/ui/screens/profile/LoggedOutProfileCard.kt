@@ -1,4 +1,4 @@
-package com.solution_challenge.candiformation.ui.screens.setting
+package com.solution_challenge.candiformation.ui.screens.profile
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -53,8 +53,8 @@ fun LoggedOutProfileCard(
                 Text(
                     modifier = Modifier
                         .clickable {
-                            navController.navigate("setting/login") {
-                                popUpTo("setting/login") { inclusive = true }
+                            navController.navigate("profile/login") {
+                                popUpTo("profile/login") { inclusive = true }
                             }
                         },
                     text = "로그인",

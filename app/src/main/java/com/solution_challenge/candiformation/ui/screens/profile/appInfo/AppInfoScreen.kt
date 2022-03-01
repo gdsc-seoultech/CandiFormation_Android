@@ -1,4 +1,4 @@
-package com.solution_challenge.candiformation.ui.screens.setting.appInfo
+package com.solution_challenge.candiformation.ui.screens.profile.appInfo
 
 
 import androidx.compose.foundation.border

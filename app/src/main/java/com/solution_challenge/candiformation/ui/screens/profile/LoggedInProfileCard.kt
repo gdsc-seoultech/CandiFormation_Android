@@ -1,4 +1,4 @@
-package com.solution_challenge.candiformation.ui.screens.setting
+package com.solution_challenge.candiformation.ui.screens.profile
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

@@ -1,4 +1,4 @@
-package com.solution_challenge.candiformation.ui.screens.setting.login.signup
+package com.solution_challenge.candiformation.ui.screens.profile.login.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -174,8 +174,8 @@ fun SignUpScreenContent(
                     viewModel.authEmail.value = emailText.value
                     viewModel.emailAuth(viewModel.authEmail.value)
 
-                    navController.navigate("setting/login/signup/auth") {
-                        popUpTo(route = "setting/login/signup/auth") { inclusive = true }
+                    navController.navigate("profile/login/signup/auth") {
+                        popUpTo(route = "profile/login/signup/auth") { inclusive = true }
                     }
                 }
             }

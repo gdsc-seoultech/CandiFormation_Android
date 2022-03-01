@@ -1,5 +1,6 @@
-package com.solution_challenge.candiformation.ui.screens.setting.login.signup
+package com.solution_challenge.candiformation.ui.screens.profile.login.signup
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -8,10 +9,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,10 +22,11 @@ import com.solution_challenge.candiformation.components.CustomButton
 import com.solution_challenge.candiformation.components.CustomTopAppBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.ui.theme.VeryLightGrey_type2
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun SignUpNicknameScreen(
+fun SignUpAuthScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
@@ -35,11 +35,11 @@ fun SignUpNicknameScreen(
             CustomTopAppBar(
                 navController = navController,
                 title = "Sign Up",
-                navBack = false
+                navBack = true
             )
         },
         content = {
-            SignUpNicknameScreenContent(
+            SignUpAuthScreenContent(
                 navController = navController,
                 viewModel = viewModel
             )
@@ -48,25 +48,38 @@ fun SignUpNicknameScreen(
 }
 
 @Composable
-fun SignUpNicknameScreenContent(
+fun SignUpAuthScreenContent(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-    var nicknameText = remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
+    val isVerified by viewModel.isVerified.observeAsState()
+    var tempVerifyCode = remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        
         Spacer(modifier = Modifier.height(40.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "${viewModel.authEmail.value} ",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "로 인증코드를 보냈습니다.",
+                fontSize = 14.sp
+            )
+        }
 
-        Text(
-            text = "인증이 완료되었습니다.",
-            fontWeight = FontWeight.Bold,
-            fontSize = 16.sp
-        )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         Row(
             modifier = Modifier
@@ -77,10 +90,10 @@ fun SignUpNicknameScreenContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextField(
-                value = nicknameText.value,
-                onValueChange = { nicknameText.value = it },
+                value = tempVerifyCode.value,
+                onValueChange = { tempVerifyCode.value = it },
                 shape = RoundedCornerShape(0.dp),
-                placeholder = { Text("닉네임") },
+                placeholder = { Text("인증코드") },
                 singleLine = true,
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.White,
@@ -93,27 +106,35 @@ fun SignUpNicknameScreenContent(
                 )
             )
         }
-
+        
         Spacer(modifier = Modifier.height(16.dp))
+
+//        TextField(
+//            value = tempVerifyCode,
+//            onValueChange = {
+//                tempVerifyCode = it
+//            }
+//        )
 
         CustomButton(
             viewModel = viewModel,
             navController = navController,
-            title = "회원가입 완료",
-            widthDp = 140.dp,
+            title = "인증 확인",
+            widthDp = 180.dp,
             onClick = {
-                viewModel.signUpBody.value.nickname = nicknameText.value
-                viewModel.signUp()
-                viewModel.login(
-                    idText = viewModel.signUpBody.value.username,
-                    passwordText = viewModel.signUpBody.value.password!!,
-                    onSuccess = {
-                        navController.navigate("setting") {
-                            popUpTo("setting") { inclusive = true }
+                scope.launch {
+                    viewModel.verifyCode(tempVerifyCode.value)
+                    delay(1000)
+                    if (isVerified!!.verify){
+                        Log.d("suee97", "회원가입 성공~!!!!!!!!!")
+
+                        navController.navigate("profile/login/signup/setnickname") {
+                            popUpTo(route = "profile/login/signup/setnickname") { inclusive = true }
                         }
-                    },
-                    onFailure = {}
-                )
+                    } else {
+                        Log.d("suee97", "회원가입 실패~!!!!!!!!!")
+                    }
+                }
             }
         )
     }

@@ -51,6 +51,6 @@ fun SetupNavigation(
         candidateNavGraph(navController = navController, viewModel = viewModel)
         homeNavGraph(navController = navController, viewModel = viewModel)
         newsNavGraph(navController = navController, viewModel = viewModel)
-        settingNavGraph(navController = navController, viewModel = viewModel)
+        profileNavGraph(navController = navController, viewModel = viewModel)
     }
 }

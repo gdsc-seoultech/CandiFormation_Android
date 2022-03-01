@@ -1,4 +1,4 @@
-package com.solution_challenge.candiformation.ui.screens.setting.like
+package com.solution_challenge.candiformation.ui.screens.profile.like
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column

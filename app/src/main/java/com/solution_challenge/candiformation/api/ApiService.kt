@@ -17,18 +17,18 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class ArticleApiService {
+class ApiService {
 
     @Singleton
     @Provides
     fun provideCandiRepository(
-        articleApi: ArticleApiInterface,
+        articleApi: ApiInterface,
         @ApplicationContext context:Context
     ) = CandiRepository(articleApi, context)
 
     @Singleton
     @Provides
-    fun provideArticleApi(): ArticleApiInterface {
+    fun provideArticleApi(): ApiInterface {
         var okHttpClient: OkHttpClient? = null
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -44,6 +44,6 @@ class ArticleApiService {
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
-            .create(ArticleApiInterface::class.java)
+            .create(ApiInterface::class.java)
     }
 }

@@ -1,4 +1,4 @@
-package com.solution_challenge.candiformation.ui.screens.setting
+package com.solution_challenge.candiformation.ui.screens.profile
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun SettingScreen(
+fun ProfileScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
@@ -111,8 +111,8 @@ fun SettingList(
                 if (viewModel.currentUser.value.username.isNullOrEmpty()) {
                     launchSnackBar("로그인이 필요한 서비스입니다.")
                 } else {
-                    navController.navigate("setting/comments") {
-                        popUpTo("setting")
+                    navController.navigate("profile/comments") {
+                        popUpTo("profile")
                     }
                 }
             }
@@ -126,8 +126,8 @@ fun SettingList(
                 if (viewModel.currentUser.value.username.isNullOrEmpty()) {
                     launchSnackBar("로그인이 필요한 서비스입니다.")
                 } else {
-                    navController.navigate("setting/like") {
-                        popUpTo("setting")
+                    navController.navigate("profile/like") {
+                        popUpTo("profile")
                     }
                 }
             }
@@ -146,7 +146,7 @@ fun SettingList(
             viewModel = viewModel,
             title = "Information",
             onClicked = {
-                navController.navigate("setting/appInfo")
+                navController.navigate("profile/appInfo")
             }
         )
         GreyDivider()

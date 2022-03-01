@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.content.edit
-import com.solution_challenge.candiformation.api.ArticleApiInterface
+import com.solution_challenge.candiformation.api.ApiInterface
 import com.solution_challenge.candiformation.models.*
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
 class CandiRepository @Inject constructor(
-    private val articleApi: ArticleApiInterface,
+    private val articleApi: ApiInterface,
     private val context: Context
 ) {
 

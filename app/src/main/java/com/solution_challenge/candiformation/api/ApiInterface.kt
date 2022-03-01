@@ -3,7 +3,7 @@ package com.solution_challenge.candiformation.api
 import com.solution_challenge.candiformation.models.*
 import retrofit2.http.*
 
-interface ArticleApiInterface {
+interface ApiInterface {
 
     // 모든 article 불러오기
     @GET("api/articles")

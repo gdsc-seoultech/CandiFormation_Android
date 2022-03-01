@@ -1,4 +1,4 @@
-package com.solution_challenge.candiformation.ui.screens.setting.login
+package com.solution_challenge.candiformation.ui.screens.profile.login
 
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -108,8 +108,8 @@ fun LoginScreenContent(
                         idText = idText.value,
                         passwordText = passwordText.value,
                         onSuccess = {
-                            navController.navigate("setting") {
-                                popUpTo("setting") { inclusive = true }
+                            navController.navigate("profile") {
+                                popUpTo("profile") { inclusive = true }
                             }
                         },
                         onFailure = {
@@ -126,8 +126,8 @@ fun LoginScreenContent(
             title = "회원가입",
             widthDp = 180.dp,
             onClick = {
-                navController.navigate("setting/login/signup") {
-                    popUpTo("setting/login")
+                navController.navigate("profile/login/signup") {
+                    popUpTo("profile/login")
                 }
             }
         )
@@ -154,8 +154,8 @@ fun LoginScreenContent(
 
                                 },
                                 onSuccess = {
-                                    navController.navigate("setting") {
-                                        popUpTo("setting")
+                                    navController.navigate("profile") {
+                                        popUpTo("profile")
                                     }
                                 }
                             )

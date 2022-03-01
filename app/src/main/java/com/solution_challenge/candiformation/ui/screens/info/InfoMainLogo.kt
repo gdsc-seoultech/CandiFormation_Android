@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.solution_challenge.candiformation.ui.SharedViewModel
-import com.solution_challenge.candiformation.ui.screens.setting.SettingListUnit
-import com.solution_challenge.candiformation.ui.screens.setting.SettingTitleUnit
+import com.solution_challenge.candiformation.ui.screens.profile.SettingListUnit
+import com.solution_challenge.candiformation.ui.screens.profile.SettingTitleUnit
 import kotlinx.coroutines.launch
 
 @Composable
