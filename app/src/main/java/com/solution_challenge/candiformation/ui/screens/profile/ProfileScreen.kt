@@ -1,6 +1,7 @@
 package com.solution_challenge.candiformation.ui.screens.profile
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -11,10 +12,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
+import com.solution_challenge.candiformation.MainActivity
+import com.solution_challenge.candiformation.R
 import com.solution_challenge.candiformation.components.CustomDialog_type_1
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import kotlinx.coroutines.launch
@@ -84,6 +90,15 @@ fun SettingList(
 ) {
     val snackState = remember { SnackbarHostState() }
     val snackScope = rememberCoroutineScope()
+
+    // Share
+    val context = LocalContext.current
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, stringResource(id = R.string.playstore_link))
+        type = "text/plain"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, null)
 
     fun launchSnackBar(msg: String) {
         snackScope.launch {
@@ -155,7 +170,7 @@ fun SettingList(
             viewModel = viewModel,
             title = "Share",
             onClicked = {
-                launchSnackBar("준비중입니다.")
+                context.startActivity(shareIntent)
             }
         )
         GreyDivider()
