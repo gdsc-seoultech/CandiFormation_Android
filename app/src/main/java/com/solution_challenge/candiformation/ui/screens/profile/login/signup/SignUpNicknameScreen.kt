@@ -8,9 +8,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +20,7 @@ import com.solution_challenge.candiformation.components.CustomButton
 import com.solution_challenge.candiformation.components.CustomTopAppBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.ui.theme.VeryLightGrey_type2
+import java.util.regex.Pattern
 
 @Composable
 fun SignUpNicknameScreen(
@@ -51,13 +50,14 @@ fun SignUpNicknameScreenContent(
     viewModel: SharedViewModel
 ) {
     var nicknameText = remember { mutableStateOf("") }
+    var msg by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(36.dp))
 
         Text(
             text = "인증이 완료되었습니다.",
@@ -100,19 +100,34 @@ fun SignUpNicknameScreenContent(
             title = "회원가입 완료",
             widthDp = 140.dp,
             onClick = {
-                viewModel.signUpBody.value.nickname = nicknameText.value
-                viewModel.signUp()
-                viewModel.login(
-                    idText = viewModel.signUpBody.value.username,
-                    passwordText = viewModel.signUpBody.value.password!!,
-                    onSuccess = {
-                        navController.navigate("profile") {
-                            popUpTo("profile") { inclusive = true }
+                if (nicknameText.value.isNullOrEmpty()) {
+                    msg = "올바른 닉네임을 입력해주세요."
+                } else if (nicknameText.value.length > 12 || nicknameText.value.length < 4) {
+                    msg = "닉네임의 길이는 영문자 기준 4~12자 이내로 설정해주세요."
+                } else {
+                    viewModel.signUpBody.value.nickname = nicknameText.value
+                    viewModel.signUp()
+                    viewModel.login(
+                        idText = viewModel.signUpBody.value.username,
+                        passwordText = viewModel.signUpBody.value.password!!,
+                        onSuccess = {
+                            navController.navigate("profile") {
+                                popUpTo("profile") { inclusive = true }
+                            }
+                        },
+                        onFailure = {
+
                         }
-                    },
-                    onFailure = {}
-                )
+                    )
+                }
             }
+        )
+        Text(
+            modifier = Modifier
+                .padding(vertical = 16.dp, horizontal = 32.dp),
+            text = msg,
+            fontSize = 16.sp,
+            color = Color.Red
         )
     }
 }
