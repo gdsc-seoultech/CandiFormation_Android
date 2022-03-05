@@ -9,10 +9,12 @@ import androidx.compose.material.icons.filled.HowToVote
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.solution_challenge.candiformation.R
 import com.solution_challenge.candiformation.components.CustomTopAppBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.utils.Constants
@@ -82,7 +84,7 @@ fun AppInfoTopLogo() {
 
 @Composable
 fun AppInfoScreenContent() {
-    AppInfoScreenCard(title = "App version", description = "3.0")
+    AppInfoScreenCard(title = "App version", description = stringResource(id = R.string.app_version))
     AppInfoScreenCard(title = "Developers", description = "Wee SR\nShin YB\nOh SU\nYang YS")
     AppInfoScreenCard(
         title = "Contacts / Bug Report",
