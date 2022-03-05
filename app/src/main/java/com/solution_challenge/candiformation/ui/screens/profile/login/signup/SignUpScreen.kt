@@ -19,7 +19,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.solution_challenge.candiformation.components.CustomButton
-import com.solution_challenge.candiformation.components.CustomCheckLine
 import com.solution_challenge.candiformation.components.CustomTopAppBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.ui.theme.VeryLightGrey_type2
@@ -55,8 +54,6 @@ fun SignUpScreenContent(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-    val scope = rememberCoroutineScope()
-
     var emailText = remember { mutableStateOf("") }
     var pwdText = remember { mutableStateOf("") }
 
@@ -235,7 +232,7 @@ fun SignUpScreenContent(
         Spacer(modifier = Modifier.height(12.dp))
 
         serviceUsageCheck?.let {
-            CustomCheckLine(
+            AgreementToCondition(
                 modifier = Modifier,
                 msg = "서비스 이용 약관 동의    ",
                 checkState = it,
@@ -251,7 +248,7 @@ fun SignUpScreenContent(
             )
         }
         privateInfoCheck?.let {
-            CustomCheckLine(
+            AgreementToCondition(
                 modifier = Modifier,
                 msg = "개인정보처리방침 동의  ",
                 checkState = it,

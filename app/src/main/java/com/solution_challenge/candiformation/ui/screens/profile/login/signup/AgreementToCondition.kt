@@ -1,4 +1,4 @@
-package com.solution_challenge.candiformation.components
+package com.solution_challenge.candiformation.ui.screens.profile.login.signup
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CustomCheckLine(
+fun AgreementToCondition(
     modifier: Modifier,
     msg: String,
     checkState: Boolean,
