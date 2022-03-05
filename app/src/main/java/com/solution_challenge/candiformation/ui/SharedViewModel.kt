@@ -306,6 +306,8 @@ class SharedViewModel @Inject constructor(
     val signUpMsg = MutableLiveData<String?>("")
     val signUpNextButtonEnabled = MutableLiveData<Boolean>(false)
     val signUpTextFieldEnabled = MutableLiveData<Boolean>(true)
+    val serviceUsageCheck = MutableLiveData<Boolean>(false)
+    val privateInfoCheck = MutableLiveData<Boolean>(false)
 
     fun setSignUpMsg(msg: String) {
         signUpMsg.postValue(msg)
@@ -314,6 +316,24 @@ class SharedViewModel @Inject constructor(
     fun setSignUpInitEnabled() {
         signUpNextButtonEnabled.postValue(false)
         signUpTextFieldEnabled.postValue(true)
+        serviceUsageCheck.postValue(false)
+        privateInfoCheck.postValue(false)
+    }
+
+    fun setServiceUsageCheck() {
+        if(serviceUsageCheck.value == false) {
+            serviceUsageCheck.postValue(true)
+        } else {
+            serviceUsageCheck.postValue(false)
+        }
+    }
+
+    fun setPrivateInfoCheck() {
+        if(privateInfoCheck.value == false) {
+            privateInfoCheck.postValue(true)
+        } else {
+            privateInfoCheck.postValue(false)
+        }
     }
 
     fun checkEmailDuplication(email: String) {
@@ -370,7 +390,8 @@ class SharedViewModel @Inject constructor(
     }
     //  =====================================================================================
 
-    // 닉네임 중복체크(사실상 회원가입)
+
+    // 닉네임 중복체크(사실상 회원가입) =========================================================
     val nicknameMsg = MutableLiveData("")
 
     fun setNicknameMsg(msg: String) {
@@ -396,4 +417,5 @@ class SharedViewModel @Inject constructor(
             }
         }
     }
+    // =====================================================================================
 }

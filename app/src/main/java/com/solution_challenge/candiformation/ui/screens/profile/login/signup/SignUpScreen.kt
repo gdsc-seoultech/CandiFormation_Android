@@ -3,7 +3,9 @@ package com.solution_challenge.candiformation.ui.screens.profile.login.signup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -17,6 +19,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.solution_challenge.candiformation.components.CustomButton
+import com.solution_challenge.candiformation.components.CustomCheckLine
 import com.solution_challenge.candiformation.components.CustomTopAppBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.ui.theme.VeryLightGrey_type2
@@ -62,11 +65,17 @@ fun SignUpScreenContent(
     val isNextButtonEnabled by viewModel.signUpNextButtonEnabled.observeAsState()
     val isTextFieldEnabled by viewModel.signUpTextFieldEnabled.observeAsState()
 
+    val serviceUsageCheck by viewModel.serviceUsageCheck.observeAsState()
+    val privateInfoCheck by viewModel.privateInfoCheck.observeAsState()
+
     val signUpMsg by viewModel.signUpMsg.observeAsState()
+
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(60.dp))
@@ -174,7 +183,11 @@ fun SignUpScreenContent(
                         viewModel.setSignUpMsg("올바른 이메일 또는 비밀번호가 아닙니다.")
                     } else if (!pattern.matcher(emailText.value).matches()) {
                         viewModel.setSignUpMsg("올바른 이메일 형식이 아닙니다.")
-                    } else if (!Pattern.matches("^(?=.*[A-Za-z])(?=.*[0-9]).{7,15}.\$", pwdText.value)) {
+                    } else if (!Pattern.matches(
+                            "^(?=.*[A-Za-z])(?=.*[0-9]).{7,15}.\$",
+                            pwdText.value
+                        )
+                    ) {
                         viewModel.setSignUpMsg("비밀번호는 숫자, 영어를 포함해 8~15자로 설정해주세요!")
                     } else {
                         viewModel.setSignUpMsg("")
@@ -211,6 +224,33 @@ fun SignUpScreenContent(
         signUpMsg?.let {
             Text(
                 text = it
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+        Divider(modifier = Modifier.fillMaxWidth(.8f))
+        Spacer(modifier = Modifier.height(12.dp))
+
+        serviceUsageCheck?.let {
+            CustomCheckLine(
+                modifier = Modifier,
+                msg = "서비스 이용 약관 동의    ",
+                checkState = it,
+                onCheckClicked = {
+                    viewModel.setServiceUsageCheck()
+                },
+                onSpecClicked = {}
+            )
+        }
+        privateInfoCheck?.let {
+            CustomCheckLine(
+                modifier = Modifier,
+                msg = "개인정보처리방침 동의  ",
+                checkState = it,
+                onCheckClicked = {
+                    viewModel.setPrivateInfoCheck()
+                },
+                onSpecClicked = {}
             )
         }
     }
