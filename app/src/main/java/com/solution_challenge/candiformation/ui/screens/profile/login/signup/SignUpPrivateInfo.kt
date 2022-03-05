@@ -14,10 +14,10 @@ import androidx.navigation.NavHostController
 import com.solution_challenge.candiformation.R
 import com.solution_challenge.candiformation.components.CustomTopAppBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
-import com.solution_challenge.candiformation.utils.Constants.CONTENT_INNER_PADDING
+import com.solution_challenge.candiformation.utils.Constants
 
 @Composable
-fun SignUpInfoScreen(
+fun SignUpPrivateInfo(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
@@ -25,28 +25,28 @@ fun SignUpInfoScreen(
         topBar = {
             CustomTopAppBar(
                 navController = navController,
-                title = "서비스 이용 약관",
+                title = "개인정보처리방침",
                 navBack = true
             )
         },
         content = {
-            SignUpInfoScreenContent()
+            SignUpPrivateInfoContent()
         }
     )
 }
 
 @Composable
-fun SignUpInfoScreenContent() {
+fun SignUpPrivateInfoContent() {
     val scrollState = rememberScrollState()
-    
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = CONTENT_INNER_PADDING)
+            .padding(horizontal = Constants.CONTENT_INNER_PADDING)
             .verticalScroll(scrollState)
     ) {
         Text(
-            text = stringResource(id = R.string.service_usage)
+            text = stringResource(id = R.string.private_info)
         )
     }
 }

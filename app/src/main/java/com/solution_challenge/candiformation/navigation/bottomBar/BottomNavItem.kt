@@ -41,8 +41,8 @@ sealed class BottomNavItem(
             "profile/login/signup/setnickname",
             "profile/like",
             "profile/comments",
-            "profile/login/signup/info",
-            "profile/login/signup/info2"
+            "profile/login/signup/service_usage",
+            "profile/login/signup/private_info"
         )
     )
 }

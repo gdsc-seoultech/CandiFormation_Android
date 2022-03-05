@@ -243,7 +243,7 @@ fun SignUpScreenContent(
                     viewModel.setServiceUsageCheck()
                 },
                 onSpecClicked = {
-                    navController.navigate(route = "profile/login/signup/info") {
+                    navController.navigate(route = "profile/login/signup/service_usage") {
                         popUpTo("profile/login/signup")
                     }
                 },
@@ -259,7 +259,7 @@ fun SignUpScreenContent(
                     viewModel.setPrivateInfoCheck()
                 },
                 onSpecClicked = {
-                    navController.navigate(route = "profile/login/signup/info2") {
+                    navController.navigate(route = "profile/login/signup/private_info") {
                         popUpTo("profile/login/signup")
                     }
                 },

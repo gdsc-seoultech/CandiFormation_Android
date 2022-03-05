@@ -61,11 +61,11 @@ fun NavGraphBuilder.profileNavGraph(
         composable(route = "profile/comments") {
             CommentsScreen(navController = navController, viewModel = viewModel)
         }
-        composable(route = "profile/login/signup/info") {
-            SignUpInfoScreen(navController = navController, viewModel = viewModel)
+        composable(route = "profile/login/signup/service_usage") {
+            SignUpServiceUsage(navController = navController, viewModel = viewModel)
         }
-        composable(route = "profile/login/signup/info2") {
-            SignUpInfoScreen2(navController = navController, viewModel = viewModel)
+        composable(route = "profile/login/signup/private_info") {
+            SignUpPrivateInfo(navController = navController, viewModel = viewModel)
         }
     }
 }
