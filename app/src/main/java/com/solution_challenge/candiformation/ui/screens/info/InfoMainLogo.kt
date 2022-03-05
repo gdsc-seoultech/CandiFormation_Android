@@ -59,9 +59,7 @@ fun InfoList(
             viewModel = viewModel,
             title = "Party Archive",
             onClicked = {
-                navController.navigate("info/partyArchive") {
-                    popUpTo("info")
-                }
+                launchSnackBar("준비중입니다.")
             }
         )
         GreyDivider()
@@ -141,12 +139,4 @@ fun InfoListUnit(
 @Composable
 fun GreyDivider() {
     Divider(modifier = Modifier.padding(horizontal = 8.dp))
-}
-
-@Composable
-fun DebateInformation(
-    navController: NavHostController,
-    viewModel: SharedViewModel
-) {
-    Text(text = "토론날짜들")
 }
