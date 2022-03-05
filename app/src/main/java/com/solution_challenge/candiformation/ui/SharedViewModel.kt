@@ -316,8 +316,6 @@ class SharedViewModel @Inject constructor(
     fun setSignUpInitEnabled() {
         signUpNextButtonEnabled.postValue(false)
         signUpTextFieldEnabled.postValue(true)
-        serviceUsageCheck.postValue(false)
-        privateInfoCheck.postValue(false)
     }
 
     fun setServiceUsageCheck() {
@@ -339,11 +337,11 @@ class SharedViewModel @Inject constructor(
     fun checkEmailDuplication(email: String) {
         viewModelScope.launch {
             val res = repository.checkEmailDuplication(email)
-            signUpNextButtonEnabled.postValue(res)
-            signUpTextFieldEnabled.postValue(!res)
             if(res == false) {
                 signUpMsg.postValue("중복된 이메일이 존재합니다.")
-            } else if(res == true) {
+            } else if(res == true && serviceUsageCheck.value == true && privateInfoCheck.value == true) {
+                signUpNextButtonEnabled.postValue(res)
+                signUpTextFieldEnabled.postValue(!res)
                 signUpMsg.postValue("다음을 눌러서 진행해주세요!")
             }
         }

@@ -176,7 +176,7 @@ fun SignUpScreenContent(
             CustomButton(
                 viewModel = viewModel,
                 navController = navController,
-                title = "중복 확인",
+                title = "중복 확인 및 진행",
                 widthDp = 180.dp,
                 onClick = {
                     if (emailText.value.isBlank() || pwdText.value.isBlank()) {
@@ -189,7 +189,10 @@ fun SignUpScreenContent(
                         )
                     ) {
                         viewModel.setSignUpMsg("비밀번호는 숫자, 영어를 포함해 8~15자로 설정해주세요!")
-                    } else {
+                    } else if(serviceUsageCheck == false || privateInfoCheck == false) {
+                        viewModel.setSignUpMsg("아래의 약관을 동의해야 회원가입을 할 수 있습니다.")
+                    }
+                    else {
                         viewModel.setSignUpMsg("")
                         viewModel.checkEmailDuplication(emailText.value)
                     }
@@ -239,7 +242,12 @@ fun SignUpScreenContent(
                 onCheckClicked = {
                     viewModel.setServiceUsageCheck()
                 },
-                onSpecClicked = {}
+                onSpecClicked = {
+                    navController.navigate(route = "profile/login/signup/info") {
+                        popUpTo("profile/login/signup")
+                    }
+                },
+                enabled = isTextFieldEnabled!!
             )
         }
         privateInfoCheck?.let {
@@ -250,7 +258,12 @@ fun SignUpScreenContent(
                 onCheckClicked = {
                     viewModel.setPrivateInfoCheck()
                 },
-                onSpecClicked = {}
+                onSpecClicked = {
+                    navController.navigate(route = "profile/login/signup/info2") {
+                        popUpTo("profile/login/signup")
+                    }
+                },
+                enabled = isTextFieldEnabled!!
             )
         }
     }

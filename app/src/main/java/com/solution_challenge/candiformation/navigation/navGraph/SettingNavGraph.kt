@@ -11,9 +11,7 @@ import com.solution_challenge.candiformation.ui.screens.profile.appInfo.AppInfoS
 import com.solution_challenge.candiformation.ui.screens.profile.comments.CommentsScreen
 import com.solution_challenge.candiformation.ui.screens.profile.like.LikeScreen
 import com.solution_challenge.candiformation.ui.screens.profile.login.LoginScreen
-import com.solution_challenge.candiformation.ui.screens.profile.login.signup.SignUpAuthScreen
-import com.solution_challenge.candiformation.ui.screens.profile.login.signup.SignUpNicknameScreen
-import com.solution_challenge.candiformation.ui.screens.profile.login.signup.SignUpScreen
+import com.solution_challenge.candiformation.ui.screens.profile.login.signup.*
 
 @ExperimentalMaterialApi
 fun NavGraphBuilder.profileNavGraph(
@@ -63,6 +61,11 @@ fun NavGraphBuilder.profileNavGraph(
         composable(route = "profile/comments") {
             CommentsScreen(navController = navController, viewModel = viewModel)
         }
-
+        composable(route = "profile/login/signup/info") {
+            SignUpInfoScreen(navController = navController, viewModel = viewModel)
+        }
+        composable(route = "profile/login/signup/info2") {
+            SignUpInfoScreen2(navController = navController, viewModel = viewModel)
+        }
     }
 }

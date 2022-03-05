@@ -21,16 +21,20 @@ fun CustomCheckLine(
     msg: String,
     checkState: Boolean,
     onCheckClicked: () -> Unit,
-    onSpecClicked: () -> Unit
+    onSpecClicked: () -> Unit,
+    enabled: Boolean = true
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = {
-            onCheckClicked()
-        }) {
-            if(checkState) {
+        IconButton(
+            onClick = {
+                onCheckClicked()
+            },
+            enabled = enabled
+        ) {
+            if (checkState) {
                 Icon(
                     imageVector = Icons.Filled.CheckCircleOutline,
                     contentDescription = "CheckCircleOutline",
@@ -50,7 +54,9 @@ fun CustomCheckLine(
             fontSize = 16.sp
         )
         Text(
-            modifier = Modifier.padding(end = 12.dp).clickable { onSpecClicked() },
+            modifier = Modifier
+                .padding(end = 12.dp)
+                .clickable { onSpecClicked() },
             text = "자세히 보기",
             fontSize = 13.sp
         )
