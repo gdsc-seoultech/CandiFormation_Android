@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.solution_challenge.candiformation.components.CustomDialog_type_1
+import com.solution_challenge.candiformation.components.CustomDialog
 import com.solution_challenge.candiformation.models.CommentResponse
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.ui.theme.TimeColor
@@ -53,7 +53,7 @@ fun CommentViewUnit(
 ) {
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
 
-    CustomDialog_type_1(
+    CustomDialog(
         showDialog = showDialog,
         setShowDialog = setShowDialog,
         title = "댓글을 삭제하시겠습니까?",

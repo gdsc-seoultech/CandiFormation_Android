@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CustomDialog_type_1(
+fun CustomDialog(
     showDialog: Boolean,
     setShowDialog: (Boolean) -> Unit,
     title: String,

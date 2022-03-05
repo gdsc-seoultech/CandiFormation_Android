@@ -17,11 +17,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
-import com.solution_challenge.candiformation.MainActivity
 import com.solution_challenge.candiformation.R
-import com.solution_challenge.candiformation.components.CustomDialog_type_1
+import com.solution_challenge.candiformation.components.CustomDialog
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import kotlinx.coroutines.launch
 
@@ -69,7 +67,7 @@ fun ProfileScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                CustomDialog_type_1(
+                CustomDialog(
                     showDialog = showDialog,
                     setShowDialog = setShowDialog,
                     title = "로그아웃 하시겠습니까?",
@@ -150,21 +148,27 @@ fun SettingList(
         GreyDivider()
         Spacer(modifier = Modifier.height(24.dp))
         SettingTitleUnit("Application")
+
         Divider(
             modifier = Modifier
                 .height(5.dp)
                 .padding(horizontal = 8.dp),
             color = Color.Black
         )
+
         SettingListUnit(
             navController = navController,
             viewModel = viewModel,
-            title = "Information",
+            title = "Version log",
             onClicked = {
-                navController.navigate("profile/appInfo")
+                navController.navigate("profile/version") {
+                    popUpTo("profile")
+                }
             }
         )
+
         GreyDivider()
+
         SettingListUnit(
             navController = navController,
             viewModel = viewModel,
@@ -173,15 +177,20 @@ fun SettingList(
                 context.startActivity(shareIntent)
             }
         )
+
         GreyDivider()
+
         SettingListUnit(
             navController = navController,
             viewModel = viewModel,
-            title = "Setting",
+            title = "Information",
             onClicked = {
-                launchSnackBar("준비중입니다.")
+                navController.navigate("profile/appInfo")
             }
         )
+
+
+
         GreyDivider()
 
         Column(
