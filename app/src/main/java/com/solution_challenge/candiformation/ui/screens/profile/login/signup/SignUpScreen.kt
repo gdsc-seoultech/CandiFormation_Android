@@ -9,12 +9,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.solution_challenge.candiformation.components.CustomButton
 import com.solution_challenge.candiformation.components.CustomTopAppBar
@@ -27,6 +27,9 @@ fun SignUpScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    viewModel.setSignUpInitEnabled()
+    viewModel.setSignUpMsg("")
+
     Scaffold(
         topBar = {
             CustomTopAppBar(
@@ -49,12 +52,17 @@ fun SignUpScreenContent(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    val scope = rememberCoroutineScope()
+
     var emailText = remember { mutableStateOf("") }
     var pwdText = remember { mutableStateOf("") }
 
     val pattern: Pattern = android.util.Patterns.EMAIL_ADDRESS
 
-    var signUpMsg by remember { mutableStateOf("") }
+    val isNextButtonEnabled by viewModel.signUpNextButtonEnabled.observeAsState()
+    val isTextFieldEnabled by viewModel.signUpTextFieldEnabled.observeAsState()
+
+    val signUpMsg by viewModel.signUpMsg.observeAsState()
 
     Column(
         modifier = Modifier
@@ -85,22 +93,26 @@ fun SignUpScreenContent(
                     .fillMaxHeight()
                     .width(1.dp)
             )
-            TextField(
-                value = emailText.value,
-                onValueChange = { emailText.value = it },
-                shape = RoundedCornerShape(0.dp),
-                placeholder = { Text("E-mail") },
-                singleLine = true,
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    cursorColor = Color.Black,
-                    focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.LightGray,
-                    placeholderColor = VeryLightGrey_type2
+
+            isTextFieldEnabled?.let {
+                TextField(
+                    value = emailText.value,
+                    onValueChange = { emailText.value = it },
+                    shape = RoundedCornerShape(0.dp),
+                    placeholder = { Text("E-mail") },
+                    singleLine = true,
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        cursorColor = Color.Black,
+                        focusedLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.LightGray,
+                        placeholderColor = VeryLightGrey_type2
+                    ),
+                    enabled = it
                 )
-            )
+            }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -127,60 +139,82 @@ fun SignUpScreenContent(
                     .fillMaxHeight()
                     .width(1.dp)
             )
-            TextField(
-                value = pwdText.value,
-                onValueChange = { pwdText.value = it },
-                shape = RoundedCornerShape(0.dp),
-                placeholder = { Text("Password") },
-                singleLine = true,
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    cursorColor = Color.Black,
-                    focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.LightGray,
-                    placeholderColor = VeryLightGrey_type2
-                ),
-                visualTransformation = PasswordVisualTransformation()
+            isTextFieldEnabled?.let {
+                TextField(
+                    value = pwdText.value,
+                    onValueChange = { pwdText.value = it },
+                    shape = RoundedCornerShape(0.dp),
+                    placeholder = { Text("Password") },
+                    singleLine = true,
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        cursorColor = Color.Black,
+                        focusedLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.LightGray,
+                        placeholderColor = VeryLightGrey_type2
+                    ),
+                    visualTransformation = PasswordVisualTransformation(),
+                    enabled = it
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        isNextButtonEnabled?.let {
+            CustomButton(
+                viewModel = viewModel,
+                navController = navController,
+                title = "중복 확인",
+                widthDp = 180.dp,
+                onClick = {
+                    if (emailText.value.isBlank() || pwdText.value.isBlank()) {
+                        viewModel.setSignUpMsg("올바른 이메일 또는 비밀번호가 아닙니다.")
+                    } else if (!pattern.matcher(emailText.value).matches()) {
+                        viewModel.setSignUpMsg("올바른 이메일 형식이 아닙니다.")
+                    } else if (!Pattern.matches("^(?=.*[A-Za-z])(?=.*[0-9]).{7,15}.\$", pwdText.value)) {
+                        viewModel.setSignUpMsg("비밀번호는 숫자, 영어를 포함해 8~15자로 설정해주세요!")
+                    } else {
+                        viewModel.setSignUpMsg("")
+                        viewModel.checkEmailDuplication(emailText.value)
+                    }
+                },
+                enabled = !it
             )
         }
 
-        Text(
-            modifier = Modifier
-                .padding(vertical = 16.dp, horizontal = 32.dp),
-            text = signUpMsg,
-            fontSize = 16.sp,
-            color = Color.Red
-        )
+        Spacer(modifier = Modifier.height(8.dp))
 
-        CustomButton(
-            viewModel = viewModel,
-            navController = navController,
-            title = "인증하기",
-            widthDp = 180.dp,
-            onClick = {
-                if (emailText.value.isBlank() || pwdText.value.isBlank()) {
-                    signUpMsg = "이메일 또는 비밀번호를 작성해주세요."
-                } else if (!pattern.matcher(emailText.value).matches()) {
-                    signUpMsg = "올바른 이메일 형식이 아닙니다."
-                } else if (!Pattern.matches("^(?=.*[A-Za-z])(?=.*[0-9]).{7,15}.\$", pwdText.value)) {
-                    signUpMsg = "비밀번호는 숫자, 문자를 포함하여 \n8~15자로 해주세요."
-                } else {
+        isNextButtonEnabled?.let {
+            CustomButton(
+                viewModel = viewModel,
+                navController = navController,
+                title = "다음",
+                widthDp = 180.dp,
+                onClick = {
                     viewModel.signUpBody.value.username = emailText.value
                     viewModel.signUpBody.value.password = pwdText.value
-
-                    // 이메일 인증
                     viewModel.authEmail.value = emailText.value
                     viewModel.emailAuth(viewModel.authEmail.value)
-
                     navController.navigate("profile/login/signup/auth") {
                         popUpTo(route = "profile/login/signup/auth") { inclusive = true }
                     }
-                }
-            }
-        )
+                },
+                enabled = it
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        signUpMsg?.let {
+            Text(
+                text = it
+            )
+        }
     }
 }
+
 
 

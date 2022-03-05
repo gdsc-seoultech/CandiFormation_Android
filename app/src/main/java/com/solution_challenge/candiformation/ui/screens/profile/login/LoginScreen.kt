@@ -88,13 +88,7 @@ fun LoginScreenContent(
             isVisible = false,
             text = passwordText
         )
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            modifier = Modifier.padding(vertical = 16.dp),
-            text = loginMsg,
-            fontSize = 16.sp,
-            color = Color.Red
-        )
+        Spacer(modifier = Modifier.height(12.dp))
         CustomButton(
             viewModel = viewModel,
             navController = navController,
@@ -131,6 +125,8 @@ fun LoginScreenContent(
                 }
             }
         )
+        Spacer(modifier = Modifier.height(12.dp))
+
 
         // 구글 로그인
         val scope = rememberCoroutineScope()
@@ -174,6 +170,14 @@ fun LoginScreenContent(
                 authResultLauncher.launch(signInRequestCode)
             }
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = loginMsg,
+            fontSize = 16.sp,
+            color = Color.Red
+        )
     }
 }
 
@@ -181,7 +185,7 @@ fun LoginScreenContent(
 @Composable
 fun SignInView(errorText: String?, onClick: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         GoogleSignInButtonUi(
@@ -192,10 +196,10 @@ fun SignInView(errorText: String?, onClick: () -> Unit) {
             }
             // authResultLauncer launch : SignIn Intent 실행 및 결과 처리 (AuthResultContract)
         )
-        errorText?.let { // errorText가 전달된 경우 이를 표시
-            Spacer(modifier = Modifier.height(30.dp))
-            Text(text = it)
-        }
+//        errorText?.let { // errorText가 전달된 경우 이를 표시
+//            Spacer(modifier = Modifier.height(30.dp))
+//            Text(text = it)
+//        }
     }
 
 }

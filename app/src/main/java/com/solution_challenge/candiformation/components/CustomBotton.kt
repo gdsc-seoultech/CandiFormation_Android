@@ -23,7 +23,8 @@ fun CustomButton(
     navController: NavHostController,
     title: String,
     widthDp: Dp,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    enabled: Boolean = true
 ) {
     Button(
         modifier = Modifier.width(widthDp).height(40.dp),
@@ -33,7 +34,8 @@ fun CustomButton(
         ),
         onClick = { onClick() },
         border = BorderStroke(1.dp, Color.Black),
-        elevation = ButtonDefaults.elevation(0.dp)
+        elevation = ButtonDefaults.elevation(0.dp),
+        enabled = enabled
     ) {
         Text(
             text = title,

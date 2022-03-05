@@ -199,7 +199,7 @@ class CandiRepository @Inject constructor(
     }
 
 
-    // 이메일 인증
+    // 이메일 인증(코드보내기)
     suspend fun emailAuth(email: String) {
         val res = try {
             articleApi.emailAuth(email)
@@ -209,14 +209,12 @@ class CandiRepository @Inject constructor(
         }
     }
 
-    suspend fun verifyCode(email: String, code: String): VerifyResponse {
-        val res = try {
-            articleApi.verifyCode(email, code)
-        } catch (e: Exception) {
-            VerifyResponse("", false)
-        }
-        return res
+
+    // 코드 인증
+    suspend fun verifyCode(email: String, code: String): Boolean {
+        return articleApi.verifyCode(email, code)
     }
+
 
     // 모든 댓글 가져오기
     suspend fun getAllComments(username: String): List<CommentResponse> {
@@ -234,5 +232,18 @@ class CandiRepository @Inject constructor(
         return articleApi.getArticleLikes(articleId)
     }
 
+    // 이메일 중복 체크
+    suspend fun checkEmailDuplication(email: String): Boolean {
+        return articleApi.checkEmailDuplication(email)
+    }
+
+    // 닉네임 중복 체크
+    suspend fun checkNicknameDuplication(
+        email: String,
+        password: String,
+        nickname: String
+    ): Boolean {
+        return articleApi.checkNicknameDuplication(email, password, nickname)
+    }
 
 }

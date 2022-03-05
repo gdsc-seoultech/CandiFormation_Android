@@ -21,7 +21,8 @@ fun CustomTextField(
     placeHolderMsg: String,
     iconRes: ImageVector,
     isVisible: Boolean,
-    text: MutableState<String>
+    text: MutableState<String>,
+    enabled: Boolean = true
 ) {
     Row(
         modifier = Modifier
@@ -60,7 +61,7 @@ fun CustomTextField(
                 unfocusedLabelColor = Color.LightGray,
                 placeholderColor = VeryLightGrey_type2
             ),
-            // ***으로 뜨게 하기
+            enabled = enabled,
             visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
     }

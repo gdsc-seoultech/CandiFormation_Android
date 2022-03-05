@@ -10,12 +10,8 @@ import androidx.lifecycle.viewModelScope
 import com.solution_challenge.candiformation.data.repositories.CandiRepository
 import com.solution_challenge.candiformation.models.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -261,24 +257,7 @@ class SharedViewModel @Inject constructor(
     }
 
 
-    // 이메일 인증
-    var authEmail = mutableStateOf("")
 
-    fun emailAuth(email: String) {
-        viewModelScope.launch {
-            repository.emailAuth(email)
-        }
-    }
-
-    val isVerified: MutableLiveData<VerifyResponse> = MutableLiveData()
-
-    fun verifyCode(tempCode: String) {
-        viewModelScope.launch {
-            val res = mutableStateOf(VerifyResponse("", false))
-            res.value = repository.verifyCode(authEmail.value, tempCode)
-            isVerified.value = res.value
-        }
-    }
 
     // 구글 signUp + Login
     fun googleLogin(
@@ -319,6 +298,102 @@ class SharedViewModel @Inject constructor(
     fun getArticleLikes(_articleId: Int) {
         viewModelScope.launch {
             getArticleLikes.value = repository.getArticleLikes(_articleId).likes
+        }
+    }
+
+
+    // 이메일 중복체크 ==========================================================================
+    val signUpMsg = MutableLiveData<String?>("")
+    val signUpNextButtonEnabled = MutableLiveData<Boolean>(false)
+    val signUpTextFieldEnabled = MutableLiveData<Boolean>(true)
+
+    fun setSignUpMsg(msg: String) {
+        signUpMsg.postValue(msg)
+    }
+
+    fun setSignUpInitEnabled() {
+        signUpNextButtonEnabled.postValue(false)
+        signUpTextFieldEnabled.postValue(true)
+    }
+
+    fun checkEmailDuplication(email: String) {
+        viewModelScope.launch {
+            val res = repository.checkEmailDuplication(email)
+            signUpNextButtonEnabled.postValue(res)
+            signUpTextFieldEnabled.postValue(!res)
+            if(res == false) {
+                signUpMsg.postValue("중복된 이메일이 존재합니다.")
+            } else if(res == true) {
+                signUpMsg.postValue("다음을 눌러서 진행해주세요!")
+            }
+        }
+    }
+    // =====================================================================================
+
+
+    // 인증코드확인 ==========================================================================
+    var authEmail = mutableStateOf("")
+
+    fun emailAuth(email: String) {
+        viewModelScope.launch {
+            repository.emailAuth(email)
+        }
+    }
+
+    val authMsg = MutableLiveData<String?>("")
+
+    fun setAuthMsg(msg: String) {
+        authMsg.postValue(msg)
+    }
+
+    val isVerified = MutableLiveData<Boolean>(false)
+    val authNextButtonEnabled = MutableLiveData<Boolean>(false)
+    val authTextFieldEnabled = MutableLiveData<Boolean>(true)
+
+    fun setAuthInitEnabled() {
+        authNextButtonEnabled.postValue(false)
+        authTextFieldEnabled.postValue(true)
+    }
+
+    fun verifyCode(tempCode: String) {
+        viewModelScope.launch {
+            val res = repository.verifyCode(authEmail.value, tempCode)
+            isVerified.postValue(res)
+            if(res == true) {
+                authNextButtonEnabled.postValue(true)
+                authTextFieldEnabled.postValue(false)
+                authMsg.postValue("다음을 눌러서 진행해주세요!")
+            } else {
+                authMsg.postValue("올바른 인증코드가 아닙니다.")
+            }
+        }
+    }
+    //  =====================================================================================
+
+    // 닉네임 중복체크(사실상 회원가입)
+    val nicknameMsg = MutableLiveData("")
+
+    fun setNicknameMsg(msg: String) {
+        nicknameMsg.postValue(msg)
+    }
+
+    val checkNicknameDuplicationRes = MutableLiveData<Boolean>(false)
+
+    fun checkNicknameDuplication(
+        email: String,
+        password: String,
+        nickname: String,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
+        viewModelScope.launch {
+            val res = repository.checkNicknameDuplication(email, password, nickname)
+            checkNicknameDuplicationRes.postValue(res)
+            if(res == true) {
+                onSuccess()
+            } else {
+                onFailure()
+            }
         }
     }
 }
