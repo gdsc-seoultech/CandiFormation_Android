@@ -189,8 +189,6 @@ fun SettingList(
             }
         )
 
-
-
         GreyDivider()
 
         Column(
@@ -204,7 +202,6 @@ fun SettingList(
                 hostState = snackState
             )
         }
-
     }
 }
 
