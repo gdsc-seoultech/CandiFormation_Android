@@ -59,7 +59,9 @@ fun InfoList(
             viewModel = viewModel,
             title = "Party Archive",
             onClicked = {
-                launchSnackBar("준비중입니다.")
+                navController.navigate("info/partyArchive") {
+                    popUpTo("info")
+                }
             }
         )
         GreyDivider()
