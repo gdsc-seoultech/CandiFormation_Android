@@ -26,7 +26,16 @@ fun SetupNavigation(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    if (currentRoute == "news/articles/selectedArticle" || currentRoute == "splash") {
+
+    val ignoreRoutes = listOf<String>(
+        "news/articles/selectedArticle",
+        "splash",
+        "profile/login/signup/service_usage",
+        "profile/login/signup/private_info",
+        "profile/version"
+    )
+
+    if (ignoreRoutes.contains(currentRoute)) {
         viewModel.bottomBarShown.value = false
     } else {
         viewModel.bottomBarShown.value = true
@@ -34,7 +43,6 @@ fun SetupNavigation(
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(color = Color.Black)
-
 
     NavHost(
         navController = navController,
@@ -46,7 +54,6 @@ fun SetupNavigation(
                 viewModel = viewModel
             )
         }
-
         infoNavGraph(navController = navController, viewModel = viewModel)
         candidateNavGraph(navController = navController, viewModel = viewModel)
         homeNavGraph(navController = navController, viewModel = viewModel)

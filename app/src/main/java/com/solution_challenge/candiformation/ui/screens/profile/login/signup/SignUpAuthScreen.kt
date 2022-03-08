@@ -30,6 +30,8 @@ fun SignUpAuthScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
+    viewModel.setAuthInitEnabled()
+
     Scaffold(
         topBar = {
             CustomTopAppBar(
@@ -55,6 +57,11 @@ fun SignUpAuthScreenContent(
     val scope = rememberCoroutineScope()
     val isVerified by viewModel.isVerified.observeAsState()
     var tempVerifyCode = remember { mutableStateOf("") }
+
+    val authNextButtonEnabled by viewModel.authNextButtonEnabled.observeAsState()
+    val authTextFieldEnabled by viewModel.authTextFieldEnabled.observeAsState()
+
+    val authMsg by viewModel.authMsg.observeAsState()
 
     Column(
         modifier = Modifier
@@ -89,53 +96,69 @@ fun SignUpAuthScreenContent(
                 .background(Color.Black),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextField(
-                value = tempVerifyCode.value,
-                onValueChange = { tempVerifyCode.value = it },
-                shape = RoundedCornerShape(0.dp),
-                placeholder = { Text("인증코드") },
-                singleLine = true,
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    cursorColor = Color.Black,
-                    focusedLabelColor = Color.Black,
-                    unfocusedLabelColor = Color.LightGray,
-                    placeholderColor = VeryLightGrey_type2
+            authTextFieldEnabled?.let {
+                TextField(
+                    value = tempVerifyCode.value,
+                    onValueChange = { tempVerifyCode.value = it },
+                    shape = RoundedCornerShape(0.dp),
+                    placeholder = { Text("인증코드") },
+                    singleLine = true,
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        cursorColor = Color.Black,
+                        focusedLabelColor = Color.Black,
+                        unfocusedLabelColor = Color.LightGray,
+                        placeholderColor = VeryLightGrey_type2
+                    ),
+                    enabled = it
                 )
-            )
+            }
         }
         
         Spacer(modifier = Modifier.height(16.dp))
 
-//        TextField(
-//            value = tempVerifyCode,
-//            onValueChange = {
-//                tempVerifyCode = it
-//            }
-//        )
-
-        CustomButton(
-            viewModel = viewModel,
-            navController = navController,
-            title = "인증 확인",
-            widthDp = 180.dp,
-            onClick = {
-                scope.launch {
-                    viewModel.verifyCode(tempVerifyCode.value)
-                    delay(1000)
-                    if (isVerified!!.verify){
-                        Log.d("suee97", "회원가입 성공~!!!!!!!!!")
-
-                        navController.navigate("profile/login/signup/setnickname") {
-                            popUpTo(route = "profile/login/signup/setnickname") { inclusive = true }
-                        }
+        authNextButtonEnabled?.let {
+            CustomButton(
+                viewModel = viewModel,
+                navController = navController,
+                title = "인증 확인",
+                widthDp = 180.dp,
+                onClick = {
+                    if(tempVerifyCode.value.isBlank()) {
+                        viewModel.setAuthMsg("인증코드를 입력해주세요.")
                     } else {
-                        Log.d("suee97", "회원가입 실패~!!!!!!!!!")
+                        viewModel.verifyCode(tempCode = tempVerifyCode.value)
                     }
-                }
-            }
-        )
+                },
+                enabled = !it
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        authNextButtonEnabled?.let {
+            CustomButton(
+                viewModel = viewModel,
+                navController = navController,
+                title = "다음",
+                widthDp = 180.dp,
+                onClick = {
+                    navController.navigate("profile/login/signup/setnickname") {
+                        popUpTo(route = "profile/login/signup/setnickname") { inclusive = true }
+                    }
+                },
+                enabled = it
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        authMsg?.let {
+            Text(
+                text = it
+            )
+        }
     }
 }

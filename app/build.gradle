@@ -12,8 +12,8 @@ android {
         applicationId "com.solution_challenge.candiformation"
         minSdk 21
         targetSdk 31
-        versionCode 4
-        versionName "4.0"
+        versionCode 6
+        versionName "1.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

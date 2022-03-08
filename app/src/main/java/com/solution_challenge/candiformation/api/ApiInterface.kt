@@ -58,9 +58,9 @@ interface ApiInterface {
     )
 
     // 이메일 인증을 위한 POST
-    @POST("api/authenticate/mail/{email}")
+    @POST("api/authenticate/mail/{mail}")
     suspend fun emailAuth(
-        @Path("email") email: String
+        @Path("mail") email: String
     )
 
     // 코드 인증
@@ -68,7 +68,7 @@ interface ApiInterface {
     suspend fun verifyCode(
         @Path("email") email: String,
         @Path("code") code: String
-    ): VerifyResponse
+    ): Boolean
 
 
     // 모든 댓글 가져오기
@@ -84,4 +84,20 @@ interface ApiInterface {
     suspend fun getArticleLikes(
         @Path("articleId") articleId: Int
     ): ArticleLikeNumResponse
+
+
+    // 이메일 중복체크
+    @POST("api/users/duplication/{email}")
+    suspend fun checkEmailDuplication(
+        @Path("email") email: String
+    ): Boolean
+
+
+    // 닉네임 중복체크 이지만 사실은 회원가입
+    @POST("api/users/duplication/{email}/{password}/{nickname}")
+    suspend fun checkNicknameDuplication(
+        @Path("email") email: String,
+        @Path("password") password: String,
+        @Path("nickname") nickname: String
+    ): Boolean
 }

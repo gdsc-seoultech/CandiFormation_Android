@@ -89,17 +89,27 @@ fun InfoScreenMainLogo(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(painter = painterResource(id = R.drawable.dasun), contentDescription = null)
-        Text(
-            text = "D - ${viewModel.getLeftBonTime()}", // 2022년 3월 9일 D -
-            fontSize = 40.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-        Text(
-            text = "(사전투표 : D - ${viewModel.getLeftSazunTime()})",
-            fontSize = 17.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
+        if(viewModel.getLeftBonTime() == 0L) {
+            Text(
+                text = "D - Day", // 2022년 3월 9일 D -
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+        } else if (viewModel.getLeftBonTime() > 0L) {
+            Text(
+                text = "D - ${viewModel.getLeftBonTime()}", // 2022년 3월 9일 D -
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+        } else {
+            Text(
+                text = "선거가 종료되었습니다.", // 2022년 3월 9일 D -
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+        }
     }
 }

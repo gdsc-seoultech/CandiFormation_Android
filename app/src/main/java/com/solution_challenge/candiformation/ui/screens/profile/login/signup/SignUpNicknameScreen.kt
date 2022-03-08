@@ -1,5 +1,6 @@
 package com.solution_challenge.candiformation.ui.screens.profile.login.signup
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -9,9 +10,11 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,6 +23,7 @@ import com.solution_challenge.candiformation.components.CustomButton
 import com.solution_challenge.candiformation.components.CustomTopAppBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.ui.theme.VeryLightGrey_type2
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 @Composable
@@ -50,7 +54,10 @@ fun SignUpNicknameScreenContent(
     viewModel: SharedViewModel
 ) {
     var nicknameText = remember { mutableStateOf("") }
-    var msg by remember { mutableStateOf("") }
+    val nicknameMsg by viewModel.nicknameMsg.observeAsState()
+    val checkNicknameDuplicationRes by viewModel.checkNicknameDuplicationRes.observeAsState()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -64,7 +71,8 @@ fun SignUpNicknameScreenContent(
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp
         )
-        Spacer(modifier = Modifier.height(8.dp))
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         Row(
             modifier = Modifier
@@ -100,34 +108,43 @@ fun SignUpNicknameScreenContent(
             title = "회원가입 완료",
             widthDp = 140.dp,
             onClick = {
+                viewModel.signUpBody.value.nickname = nicknameText.value
+
                 if (nicknameText.value.isNullOrEmpty()) {
-                    msg = "올바른 닉네임을 입력해주세요."
-                } else if (nicknameText.value.length > 12 || nicknameText.value.length < 4) {
-                    msg = "닉네임의 길이는 영문자 기준 4~12자 이내로 설정해주세요."
+                    viewModel.setNicknameMsg("사용할 닉네임을 입력해주세요.")
+                } else if (nicknameText.value.length > 13 || nicknameText.value.length < 3) {
+                    viewModel.setNicknameMsg("닉네임의 길이는기준 4~12자 이내로 설정해주세요.")
                 } else {
-                    viewModel.signUpBody.value.nickname = nicknameText.value
-                    viewModel.signUp()
-                    viewModel.login(
-                        idText = viewModel.signUpBody.value.username,
-                        passwordText = viewModel.signUpBody.value.password!!,
+                    viewModel.checkNicknameDuplication(
+                        email = viewModel.signUpBody.value.username,
+                        password = viewModel.signUpBody.value.password!!,
+                        nickname = viewModel.signUpBody.value.nickname,
                         onSuccess = {
-                            navController.navigate("profile") {
-                                popUpTo("profile") { inclusive = true }
+                            navController.navigate("profile/login") {
+                                popUpTo("profile/login") { inclusive = true }
                             }
+                            Toast.makeText(
+                                context,
+                                "회원가입이 완료되었습니다.\n로그인을 해주세요!",
+                                Toast.LENGTH_LONG
+                            ).show()
                         },
                         onFailure = {
-
+                            viewModel.setNicknameMsg("중복된 닉네임이 존재합니다.")
                         }
                     )
                 }
             }
         )
-        Text(
-            modifier = Modifier
-                .padding(vertical = 16.dp, horizontal = 32.dp),
-            text = msg,
-            fontSize = 16.sp,
-            color = Color.Red
-        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        nicknameMsg?.let {
+            Text(
+                modifier = Modifier
+                    .padding(vertical = 16.dp, horizontal = 32.dp),
+                text = it
+            )
+        }
     }
 }
