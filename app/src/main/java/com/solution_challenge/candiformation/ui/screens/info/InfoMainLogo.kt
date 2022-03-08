@@ -59,7 +59,7 @@ fun InfoList(
             viewModel = viewModel,
             title = "Party Archive",
             onClicked = {
-                navController.navigate(route = "info/presidentArchive") {
+                navController.navigate(route = "info/partyArchive") {
                     popUpTo("info")
                 }
             }
