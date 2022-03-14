@@ -16,6 +16,7 @@ import com.solution_challenge.candiformation.models.LikeBody
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.solution_challenge.candiformation.components.LoadingView
 import kotlinx.coroutines.launch
 
 @Composable
@@ -86,8 +87,8 @@ fun NewsScreenContent(
         ) {
             Log.d("suee97", "id순서 >> ${articleDataList}")
 
-            if (articleDataList.isNullOrEmpty()) {
-
+            if(articleDataList.isNullOrEmpty()) {
+                LoadingView()
             } else {
                 LazyColumn() {
                     items(articleDataList.size) { index ->

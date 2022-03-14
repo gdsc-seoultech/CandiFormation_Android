@@ -22,7 +22,6 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor(
     private val repository: CandiRepository
 ) : ViewModel() {
-
     // 로그인 정보 ======================================================================
     var currentUser = mutableStateOf(
         SignUpBody(
@@ -44,7 +43,7 @@ class SharedViewModel @Inject constructor(
 
     fun getArticle() {
         viewModelScope.launch(Dispatchers.IO) {
-            articleDataList.postValue(repository.getArticleResponse())
+            articleDataList.postValue(repository.getArticleResponse().data)
         }
     }
     // =======================================================================================
@@ -144,7 +143,7 @@ class SharedViewModel @Inject constructor(
     ) {
         viewModelScope.launch() {
             repository.like(likeBody = likeBody)
-            articleDataList.postValue(repository.getArticleResponse())
+            articleDataList.postValue(repository.getArticleResponse().data)
             whatArticleLiked.value = repository.whatArticleLiked(likeBody.username)
             getArticleLikes.value = repository.getArticleLikes(articleId.value).likes
         }

@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.core.content.edit
 import com.solution_challenge.candiformation.api.ApiInterface
 import com.solution_challenge.candiformation.models.*
+import com.solution_challenge.candiformation.utils.Resource
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
@@ -40,8 +41,13 @@ class CandiRepository @Inject constructor(
 
 
     // 전체 뉴스기사 정보 불러오기 ================================================================
-    suspend fun getArticleResponse(): List<ArticleResponse> {
-        return articleApi.getArticle().asReversed()
+    suspend fun getArticleResponse(): Resource<List<ArticleResponse>> {
+        val res = try{
+            Resource.Success(articleApi.getArticle().asReversed())
+        } catch (e: Exception) {
+            Resource.Error("Get Article Response Error")
+        }
+        return res
     }
     // ==========================================================================================
 

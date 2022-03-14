@@ -1,13 +1,14 @@
 package com.solution_challenge.candiformation.api
 
 import com.solution_challenge.candiformation.models.*
+import com.solution_challenge.candiformation.utils.Resource
 import retrofit2.http.*
 
 interface ApiInterface {
 
     // 모든 article 불러오기
     @GET("api/articles")
-    suspend fun getArticle(): List<ArticleResponse> // Article list를 return
+    suspend fun getArticle(): List<ArticleResponse>
 
     // 회원가입
     @POST("api/users")

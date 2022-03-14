@@ -14,6 +14,7 @@ import com.solution_challenge.candiformation.navigation.SetupNavigation
 import com.solution_challenge.candiformation.navigation.bottomBar.BottomNavBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.solution_challenge.candiformation.components.LoadingView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
