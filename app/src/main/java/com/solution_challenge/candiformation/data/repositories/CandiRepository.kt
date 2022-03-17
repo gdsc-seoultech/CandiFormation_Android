@@ -149,7 +149,7 @@ class CandiRepository @Inject constructor(
         }
     }
 
-    // 토큰
+    // 토큰 =============================================================================
     fun getHeaderMap() = mapOf(
         pair = Pair(
             "Authorization",
@@ -207,12 +207,7 @@ class CandiRepository @Inject constructor(
 
     // 이메일 인증(코드보내기)
     suspend fun emailAuth(email: String) {
-        val res = try {
-            articleApi.emailAuth(email)
-            Log.d("suee97", "emailAuth 성공")
-        } catch (e: Exception) {
-            Log.d("suee97", "emailAuth 에러 >>> ${e.localizedMessage}")
-        }
+        articleApi.emailAuth(email)
     }
 
 
@@ -251,5 +246,4 @@ class CandiRepository @Inject constructor(
     ): Boolean {
         return articleApi.checkNicknameDuplication(email, password, nickname)
     }
-
 }

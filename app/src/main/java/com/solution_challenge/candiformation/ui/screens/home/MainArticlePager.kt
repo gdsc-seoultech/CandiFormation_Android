@@ -99,5 +99,14 @@ fun MainArticlePager(
                 inactiveColor = Color.LightGray
             )
         }
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(.4f)
+                .background(Color.Black)
+        ) {
+            
+        }
     }
 }

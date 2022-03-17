@@ -37,7 +37,7 @@ class SharedViewModel @Inject constructor(
     // ======================================================================================
 
 
-    // 모든 기사 정보 불러오기 + 메인 5개 =========================================================
+    // 모든 기사 정보 불러오기  ================================================================
     val articleDataList: MutableLiveData<List<ArticleResponse>> =
         MutableLiveData(listOf<ArticleResponse>())
 
@@ -143,7 +143,7 @@ class SharedViewModel @Inject constructor(
     ) {
         viewModelScope.launch() {
             repository.like(likeBody = likeBody)
-            articleDataList.postValue(repository.getArticleResponse().data)
+            getArticle()
             whatArticleLiked.value = repository.whatArticleLiked(likeBody.username)
             getArticleLikes.value = repository.getArticleLikes(articleId.value).likes
         }
@@ -254,9 +254,6 @@ class SharedViewModel @Inject constructor(
             _isRefreshing.emit(false)
         }
     }
-
-
-
 
     // 구글 signUp + Login
     fun googleLogin(
