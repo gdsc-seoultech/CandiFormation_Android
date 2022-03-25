@@ -13,6 +13,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.solution_challenge.candiformation.components.CustomSnackBar
+import com.solution_challenge.candiformation.components.launchSnackBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import com.solution_challenge.candiformation.ui.screens.profile.SettingListUnit
 import com.solution_challenge.candiformation.ui.screens.profile.SettingTitleUnit
@@ -24,16 +26,7 @@ fun InfoList(
     viewModel: SharedViewModel
 ) {
     val snackState = remember { SnackbarHostState() }
-    val snackScope = rememberCoroutineScope()
-
-    fun launchSnackBar(msg: String) {
-        snackScope.launch {
-            snackState.showSnackbar(
-                message = msg,
-                duration = SnackbarDuration.Short
-            )
-        }
-    }
+    val scope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxWidth()) {
         InfoTitleUnit("Archive")
@@ -78,25 +71,18 @@ fun InfoList(
             viewModel = viewModel,
             title = "Debates",
             onClicked = {
-                launchSnackBar("준비중입니다.")
+                launchSnackBar(
+                    msg = "준비중입니다.",
+                    snackState = snackState,
+                    snackScope = scope
+                )
             }
         )
         GreyDivider()
         Spacer(modifier = Modifier.height(32.dp))
 
-
     }
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(.9f),
-        verticalArrangement = Arrangement.Bottom,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        SnackbarHost(
-            hostState = snackState
-        )
-    }
+    CustomSnackBar(snackState = snackState, verticalFraction = .2f)
 }
 
 @Composable

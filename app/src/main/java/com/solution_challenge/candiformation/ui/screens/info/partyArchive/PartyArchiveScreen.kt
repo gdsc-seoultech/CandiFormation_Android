@@ -37,7 +37,7 @@ fun PartyArchiveScreen(
         topBar = {
             CustomTopAppBar(
                 navController = navController,
-                title = "Presidents Archive",
+                title = "Party Archive",
                 navBack = true
             )
         },
