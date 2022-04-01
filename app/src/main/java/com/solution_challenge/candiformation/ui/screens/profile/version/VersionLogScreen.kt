@@ -43,7 +43,7 @@ fun VersionLogScreen(
 @Composable
 fun VersionLogScreenContent() {
     VersionLogoCard(
-        title = "1.1.0",
+        title = "1.1.1",
         desc = "약관동의화면 하단바를 숨깁니다.\n" +
                 "기사를 불러오지 못할 시 로딩화면을 띄웁니다.\n" +
                 "회원가입 화면 수정"
