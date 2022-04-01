@@ -79,10 +79,8 @@ fun InfoList(
             }
         )
         GreyDivider()
-        Spacer(modifier = Modifier.height(32.dp))
-
     }
-    CustomSnackBar(snackState = snackState, verticalFraction = .2f)
+    CustomSnackBar(snackState = snackState, verticalFraction = .4f)
 }
 
 @Composable

@@ -28,8 +28,6 @@ fun InfoScreen(
     navController: NavHostController,
     viewModel: SharedViewModel
 ) {
-    var scrollState = rememberScrollState()
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -43,15 +41,13 @@ fun InfoScreen(
             Column(
                 modifier = Modifier
                     .padding(horizontal = CONTENT_INNER_PADDING)
-                    .fillMaxWidth()
+                    .fillMaxSize()
             ) {
                 InfoScreenContent(
                     navController = navController,
-                    viewModel = viewModel,
-                    scrollState = scrollState
+                    viewModel = viewModel
                 )
             }
-
         }
     )
 }
@@ -59,13 +55,11 @@ fun InfoScreen(
 @Composable
 fun InfoScreenContent(
     navController: NavHostController,
-    viewModel: SharedViewModel,
-    scrollState: ScrollState
+    viewModel: SharedViewModel
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .verticalScroll(scrollState)
     ) {
         InfoScreenMainLogo(
             navController = navController,
@@ -106,7 +100,7 @@ fun InfoScreenMainLogo(
         } else {
             Text(
                 text = "선거가 종료되었습니다.", // 2022년 3월 9일 D -
-                fontSize = 40.sp,
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )

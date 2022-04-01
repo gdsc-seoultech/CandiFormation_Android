@@ -106,7 +106,7 @@ fun MainArticlePager(
                 .fillMaxHeight(.4f)
                 .background(Color.Black)
         ) {
-            
+
         }
     }
 }

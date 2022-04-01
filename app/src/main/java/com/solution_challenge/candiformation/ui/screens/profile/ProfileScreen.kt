@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.solution_challenge.candiformation.R
 import com.solution_challenge.candiformation.components.CustomDialog
+import com.solution_challenge.candiformation.components.CustomSnackBar
+import com.solution_challenge.candiformation.components.launchSnackBar
 import com.solution_challenge.candiformation.ui.SharedViewModel
 import kotlinx.coroutines.launch
 
@@ -87,7 +89,7 @@ fun SettingList(
     viewModel: SharedViewModel
 ) {
     val snackState = remember { SnackbarHostState() }
-    val snackScope = rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
 
     // Share
     val context = LocalContext.current
@@ -97,15 +99,6 @@ fun SettingList(
         type = "text/plain"
     }
     val shareIntent = Intent.createChooser(sendIntent, null)
-
-    fun launchSnackBar(msg: String) {
-        snackScope.launch {
-            snackState.showSnackbar(
-                message = msg,
-                duration = SnackbarDuration.Short
-            )
-        }
-    }
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.height(24.dp))
@@ -122,7 +115,11 @@ fun SettingList(
             title = "Comments",
             onClicked = {
                 if (viewModel.currentUser.value.username.isNullOrEmpty()) {
-                    launchSnackBar("로그인이 필요한 서비스입니다.")
+                    launchSnackBar(
+                        msg = "로그인이 필요한 서비스입니다.",
+                        snackScope = scope,
+                        snackState = snackState
+                    )
                 } else {
                     navController.navigate("profile/comments") {
                         popUpTo("profile")
@@ -137,7 +134,11 @@ fun SettingList(
             title = "Likes",
             onClicked = {
                 if (viewModel.currentUser.value.username.isNullOrEmpty()) {
-                    launchSnackBar("로그인이 필요한 서비스입니다.")
+                    launchSnackBar(
+                        msg = "로그인이 필요한 서비스입니다.",
+                        snackScope = scope,
+                        snackState = snackState
+                    )
                 } else {
                     navController.navigate("profile/like") {
                         popUpTo("profile")
@@ -191,17 +192,10 @@ fun SettingList(
 
         GreyDivider()
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(.5f),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            SnackbarHost(
-                hostState = snackState
-            )
-        }
+        CustomSnackBar(
+            snackState = snackState,
+            verticalFraction = 0.5f
+        )
     }
 }
 
