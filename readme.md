@@ -117,6 +117,9 @@
 - Users can see articles that they like.
 - Users can see the comments written by the user.
 
+# ⚒ Architecture ⚒
+![](https://velog.velcdn.com/images/ryool/post/56669117-4d91-4af8-996d-e1d87d9f7e21/image.png)
+
 
 # 💻 Tech Stack 💻
 - ![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white) <img src="https://img.shields.io/badge/Jetpack Compose-green?style=for-the-badge&logo=JetpackCompose&logoColor=4285F4"/> ![Kotlin](https://img.shields.io/badge/kotlin-%230095D5.svg?style=for-the-badge&logo=kotlin&logoColor=white)
